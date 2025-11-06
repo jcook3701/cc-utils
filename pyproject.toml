@@ -18,15 +18,12 @@ readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
 requires-python = ">=3.11"
-dependencies = [
-  "typer",
-  "cookiecutter",
-  "GitPython",
-]
+dependencies = []
 keywords = [
   "python3",
   "cookiecutter",
-  "templates"
+  "templates",
+  "utilities",
 ]
 classifiers = [
   "Programming Language :: Python :: 3",

@@ -9,9 +9,11 @@
 SHELL := /bin/bash
 .SHELLFLAGS := -O globstar -c
 
-# If V is set to '1' or 'y' on the command line, AT will be empty (verbose).
-# Otherwise, AT will contain '@' (quiet by default).
-# The '?' is a conditional assignment operator: it only sets V if it hasn't been set externally.
+# If V is set to '1' or 'y' on the command line,
+# AT will be empty (verbose).  Otherwise, AT will
+# contain '@' (quiet by default).  The '?' is a
+# conditional assignment operator: it only sets V
+# if it hasn't been set externally.
 V ?= 0
 ifeq ($(V),0)
     AT = @
@@ -126,26 +128,29 @@ typecheck:
 # --------------------------------------------------
 test:
 	$(AT)echo "🧪 Running tests with pytest..."
-	$(AT)PYTHONPATH=$(PWD)/src $(PYTEST) -v --maxfail=1 --disable-warnings $(TEST_DIR)
+	$(AT)PYTHONPATH=$(PWD)/src $(PYTEST) -v \
+		--maxfail=1 --disable-warnings $(TEST_DIR)
 
 # --------------------------------------------------
 # Documentation (Sphinx + Jekyll)
 # --------------------------------------------------
 sphinx:
+	$(AT)echo "🧹 Clening Sphinx build artifacts..."
+	$(AT)rm -r $(JEKYLL_OUTPUT_DIR)
 	$(AT)echo "🔨 Building Sphinx documentation 📘 as Markdown..."
-	$(AT)(SPHINX) $(SPHINX_DIR) $(JEKYLL_OUTPUT_DIR)
+	$(AT)$(SPHINX) $(SPHINX_DIR) $(JEKYLL_OUTPUT_DIR)
 	$(AT)echo "✅ Sphinx Markdown build complete!"
 
 jekyll:
-	$(AT)echo "🔨 Building Jekyll site..."
+	$(AT)echo "🔨 Building Jekyll site 🌐..."
 	$(AT)cd $(JEKYLL_DIR) && $(JEKYLL_BUILD)
 	$(AT)echo "✅ Full documentation build complete!"
 
 # TODO: Update project to work with sphinx
-build-docs: jekyll
+build-docs: sphinx jekyll
 
-run-docs: build-docs
-	$(AT)echo "🚀 Starting Jekyll development server..."
+run-docs:
+	$(AT)echo "🚀 Starting Jekyll development server 🌐..."
 	$(AT)cd $(JEKYLL_DIR) && $(JEKYLL_SERVE)
 
 readme:
@@ -185,7 +190,7 @@ clean:
 	$(AT)cd $(JEKYLL_DIR) && $(JEKYLL_CLEAN)
 	$(AT)rm -rf build dist *.egg-info
 	$(AT)find $(SRC_DIR) $(TEST_DIR) -name "__pycache__" -type d -exec rm -rf {} +
-	$(AT)-[ -d "$(VENV_DIR)" ] && rm -r $(VENV_DIR)
+	$(AT)rm -rf $(VENV_DIR)
 	$(AT)echo "🧹 Finished cleaning build artifacts..."
 
 # --------------------------------------------------
