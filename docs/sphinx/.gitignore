@@ -1,6 +1,6 @@
 # .gitignore
 # =========================================
-# Project: ccutils
+# Project: ccutils/docs/sphinx
 # =========================================
 
 # =========================================
@@ -10,18 +10,8 @@
 # =========================================
 # Project file ignores #
 # =========================================
-.venv/
-.mypy_cache/
-.pytest_cache/
-.ruff_cache/
-*.egg-info/
-__pycache__/
-dist/
-# =========================================
-# CI/CD Ignores #
-# =========================================
-# NOTE: This file is set in Makefile -> README_GEN_DIR
-docs/jekyll/tmp_readme/
+api/
+_build/html/
 # =========================================
 ## Default Ignores ##
 # =========================================

@@ -26,7 +26,8 @@ dependencies = [
 keywords = [
   "python3",
   "cookiecutter",
-  "templates"
+  "templates",
+  "utilities",
 ]
 classifiers = [
   "Programming Language :: Python :: 3",
@@ -34,6 +35,7 @@ classifiers = [
 ]
 
 [tool.setuptools.packages.find]
+where = ["src"]
 include = [
   "src",
   "tests",
