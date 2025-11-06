@@ -8,16 +8,28 @@
 # --------------------------------------------------
 SHELL := /bin/bash
 .SHELLFLAGS := -O globstar -c
+
+# If V is set to '1' or 'y' on the command line, AT will be empty (verbose).
+# Otherwise, AT will contain '@' (quiet by default).
+# The '?' is a conditional assignment operator: it only sets V if it hasn't been set externally.
+V ?= 0
+ifeq ($(V),0)
+    AT = @
+else
+    AT =
+endif
 # --------------------------------------------------
 # 📁 Build Directories
 # --------------------------------------------------
-SRC_DIR := src
-TEST_DIR := tests
-SPHINX_DIR = docs/sphinx
-JEKYLL_DIR = docs/jekyll
+SRC_DIR := ./src
+TEST_DIR := ./tests
+DOCS_DIR := ./docs
+SPHINX_DIR := $(DOCS_DIR)/sphinx
+JEKYLL_DIR := $(DOCS_DIR)/jekyll
 
-SPHINX_BUILD_DIR = $(SPHINX_DIR)/_build/html
-JEKYLL_OUTPUT_DIR = $(JEKYLL_DIR)/sphinx
+SPHINX_BUILD_DIR := $(SPHINX_DIR)/_build/html
+JEKYLL_OUTPUT_DIR := $(JEKYLL_DIR)/sphinx
+README_GEN_DIR := $(JEKYLL_DIR)/tmp_readme
 # --------------------------------------------------
 # 🐍 Python / Virtual Environment
 # --------------------------------------------------
@@ -33,7 +45,7 @@ DEV_DOCS := .[docs]
 # 🐍️ Python Commands (venv, activate, pip)
 # --------------------------------------------------
 CREATE_VENV := $(PYTHON) -m venv $(VENV_DIR)
-ACTIVATE = source $(VENV_DIR)/bin/activate
+ACTIVATE := source $(VENV_DIR)/bin/activate
 PIP := $(ACTIVATE) && $(PYTHON) -m pip
 # --------------------------------------------------
 # 🧠 Typing (mypy)
@@ -120,9 +132,9 @@ test:
 # Documentation (Sphinx + Jekyll)
 # --------------------------------------------------
 docs:
-	@echo "🔨 Building Sphinx documentation 📘 as Markdown..."
-	$(SPHINX) $(SPHINX_DIR) $(JEKYLL_OUTPUT_DIR)
-	@echo "✅ Sphinx Markdown build complete!"
+	# @echo "🔨 Building Sphinx documentation 📘 as Markdown..."
+	# $(SPHINX) $(SPHINX_DIR) $(JEKYLL_OUTPUT_DIR)
+	# @echo "✅ Sphinx Markdown build complete!"
 	@echo "🔨 Building Jekyll site..."
 	cd $(JEKYLL_DIR) && $(JEKYLL_BUILD)
 	@echo "✅ Full documentation build complete!"
@@ -130,6 +142,27 @@ docs:
 jekyll-serve: docs
 	@echo "🚀 Starting Jekyll development server..."
 	cd $(JEKYLL_DIR) && $(JEKYLL_SERVE)
+
+run-docs: jekyll-serve
+
+readme:
+	$(AT)echo "🔨 Building ./README.md 📘 with Jekyll..."
+	$(AT)mkdir -p $(README_GEN_DIR)
+	$(AT)cp $(JEKYLL_DIR)/_config.yml $(README_GEN_DIR)/_config.yml
+	$(AT)cp $(JEKYLL_DIR)/Gemfile $(README_GEN_DIR)/Gemfile
+	$(AT)printf "%s\n" "---" \
+		"layout: raw" \
+		"permalink: /README.md" \
+		"---" > $(README_GEN_DIR)/README.md
+	$(AT)printf '%s\n' '<!--' \
+		'  Auto-generated file. Do not edit directly.' \
+		'  Edit $(JEKYLL_DIR)/README.md instead.' \
+		'  Run ```make readme``` to regenrate this file' \
+		'-->' >> $(README_GEN_DIR)/README.md
+	$(AT)cat $(JEKYLL_DIR)/README.md >> $(README_GEN_DIR)/README.md
+	$(AT)cd $(README_GEN_DIR) && $(JEKYLL_BUILD) --quiet
+	$(AT)cp $(README_GEN_DIR)/_site/README.md ./README.md
+	$(AT)echo "✅ README.md auto generation complete!"
 
 # --------------------------------------------------
 # Run ccutils program
@@ -166,6 +199,11 @@ help:
 	@echo "  make typecheck              Run Mypy type checking"
 	@echo "  make test                   Run Pytest suite"
 	@echo "  make docs                   Build Sphinx + Jekyll documentation"
+	@echo "  make run-docs               Preview Jekyll documentation"
+	@echo "  make readme                 Uses Jekyll $(JEKYLL_DIR)/README.md for readme generation"
 	@echo "  make run                    Run ccutils.py"
 	@echo "  make clean                  Clean build artifacts"
 	@echo "  make all                    Run lint, typecheck, test, and docs"
+	@echo "Options:"
+	@echo "  V=1             Enable verbose output (show all commands being executed)"
+	@echo "  make -s         Run completely silently (suppress make's own output AND command echo)"
