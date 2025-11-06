@@ -64,7 +64,7 @@ PYTEST := $(ACTIVATE) && $(PYTHON) -m pytest
 # 📘 Documentation (Sphinx + Jekyll)
 # --------------------------------------------------
 SPHINX := $(ACTIVATE) && $(PYTHON) -m sphinx -b markdown
-JEKYLL_BUILD := bundle exec jekyll build
+JEKYLL_BUILD := bundle exec jekyll build --quiet
 JEKYLL_CLEAN := bundle exec jekyll clean
 JEKYLL_SERVE := bundle exec jekyll serve
 # --------------------------------------------------
@@ -74,43 +74,43 @@ CCUTILS := $(ACTIVATE) && $(PYTHON) -m ccutils.ccutils
 
 # -------------------------------------------------------------------
 .PHONY: all venv install ruff-lint-check ruff-lint-fix yaml-lint-check \
-	lint-check typecheck test docs jekyll-serve clean help
+	lint-check typecheck test build-docs run-docs readme clean help
 # -------------------------------------------------------------------
 # Default: run install, lint, typecheck, tests, and docs
 # -------------------------------------------------------------------
-all: install lint-check typecheck test docs
+all: install lint-check typecheck test build-docs readme
 
 # --------------------------------------------------
 # Virtual Environment Setup
 # --------------------------------------------------
 venv:
-	@echo "🔨️ Creating virtual environment..."
-	$(CREATE_VENV)
-	@echo "✅ Virtual environment created."
+	$(AT)echo "🔨️ Creating virtual environment..."
+	$(AT)$(CREATE_VENV)
+	$(AT)echo "✅ Virtual environment created."
 
 install: venv
-	@echo "📦 Installing project dependencies..."
-	$(PIP) install --upgrade pip
-	$(PIP) install -e $(DEPS)
-	$(PIP) install -e $(DEV_DEPS)
-	$(PIP) install -e $(DEV_DOCS)
-	@echo "✅ Dependencies installed."
+	$(AT)echo "📦 Installing project dependencies..."
+	$(AT)$(PIP) install --upgrade pip
+	$(AT)$(PIP) install -e $(DEPS)
+	$(AT)$(PIP) install -e $(DEV_DEPS)
+	$(AT)$(PIP) install -e $(DEV_DOCS)
+	$(AT)echo "✅ Dependencies installed."
 
 # --------------------------------------------------
 # Linting (ruff, yaml, jinja2)
 # --------------------------------------------------
 ruff-lint-check:
-	@echo "🔍 Running ruff linting..."
-	$(RUFF) check $(SRC_DIR) $(TEST_DIR)
+	$(AT)echo "🔍 Running ruff linting..."
+	$(AT)$(RUFF) check $(SRC_DIR) $(TEST_DIR)
 
 ruff-lint-fix:
-	@echo "🎨 Running ruff lint fixes..."
-	$(RUFF) check --show-files $(SRC_DIR) $(TEST_DIR)
-	$(RUFF) check --fix $(SRC_DIR) $(TEST_DIR)
+	$(AT)echo "🎨 Running ruff lint fixes..."
+	$(AT)$(RUFF) check --show-files $(SRC_DIR) $(TEST_DIR)
+	$(AT)$(RUFF) check --fix $(SRC_DIR) $(TEST_DIR)
 
 yaml-lint-check:
-	@echo "🔍 Running yamllint..."
-	$(YAMLLINT) .
+	$(AT)echo "🔍 Running yamllint..."
+	$(AT)$(YAMLLINT) .
 
 lint-check: ruff-lint-check yaml-lint-check
 
@@ -118,32 +118,35 @@ lint-check: ruff-lint-check yaml-lint-check
 # Typechecking (MyPy)
 # --------------------------------------------------
 typecheck:
-	@echo "🧠 Checking types (MyPy)..."
-	$(MYPY) $(SRC_DIR) $(TEST_DIR)
+	$(AT)echo "🧠 Checking types (MyPy)..."
+	$(AT)$(MYPY) $(SRC_DIR) $(TEST_DIR)
 
 # --------------------------------------------------
 # Testing (pytest)
 # --------------------------------------------------
 test:
-	@echo "🧪 Running tests with pytest..."
-	PYTHONPATH=$(PWD)/src $(PYTEST) -v --maxfail=1 --disable-warnings $(TEST_DIR)
+	$(AT)echo "🧪 Running tests with pytest..."
+	$(AT)PYTHONPATH=$(PWD)/src $(PYTEST) -v --maxfail=1 --disable-warnings $(TEST_DIR)
 
 # --------------------------------------------------
 # Documentation (Sphinx + Jekyll)
 # --------------------------------------------------
-docs:
-	# @echo "🔨 Building Sphinx documentation 📘 as Markdown..."
-	# $(SPHINX) $(SPHINX_DIR) $(JEKYLL_OUTPUT_DIR)
-	# @echo "✅ Sphinx Markdown build complete!"
-	@echo "🔨 Building Jekyll site..."
-	cd $(JEKYLL_DIR) && $(JEKYLL_BUILD)
-	@echo "✅ Full documentation build complete!"
+sphinx:
+	$(AT)echo "🔨 Building Sphinx documentation 📘 as Markdown..."
+	$(AT)(SPHINX) $(SPHINX_DIR) $(JEKYLL_OUTPUT_DIR)
+	$(AT)echo "✅ Sphinx Markdown build complete!"
 
-jekyll-serve: docs
-	@echo "🚀 Starting Jekyll development server..."
-	cd $(JEKYLL_DIR) && $(JEKYLL_SERVE)
+jekyll:
+	$(AT)echo "🔨 Building Jekyll site..."
+	$(AT)cd $(JEKYLL_DIR) && $(JEKYLL_BUILD)
+	$(AT)echo "✅ Full documentation build complete!"
 
-run-docs: jekyll-serve
+# TODO: Update project to work with sphinx
+build-docs: jekyll
+
+run-docs: build-docs
+	$(AT)echo "🚀 Starting Jekyll development server..."
+	$(AT)cd $(JEKYLL_DIR) && $(JEKYLL_SERVE)
 
 readme:
 	$(AT)echo "🔨 Building ./README.md 📘 with Jekyll..."
@@ -160,50 +163,52 @@ readme:
 		'  Run ```make readme``` to regenrate this file' \
 		'-->' >> $(README_GEN_DIR)/README.md
 	$(AT)cat $(JEKYLL_DIR)/README.md >> $(README_GEN_DIR)/README.md
-	$(AT)cd $(README_GEN_DIR) && $(JEKYLL_BUILD) --quiet
+	$(AT)cd $(README_GEN_DIR) && $(JEKYLL_BUILD)
 	$(AT)cp $(README_GEN_DIR)/_site/README.md ./README.md
+	$(AT)echo "🧹 Clening README.md build artifacts..."
+	$(AT)rm -r $(README_GEN_DIR)
 	$(AT)echo "✅ README.md auto generation complete!"
 
 # --------------------------------------------------
 # Run ccutils program
 # --------------------------------------------------
 run:
-	@echo "🏃‍♂️ running ccurtils..."
-	$(CCUTILS)
+	$(AT)echo "🏃‍♂️ running ccurtils..."
+	$(AT)$(CCUTILS)
 
 # --------------------------------------------------
 # Clean artifacts
 # --------------------------------------------------
 clean:
-	@echo "🧹 Clening build artifacts..."
-	rm -rf $(SPHINX_DIR)/_build $(JEKYLL_OUTPUT_DIR)
-	cd $(JEKYLL_DIR) && $(JEKYLL_CLEAN)
-	rm -rf build dist *.egg-info
-	find $(SRC_DIR) $(TEST_DIR) -name "__pycache__" -type d -exec rm -rf {} +
-	-[ -d "$(VENV_DIR)" ] && rm -r $(VENV_DIR)
-	@echo "🧹 Finished cleaning build artifacts..."
+	$(AT)echo "🧹 Clening build artifacts..."
+	$(AT)rm -rf $(SPHINX_DIR)/_build $(JEKYLL_OUTPUT_DIR)
+	$(AT)cd $(JEKYLL_DIR) && $(JEKYLL_CLEAN)
+	$(AT)rm -rf build dist *.egg-info
+	$(AT)find $(SRC_DIR) $(TEST_DIR) -name "__pycache__" -type d -exec rm -rf {} +
+	$(AT)-[ -d "$(VENV_DIR)" ] && rm -r $(VENV_DIR)
+	$(AT)echo "🧹 Finished cleaning build artifacts..."
 
 # --------------------------------------------------
 # Help
 # --------------------------------------------------
 help:
-	@echo "📦 ccutils Makefile"
-	@echo ""
-	@echo "Usage:"
-	@echo "  make venv                   Create virtual environment"
-	@echo "  make install                Install dependencies"
-	@echo "  make ruff-lint-check        Run Ruff linter"
-	@echo "  make ruff-lint-fix          Auto-fix lint issues with python ruff"
-	@echo "  make yaml-lint-check        Run YAML linter"
-	@echo "  make lint-check             Run all project linters (ruff, & yaml)"
-	@echo "  make typecheck              Run Mypy type checking"
-	@echo "  make test                   Run Pytest suite"
-	@echo "  make docs                   Build Sphinx + Jekyll documentation"
-	@echo "  make run-docs               Preview Jekyll documentation"
-	@echo "  make readme                 Uses Jekyll $(JEKYLL_DIR)/README.md for readme generation"
-	@echo "  make run                    Run ccutils.py"
-	@echo "  make clean                  Clean build artifacts"
-	@echo "  make all                    Run lint, typecheck, test, and docs"
-	@echo "Options:"
-	@echo "  V=1             Enable verbose output (show all commands being executed)"
-	@echo "  make -s         Run completely silently (suppress make's own output AND command echo)"
+	$(AT)echo "📦 ccutils Makefile"
+	$(AT)echo ""
+	$(AT)echo "Usage:"
+	$(AT)echo "  make venv                   Create virtual environment"
+	$(AT)echo "  make install                Install dependencies"
+	$(AT)echo "  make ruff-lint-check        Run Ruff linter"
+	$(AT)echo "  make ruff-lint-fix          Auto-fix lint issues with python ruff"
+	$(AT)echo "  make yaml-lint-check        Run YAML linter"
+	$(AT)echo "  make lint-check             Run all project linters (ruff, & yaml)"
+	$(AT)echo "  make typecheck              Run Mypy type checking"
+	$(AT)echo "  make test                   Run Pytest suite"
+	$(AT)echo "  make build-docs             Build Sphinx + Jekyll documentation"
+	$(AT)echo "  make run-docs               Preview Jekyll documentation"
+	$(AT)echo "  make readme                 Uses Jekyll $(JEKYLL_DIR)/README.md for readme generation"
+	$(AT)echo "  make run                    Run ccutils.py"
+	$(AT)echo "  make clean                  Clean build artifacts"
+	$(AT)echo "  make all                    Run lint, typecheck, test, and docs"
+	$(AT)echo "Options:"
+	$(AT)echo "  V=1             Enable verbose output (show all commands being executed)"
+	$(AT)echo "  make -s         Run completely silently (suppress make's own output AND command echo)"

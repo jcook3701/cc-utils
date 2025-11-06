@@ -46,6 +46,8 @@ GEM
       logger
     faraday-net_http (3.4.1)
       net-http (>= 0.5.0)
+    faraday-retry (2.3.2)
+      faraday (~> 2.0)
     ffi (1.17.2)
     forwardable-extended (2.6.0)
     gemoji (4.1.0)
@@ -276,6 +278,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  faraday-retry
   github-pages
 
 BUNDLED WITH

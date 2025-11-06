@@ -20,6 +20,7 @@ dist/
 # =========================================
 # CI/CD Ignores #
 # =========================================
+# NOTE: This file is set in Makefile -> README_GEN_DIR
 docs/jekyll/tmp_readme/
 # =========================================
 ## Default Ignores ##
