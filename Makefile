@@ -136,7 +136,7 @@ test:
 # --------------------------------------------------
 sphinx:
 	$(AT)echo "🧹 Clening Sphinx build artifacts..."
-	$(AT)rm -r $(JEKYLL_OUTPUT_DIR)
+	$(AT)rm -rf $(JEKYLL_OUTPUT_DIR)
 	$(AT)echo "🔨 Building Sphinx documentation 📘 as Markdown..."
 	$(AT)$(SPHINX) $(SPHINX_DIR) $(JEKYLL_OUTPUT_DIR)
 	$(AT)echo "✅ Sphinx Markdown build complete!"
@@ -186,7 +186,7 @@ run:
 # --------------------------------------------------
 clean:
 	$(AT)echo "🧹 Clening build artifacts..."
-	$(AT)rm -rf $(SPHINX_DIR)/_build $(JEKYLL_OUTPUT_DIR)
+	$(AT)rm -rf $(SPHINX_DIR)/_build
 	$(AT)cd $(JEKYLL_DIR) && $(JEKYLL_CLEAN)
 	$(AT)rm -rf build dist *.egg-info
 	$(AT)find $(SRC_DIR) $(TEST_DIR) -name "__pycache__" -type d -exec rm -rf {} +
