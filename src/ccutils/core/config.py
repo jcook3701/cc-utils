@@ -18,19 +18,25 @@ CONFIG_PATH = Path.home() / ".ccutils" / "config.json"
 
 DEFAULT_CONFIG = CLIConfig(
     github=GitHubAccount(user="", namespace="", email="", auth=GitHubAuth()),
-    ga_tracking="",
+    ga_tracking = "",
     accounts=Accounts(),
 )
 
 
-def ensure_config() -> dict[str, Any]:
-    """Ensure the user config exists and return it."""
+def ensure_config() -> CLIConfig:
+    """Ensure the user config exists and return its contents as a dict."""
     CONFIG_PATH.parent.mkdir(parents=True, exist_ok=True)
 
     if not CONFIG_PATH.exists():
-        with open(CONFIG_PATH, "w") as f:
+        with open(CONFIG_PATH, "w", encoding="utf-8") as f:
             json.dump(DEFAULT_CONFIG, f, indent=4)
 
-    with open(CONFIG_PATH) as f:
-        data = json.load(f)
-        return cast(dict[str, Any], data)
+    with open(CONFIG_PATH, encoding="utf-8") as f:
+        data = cast(dict[str, Any], json.load(f))
+
+    # Convert paths back to Path objects if needed
+    data["cache_dir"] = Path(data["cache_dir"])
+    data["config_file"] = Path(data["config_file"])
+    data["log_file"] = Path(data["log_file"])
+
+    return CLIConfig(**data)

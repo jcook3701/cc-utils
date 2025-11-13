@@ -9,6 +9,7 @@ Author: Jared Cook
 
 from .config import ensure_config
 from .github import fetch_namespace
+from .logger import setup_logging
 from .models import (
     Accounts,
     CLIConfig,
@@ -36,4 +37,5 @@ __all__ += [
     # core:
     "ensure_config",
     "fetch_namespace",
+    "setup_logging",
 ]

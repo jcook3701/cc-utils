@@ -16,20 +16,31 @@ from .models import ConfigData, GitHubRepo, Namespace, TemplateRepo
 
 
 def fetch_config(repo_url: str) -> ConfigData | None:
-    """Fetch and parse a cookiecutter config.json from a GitHub repo."""
-    raw_url = f"{repo_url}/raw/master/config.json"
-    resp = requests.get(raw_url)
-    if resp.status_code != 200:
-        return None
+    """
+    Fetch cookiecutter.json from a GitHub repo,
+    trying both main and master branches.
+    """
+    base_raw_url = repo_url.replace("github.com", "raw.githubusercontent.com")
+    branches = ["main", "master"]
 
-    data = json.loads(resp.text)
-    return ConfigData(
-        project_name=data.get("project_name", ""),
-        author=data.get("author", ""),
-        version=data.get("version", ""),
-        description=data.get("description", ""),
-        variables=data,
-    )
+    for branch in branches:
+        raw_url = f"{repo_url}/raw/{branch}/config.json"
+        resp = requests.get(raw_url)
+
+        if resp.status_code == 200:
+            try:
+                data = json.loads(resp.text)
+                return ConfigData(
+                    project_name=data.get("project_name", ""),
+                    author=data.get("author", ""),
+                    version=data.get("version", ""),
+                    description=data.get("description", ""),
+                    variables=data,
+                )
+            except json.JSONDecodeError:
+                return None
+
+    return None
 
 
 def fetch_namespace(namespace: str) -> Namespace:

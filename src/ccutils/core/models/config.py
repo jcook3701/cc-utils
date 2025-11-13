@@ -24,20 +24,32 @@ class CLIConfig(BaseModel):
 
 
     Attributes:
-         github: GitHub users/org personal info.
-         ga_tracking: Google Analytics Tracking number.
-         accounts: User accounts.
-
-         default_template_branch:
-         cache_dir: ccutils cache directory.
-         verbose: ccutils verbose mode.
+         github: (GitHubAccount) GitHub users/org personal info.
+         ga_tracking: (str) Google Analytics Tracking number.
+         accounts: (Accounts) User accounts.
+         default_template_branch: (str)
+         cache_dir: (Path) ccutils cache directory.
+         config_file: (Path) ccutils configuration file.
+         log_file: (Path) ccutils log file.
+         verbose: (bool) ccutils verbose mode.
     """
 
-    github: GitHubAccount
-    ga_tracking: str
-    accounts: Accounts | None
+    github: GitHubAccount | None = None
+    ga_tracking: str | None = None
+    accounts: Accounts | None = None
 
-    token: str | None = None
     default_template_branch: str = "main"
+
     cache_dir: Path = Path.home() / ".cache" / "ccutils"
+    config_file: Path = Path.home() / ".ccutils" / "config.yml"
+    log_file: Path = Path.home() / ".ccutils" / "log" / "ccutlis.log"
+
     verbose: bool = False
+
+    @property
+    def config_dir(self) -> Path:
+        return self.config_file.parent
+
+    @property
+    def log_dir(self) -> Path:
+        return self.log_file.parent
