@@ -13,6 +13,7 @@ from typing import Any, TypeVar, cast
 
 T = TypeVar("T", bound="BaseModel")
 
+
 @dataclass(frozen=True)
 class BaseModel:
     """Base class providing common (de)serialization helpers."""

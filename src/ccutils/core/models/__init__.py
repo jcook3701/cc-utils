@@ -16,10 +16,10 @@ from .template import ConfigData, Namespace, TemplateRepo
 __all__ = [
     "Accounts",
     "CLIConfig",
+    "ConfigData",
     "GitHubAccount",
     "GitHubAuth",
     "GitHubRepo",
-    "ConfigData",
-    "TemplateRepo",
     "Namespace",
+    "TemplateRepo",
 ]

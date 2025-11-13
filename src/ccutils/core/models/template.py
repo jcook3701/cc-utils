@@ -29,6 +29,7 @@ class ConfigData(BaseModel):
          description: Cookiecutter project discription.
          variables: Cookiecutter project variables.
     """
+
     project_name: str
     author: str
     version: str
@@ -45,6 +46,7 @@ class TemplateRepo(BaseModel):
          repo: (GitHubRepo) GitHub repository information.
          config: (ConfigData) Metadata from a cookiecutter template.
     """
+
     repo: GitHubRepo
     config: ConfigData | None = None
 
@@ -57,6 +59,6 @@ class Namespace(BaseModel):
     Attributes:
         templates: (list[TemplateRepo]) List of GitHub namespace/organization template repositories.
     """
+
     templates: list[TemplateRepo] = field(default_factory=list)
     created_at: datetime = field(default_factory=datetime.utcnow)
-

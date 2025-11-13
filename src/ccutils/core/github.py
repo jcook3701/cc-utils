@@ -12,7 +12,7 @@ import json
 
 import requests
 
-from ccutils.core import ConfigData, GitHubRepo, Namespace, TemplateRepo
+from .models import ConfigData, GitHubRepo, Namespace, TemplateRepo
 
 
 def fetch_config(repo_url: str) -> ConfigData | None:
@@ -30,6 +30,7 @@ def fetch_config(repo_url: str) -> ConfigData | None:
         description=data.get("description", ""),
         variables=data,
     )
+
 
 def fetch_namespace(namespace: str) -> Namespace:
     """Fetch all repositories in a namespace and their configs."""
@@ -49,15 +50,15 @@ def fetch_namespace(namespace: str) -> Namespace:
                 TemplateRepo(
                     repo=GitHubRepo(
                         owner=owner,
-                        namespace = owner,
+                        namespace=owner,
                         name=repo.get("name", ""),
-                        full_name = repo.get("full_name", ""),
-                        description = repo.get("description", ""),
-                        url = repo.get("url", ""),
-                        html_url = repo_url,
-                        ssh_url = repo.get("ssh_url", ""),
-                        clone_url = repo.get("clone_url", ""),
-                        is_template = repo.get("is_template", ""),
+                        full_name=repo.get("full_name", ""),
+                        description=repo.get("description", ""),
+                        url=repo.get("url", ""),
+                        html_url=repo_url,
+                        ssh_url=repo.get("ssh_url", ""),
+                        clone_url=repo.get("clone_url", ""),
+                        is_template=repo.get("is_template", ""),
                     ),
                     config=config,
                 )

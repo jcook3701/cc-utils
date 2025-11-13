@@ -7,12 +7,33 @@ See the LICENSE file for more details.
 Author: Jared Cook
 """
 
-from ccutils.core import models
-from ccutils.core.models import *
-
 from .config import ensure_config
 from .github import fetch_namespace
+from .models import (
+    Accounts,
+    CLIConfig,
+    ConfigData,
+    GitHubAccount,
+    GitHubAuth,
+    GitHubRepo,
+    Namespace,
+    TemplateRepo,
+)
 
-# Merge __all__ dynamically
-__all__ = list(getattr(models, "__all__", [name for name in dir(models) if not name.startswith("_")]))
-__all__ += ["ensure_config", "fetch_namespace"]
+__all__ = [
+    # models:
+    "Accounts",
+    "CLIConfig",
+    "ConfigData",
+    "GitHubAccount",
+    "GitHubAuth",
+    "GitHubRepo",
+    "Namespace",
+    "TemplateRepo",
+]
+
+__all__ += [
+    # core:
+    "ensure_config",
+    "fetch_namespace",
+]

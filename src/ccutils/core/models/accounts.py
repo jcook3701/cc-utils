@@ -14,6 +14,8 @@ from dataclasses import dataclass
 from .base import BaseModel
 
 dataclass(frozen=True)
+
+
 class Accounts(BaseModel):
     """
     Represents user accounts.
@@ -24,8 +26,8 @@ class Accounts(BaseModel):
          linkedin_username:
          buymeacoffee_username:
     """
+
     github_username: str = ""
     twitter_username: str = ""
     linkedin_usercode: str = ""
     buymeacoffee_username: str = ""
-

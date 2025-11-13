@@ -75,7 +75,7 @@ JEKYLL_SERVE := bundle exec jekyll serve
 CCUTILS := $(ACTIVATE) && $(PYTHON) -m ccutils.ccutils
 
 # -------------------------------------------------------------------
-.PHONY: all venv install ruff-lint-check ruff-lint-fix yaml-lint-check \
+.PHONY: all venv install ruff-formatter ruff-lint-check ruff-lint-fix yaml-lint-check \
 	lint-check typecheck test build-docs run-docs readme clean help
 # -------------------------------------------------------------------
 # Default: run install, lint, typecheck, tests, and docs
@@ -98,6 +98,12 @@ install: venv
 	$(AT)$(PIP) install -e $(DEV_DOCS)
 	$(AT)echo "✅ Dependencies installed."
 
+# --------------------------------------------------
+# Formating (ruff)
+# --------------------------------------------------
+ruff-formatter:
+	$(AT)echo "🎨 Running ruff formatter..."
+	$(AT)$(RUFF) format $(SRC_DIR) $(TEST_DIR)
 # --------------------------------------------------
 # Linting (ruff, yaml, jinja2)
 # --------------------------------------------------
@@ -202,6 +208,7 @@ help:
 	$(AT)echo "Usage:"
 	$(AT)echo "  make venv                   Create virtual environment"
 	$(AT)echo "  make install                Install dependencies"
+	$(AT)echo "  make ruff-formatter         Run Ruff Formatter"
 	$(AT)echo "  make ruff-lint-check        Run Ruff linter"
 	$(AT)echo "  make ruff-lint-fix          Auto-fix lint issues with python ruff"
 	$(AT)echo "  make yaml-lint-check        Run YAML linter"

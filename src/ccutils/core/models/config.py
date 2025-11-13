@@ -32,6 +32,7 @@ class CLIConfig(BaseModel):
          cache_dir: ccutils cache directory.
          verbose: ccutils verbose mode.
     """
+
     github: GitHubAccount
     ga_tracking: str
     accounts: Accounts | None

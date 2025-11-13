@@ -19,11 +19,11 @@ def test_extract_cookiecutter_config(tmp_path: Path) -> None:
     output_file: Path = tmp_path / "clean.json"
 
     # Patch Repo.clone_from to do nothing
-    with patch("ccutils.extract.Repo.clone_from"): # as mock_clone
+    with patch("ccutils.extract.Repo.clone_from"):  # as mock_clone
         # Patch Path.exists to simulate cookiecutter.json
         with patch("pathlib.Path.exists", return_value=True):
             m_open = mock_open(read_data='{"name": "{{ cookiecutter.project_name }}"}')
-            with patch("builtins.open", m_open): # as mock_file
+            with patch("builtins.open", m_open):  # as mock_file
                 path: Path = extract_cookiecutter_config_from_repo(repo_url, output_file=str(output_file))
                 assert path.exists() is False or True
                 assert isinstance(path, Path)

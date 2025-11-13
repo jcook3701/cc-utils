@@ -26,6 +26,7 @@ class GitHubAuth(BaseModel):
          token (str | None): GitHub personal access token, if using token authentication.
          ssh_key_path (Path | None): Path to SSH private key, if using SSH authentication.
     """
+
     auth_type: Literal["token", "ssh"] = "ssh"
     token: str | None = None
     ssh_key_path: Path | None = Path("~/.ssh/id_rsa")
@@ -42,6 +43,7 @@ class GitHubAccount(BaseModel):
          email: (str) GitHub account email.
          auth: (GitHubAuth) Authentication configuration for GitHub access.
     """
+
     user: str
     namespace: str
     email: str
@@ -65,6 +67,7 @@ class GitHubRepo(BaseModel):
          clone_url: (str).
          is_template: (bool).
     """
+
     owner: str
     namespace: str
     name: str

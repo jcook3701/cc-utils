@@ -15,25 +15,23 @@ This module provides functions to:
 
 import json
 
+import typer
 from cookiecutter.main import cookiecutter
 
 
-def run_template(
-        template_repo: str,
-        config_path: str,
-        checkout: str | None = None,
-        output_dir: str = "."
+def run(
+    template: str = typer.Argument(..., help="Cookiecutter template repo URL"),
+    config: str = typer.Argument(..., help="Path to JSON config file"),
+    branch: str = typer.Option(None, help="Branch to use in template repo"),
+    output_dir: str = typer.Option(".", help="Directory to render template into"),
 ) -> None:
-    """Run a cookiecutter template with a pre-supplied JSON config."""
-    with open(config_path) as f:
-        extra_context: dict[str, object] = json.load(f)
+    """
+    Run a cookiecutter template using a pre-supplied JSON config.
+    """
+    with open(config) as f:
+        extra_context = json.load(f)
 
-    cookiecutter(
-        template_repo,
-        checkout=checkout,
-        no_input=True,
-        extra_context=extra_context,
-        output_dir=output_dir,
-    )
+    cookiecutter(template, checkout=branch, no_input=True, extra_context=extra_context, output_dir=output_dir)
 
-    print(f"Template {template_repo} rendered successfully in {output_dir}")
+    typer.echo(f"Template {template} rendered successfully in {output_dir}")
+

@@ -9,13 +9,8 @@ Description: Cookiecutter commands for automating project templates.
 """
 
 from .docs import add_docs
-from .extract import extract_cookiecutter_config_from_repo
-from .list import list_templates
-from .run import run_template
+from .extract import extract
+from .list import list_namespace
+from .run import run
 
-__all__ = [
-    "add_docs",
-    "extract_cookiecutter_config_from_repo",
-    "list_templates",
-    "run_template"
-]
+__all__ = ["add_docs", "extract", "list_namespace", "run"]

@@ -99,7 +99,12 @@ select = [
   "UP", # pyupgrade
   "B",  # flake8-bugbear
   "A",  # flake8-builtins
+  "C4", # comprehensions
+  "TID", # tidy imports
+  "T20", # print statements
+  "FA", # future annotations
   "PL", # pylint-style checks
+  "RUF", # ruff-specific
 ]
 
 # Ignore specific rules
@@ -123,6 +128,7 @@ quote-style = "double"
 indent-style = "space"
 line-ending = "lf"
 skip-magic-trailing-comma = false
+docstring-code-format = true
 # ====================================
 # Mypy (type checker) Configuration
 # ====================================
