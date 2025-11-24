@@ -1,3 +1,15 @@
+"""Sphinx Configuration
+
+© All rights reserved. Jared Cook
+
+See the LICENSE.TXT file for more details.
+
+Author: Jared Cook
+Description: Configuration file for the Sphinx documentation builder.
+  For the full list of built-in configuration values, see the documentation:
+  https://www.sphinx-doc.org/en/master/usage/configuration.html
+"""
+
 #Configuration file for the Sphinx documentation builder.
 #
 # For the full list of built-in configuration values, see the documentation:
@@ -69,13 +81,12 @@ autodoc_default_options = {
 
 smartquotes = False
 
-# -- Skip module docstrings (remove headers like © All rights reserved) -----
-
 
 def clean_module_docstring(app, what, name, obj, options, lines):
     """
-    Remove the 'All rights reserved' and author/license lines from module docstrings.
-    Only modifies module-level docstrings.
+    Skip module docstrings. Remove the '© All rights reserved'
+    and author/license lines from module docstrings. Only modifies
+    module-level docstrings.
     """
     if what == "module":
         # Remove lines that match the boilerplate
@@ -96,8 +107,8 @@ def add_yaml_front_matter(app: Sphinx, docname, source):
         return
 
     relative_to_src = Path(docname)
-
-    depth = len(relative_to_src.parents) - (1 if docname != 'index' else 0) # Adjust for 'index' having 0 parents but being at depth 0
+    # Adjust for 'index' having 0 parents but being at depth 0
+    depth = len(relative_to_src.parents) - (1 if docname != 'index' else 0) 
 
     parent_dir = relative_to_src.parent.name 
     if parent_dir == "":

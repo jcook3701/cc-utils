@@ -5,19 +5,19 @@
 See the LICENSE file for more details.
 
 Author: Jared Cook
-Description: CLI Configuration models:
-(CLIConfig)
+Description: CLI Configuration model.
+
+Configuration file location: ~/.config/ccutils/config.yml
 """
 
-from dataclasses import dataclass
 from pathlib import Path
 
+from pydantic import BaseModel
+
 from .accounts import Accounts
-from .base import BaseModel
-from .github import GitHubAccount
+from .github import GitHubAccount, GitHubAuth
 
 
-@dataclass(frozen=True)
 class CLIConfig(BaseModel):
     """
     Represents user CLI configuration for ccutils.
@@ -29,7 +29,6 @@ class CLIConfig(BaseModel):
          accounts: (Accounts) User accounts.
          default_template_branch: (str)
          cache_dir: (Path) ccutils cache directory.
-         config_file: (Path) ccutils configuration file.
          log_file: (Path) ccutils log file.
          verbose: (bool) ccutils verbose mode.
     """
@@ -41,15 +40,17 @@ class CLIConfig(BaseModel):
     default_template_branch: str = "main"
 
     cache_dir: Path = Path.home() / ".cache" / "ccutils"
-    config_file: Path = Path.home() / ".ccutils" / "config.yml"
-    log_file: Path = Path.home() / ".ccutils" / "log" / "ccutlis.log"
+    log_file: Path = Path.home() / ".ccutils" / "ccutlis.log"
 
     verbose: bool = False
 
     @property
-    def config_dir(self) -> Path:
-        return self.config_file.parent
-
-    @property
     def log_dir(self) -> Path:
         return self.log_file.parent
+
+
+DEFAULT_CONFIG = CLIConfig(
+    github=GitHubAccount(user="", namespace="", email="", auth=GitHubAuth()),
+    ga_tracking="",
+    accounts=Accounts(),
+)

@@ -12,7 +12,7 @@ import json
 
 import requests
 
-from .models import ConfigData, GitHubRepo, Namespace, TemplateRepo
+from ccutils.models import ConfigData, GitHubRepo, Namespace, TemplateRepo
 
 
 def fetch_config(repo_url: str) -> ConfigData | None:

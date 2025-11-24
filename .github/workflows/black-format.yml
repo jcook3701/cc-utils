@@ -1,6 +1,6 @@
-# typecheck
+# black format
 ---
-name: Python Typecheck
+name: Black Format Check
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
     branches: [master, develop]
 
 jobs:
-  typecheck:
+  black-format-check:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,10 +21,10 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install mypy
+      - name: Install Black
         run: |
           make install
 
-      - name: Run typecheck
+      - name: Format check
         run: |
-          make typecheck
+          make black-formatter-check

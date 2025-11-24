@@ -9,15 +9,14 @@ Description: Template Models:
 (TemplateRepo, Namespace, ConfigData)
 """
 
-from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any
 
-from .base import BaseModel
+from pydantic import BaseModel, Field
+
 from .github import GitHubRepo
 
 
-@dataclass(frozen=True)
 class ConfigData(BaseModel):
     """
     Metadata from a cookiecutter template project's config.json
@@ -34,10 +33,9 @@ class ConfigData(BaseModel):
     author: str
     version: str
     description: str
-    variables: dict[str, Any] = field(default_factory=dict)
+    variables: dict[str, Any] = Field(default_factory=dict)
 
 
-@dataclass(frozen=True)
 class TemplateRepo(BaseModel):
     """
     A cookiecutter template repo
@@ -51,7 +49,6 @@ class TemplateRepo(BaseModel):
     config: ConfigData | None = None
 
 
-@dataclass(frozen=True)
 class Namespace(BaseModel):
     """
     A GitHub user/org containing templates
@@ -60,5 +57,5 @@ class Namespace(BaseModel):
         templates: (list[TemplateRepo]) List of GitHub namespace/organization template repositories.
     """
 
-    templates: list[TemplateRepo] = field(default_factory=list)
-    created_at: datetime = field(default_factory=datetime.utcnow)
+    templates: list[TemplateRepo] = Field(default_factory=list)
+    created_at: datetime = Field(default_factory=datetime.utcnow)

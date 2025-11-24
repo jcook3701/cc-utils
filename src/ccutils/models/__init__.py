@@ -9,11 +9,12 @@ Description: Init python models (types)
 """
 
 from .accounts import Accounts
-from .config import CLIConfig
+from .config import DEFAULT_CONFIG, CLIConfig
 from .github import GitHubAccount, GitHubAuth, GitHubRepo
 from .template import ConfigData, Namespace, TemplateRepo
 
 __all__ = [
+    "DEFAULT_CONFIG",
     "Accounts",
     "CLIConfig",
     "ConfigData",

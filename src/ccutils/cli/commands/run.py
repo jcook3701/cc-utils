@@ -20,6 +20,7 @@ from cookiecutter.main import cookiecutter
 
 
 def run(
+    ctx: typer.Context,
     template: str = typer.Argument(..., help="Cookiecutter template repo URL"),
     config: str = typer.Argument(..., help="Path to JSON config file"),
     branch: str = typer.Option(None, help="Branch to use in template repo"),
@@ -28,10 +29,18 @@ def run(
     """
     Run a cookiecutter template using a pre-supplied JSON config.
     """
+    logger = ctx.obj["logger"]
+    cfg = ctx.obj["cfg"]
+
     with open(config) as f:
         extra_context = json.load(f)
 
-    cookiecutter(template, checkout=branch, no_input=True, extra_context=extra_context, output_dir=output_dir)
+    cookiecutter(
+        template,
+        checkout=branch,
+        no_input=True,
+        extra_context=extra_context,
+        output_dir=output_dir,
+    )
 
     typer.echo(f"Template {template} rendered successfully in {output_dir}")
-

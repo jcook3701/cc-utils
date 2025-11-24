@@ -9,14 +9,12 @@ Description: Github Models:
 (GitHubaccount, RepoInfo)
 """
 
-from dataclasses import dataclass
 from pathlib import Path
 from typing import Literal
 
-from .base import BaseModel
+from pydantic import BaseModel
 
 
-@dataclass(frozen=True)
 class GitHubAuth(BaseModel):
     """
     GitHub authentication types.
@@ -32,7 +30,6 @@ class GitHubAuth(BaseModel):
     ssh_key_path: Path | None = Path("~/.ssh/id_rsa")
 
 
-@dataclass(frozen=True)
 class GitHubAccount(BaseModel):
     """
     GitHub users/org personal info
@@ -44,13 +41,12 @@ class GitHubAccount(BaseModel):
          auth: (GitHubAuth) Authentication configuration for GitHub access.
     """
 
-    user: str
-    namespace: str
-    email: str
-    auth: GitHubAuth
+    user: str = ""
+    namespace: str = ""
+    email: str = ""
+    auth: GitHubAuth = GitHubAuth()
 
 
-@dataclass(frozen=True)
 class GitHubRepo(BaseModel):
     """
     Represents a GitHub repository within a namespace.
@@ -68,13 +64,13 @@ class GitHubRepo(BaseModel):
          is_template: (bool).
     """
 
-    owner: str
-    namespace: str
-    name: str
-    full_name: str
-    description: str
-    url: str
-    html_url: str
-    ssh_url: str
-    clone_url: str
-    is_template: bool
+    owner: str = ""
+    namespace: str = ""
+    name: str = ""
+    full_name: str = ""
+    description: str = ""
+    url: str = ""
+    html_url: str = ""
+    ssh_url: str = ""
+    clone_url: str = ""
+    is_template: bool = False

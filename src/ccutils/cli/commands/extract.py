@@ -24,13 +24,19 @@ from git import Repo  # Requires GitPython
 
 
 def extract(
-    repo: str = typer.Argument(..., help="GitHub repo URL of the cookiecutter template"),
+    ctx: typer.Context,
+    repo: str = typer.Argument(
+        ..., help="GitHub repo URL of the cookiecutter template"
+    ),
     branch: str = typer.Option("main", help="Branch to use"),
     output: str = typer.Option("clean_cookiecutter.json", help="Output JSON file path"),
 ) -> None:
     """
     Clone a repo, extract cookiecutter.json, remove Jinja placeholders, save locally.
     """
+    logger = ctx.obj["logger"]
+    cfg = ctx.obj["cfg"]
+
     with tempfile.TemporaryDirectory() as tmpdir:
         typer.echo(f"Cloning {repo} into {tmpdir} ...")
         Repo.clone_from(repo, tmpdir, branch=branch, depth=1)
@@ -41,10 +47,12 @@ def extract(
             raise typer.Exit(code=1)
 
         with open(config_path) as f:
-            data: dict[str, object]  = json.load(f)
+            data: dict[str, object] = json.load(f)
 
         cleaned_data: dict[str, object] = {
-            k: v for k, v in data.items() if not (isinstance(v, str) and re.search(r"{{\s*cookiecutter", v))
+            k: v
+            for k, v in data.items()
+            if not (isinstance(v, str) and re.search(r"{{\s*cookiecutter", v))
         }
 
         output_path = Path(output)

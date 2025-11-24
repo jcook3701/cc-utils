@@ -5,38 +5,92 @@
 See the LICENSE file for more details.
 
 Author: Jared Cook
+Description: ccutils configuration initilization
 """
 
 import json
+from functools import cache
 from pathlib import Path
-from typing import Any, cast
+from typing import Any
 
-from .models import Accounts, CLIConfig, GitHubAccount, GitHubAuth
+import yaml
+from pydantic import ValidationError
 
-CONFIG_PATH = Path.home() / ".ccutils" / "config.json"
+from ccutils.core.logger import setup_logging
+from ccutils.models import DEFAULT_CONFIG, CLIConfig
+
+CONFIG_EXT = ".yml"
+CONFIG_PATH = Path.home() / ".config" / "ccutils" / f"config{CONFIG_EXT}"
+
+logger = setup_logging(DEFAULT_CONFIG)
 
 
-DEFAULT_CONFIG = CLIConfig(
-    github=GitHubAccount(user="", namespace="", email="", auth=GitHubAuth()),
-    ga_tracking = "",
-    accounts=Accounts(),
-)
+def _read_config(path: Path) -> dict[str, Any]:
+    """Read JSON or YAML config and return as a dict."""
+    logger.debug(f"Attempting to read config from {path}")
+    if not path.exists():
+        logger.info(f"Config file {path} does not exist.")
+        raise FileNotFoundError(path)
+
+    try:
+        if path.suffix in {".yml", ".yaml"}:
+            with open(path, encoding="utf-8") as f:
+                data: dict[str, Any] = yaml.safe_load(f)
+        else:
+            with open(path, encoding="utf-8") as f:
+                data = json.load(f)
+        # Runtime type check
+        if not isinstance(data, dict):
+            raise TypeError(f"Expected dict, got {type(data).__name__}")
+        logger.debug("Config read successfully")
+        return data
+    except Exception as e:
+        logger.warning(f"Failed to read config: {e}")
+        raise
 
 
+def _write_config(path: Path, cfg: CLIConfig) -> None:
+    """Write config to file, respecting JSON/YAML based on extension."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    logger.info(f"Writing default config to {path}")
+
+    if path.suffix in {".yml", ".yaml"}:
+        with open(path, "w", encoding="utf-8") as f:
+            yaml.safe_dump(
+                cfg.model_dump(mode="json", by_alias=True),
+                f,
+                sort_keys=False,
+            )
+    else:
+        json_str = cfg.model_dump_json(
+            indent=4, fallback=lambda x: str(x) if isinstance(x, Path) else x
+        )
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(json_str)
+
+    logger.debug("Config written successfully")
+
+
+def _load_or_create_config(path: Path) -> CLIConfig:
+    """Try to load the config; if missing or invalid, write defaults."""
+    try:
+        data = _read_config(path)
+        cfg = CLIConfig.model_validate(data)
+        logger.info(f"Config loaded from {path}")
+    except (
+        FileNotFoundError,
+        json.JSONDecodeError,
+        yaml.YAMLError,
+        ValidationError,
+    ) as e:
+        logger.warning(f"Config invalid or missing ({e}), creating default.")
+        _write_config(path, DEFAULT_CONFIG)
+        cfg = DEFAULT_CONFIG
+
+    return cfg
+
+
+@cache
 def ensure_config() -> CLIConfig:
-    """Ensure the user config exists and return its contents as a dict."""
-    CONFIG_PATH.parent.mkdir(parents=True, exist_ok=True)
-
-    if not CONFIG_PATH.exists():
-        with open(CONFIG_PATH, "w", encoding="utf-8") as f:
-            json.dump(DEFAULT_CONFIG, f, indent=4)
-
-    with open(CONFIG_PATH, encoding="utf-8") as f:
-        data = cast(dict[str, Any], json.load(f))
-
-    # Convert paths back to Path objects if needed
-    data["cache_dir"] = Path(data["cache_dir"])
-    data["config_file"] = Path(data["config_file"])
-    data["log_file"] = Path(data["log_file"])
-
-    return CLIConfig(**data)
+    """Ensure the config exists and return a validated singleton CLIConfig instance."""
+    return _load_or_create_config(CONFIG_PATH)

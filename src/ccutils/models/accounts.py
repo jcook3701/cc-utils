@@ -9,11 +9,7 @@ Description: Accounts Model:
 (Accounts)
 """
 
-from dataclasses import dataclass
-
-from .base import BaseModel
-
-dataclass(frozen=True)
+from pydantic import BaseModel
 
 
 class Accounts(BaseModel):

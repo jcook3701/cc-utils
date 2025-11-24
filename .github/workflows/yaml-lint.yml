@@ -1,6 +1,6 @@
 # yaml lint
 ---
-name: Cookiecutter template YAML lint
+name: YAML Lint
 
 on:
   push:

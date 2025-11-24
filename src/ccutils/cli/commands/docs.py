@@ -18,9 +18,11 @@ from cookiecutter.main import cookiecutter
 
 
 def add_docs(
+    ctx: typer.Context,
     target_dir: str = typer.Argument(..., help="Path to existing project"),
     template_repo: str = typer.Option(
-        "git@github.com:jcook3701/github-docs-cookiecutter.git", help="GitHub docs template repo"
+        "git@github.com:jcook3701/github-docs-cookiecutter.git",
+        help="GitHub docs template repo",
     ),
     branch: str = typer.Option("main", help="Branch of the template repo"),
     force: bool = typer.Option(False, help="Overwrite existing files if they exist"),
@@ -29,6 +31,9 @@ def add_docs(
     Pull all files from the cookiecutter template into ./docs/<target_dir>
     in the target project root.
     """
+    logger = ctx.obj["logger"]
+    cfg = ctx.obj["cfg"]
+
     # Create a temp dir to render template
     with tempfile.TemporaryDirectory() as tmpdir:
         typer.echo(f"Running {template_repo} cookiecutter... {tmpdir} ...")

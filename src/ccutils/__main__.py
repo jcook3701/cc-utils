@@ -8,7 +8,12 @@ Author: Jared Cook
 Description: Entry point for running ccutils via `python -m ccutils`.
 """
 
-from .cli import app
+from ccutils.cli.main import app
+
+
+def main() -> None:
+    app()
+
 
 if __name__ == "__main__":
-    app()
+    main()

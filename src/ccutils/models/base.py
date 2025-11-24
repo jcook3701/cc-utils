@@ -5,17 +5,20 @@
 See the LICENSE file for more details.
 
 Author: Jared Cook
-Description: Base model for ccutils project models.
+Description: ccutils Base model for ccutils project models.
 """
 
+from deprecated import deprecated
 from dataclasses import asdict, dataclass, fields, is_dataclass
 from typing import Any, TypeVar, cast
 
-T = TypeVar("T", bound="BaseModel")
+
+T = TypeVar("T", bound="CcutilsBaseModel")
 
 
+@deprecated("Use pydantic BaseModel instead")
 @dataclass(frozen=True)
-class BaseModel:
+class CcutilsBaseModel:
     """Base class providing common (de)serialization helpers."""
 
     def to_dict(self) -> dict[str, Any]:
@@ -39,7 +42,7 @@ class BaseModel:
             value = data[key]
             # Recursively create nested dataclasses
             if hasattr(typ, "__dataclass_fields__") and isinstance(value, dict):
-                nested_cls = cast(type[BaseModel], typ)
+                nested_cls = cast(type[CcutilsBaseModel], typ)
                 init_data[key] = nested_cls.from_dict(value)
             else:
                 init_data[key] = value
