@@ -86,6 +86,7 @@ BLACK := $(PYTHON) -m black
 # 🧪 Testing (pytest)
 # --------------------------------------------------
 PYTEST := $(PYTHON) -m pytest
+COVERAGE := $(ACTIVATE) && coverage run -m pytest
 # --------------------------------------------------
 # 📘 Documentation (Sphinx + Jekyll)
 # --------------------------------------------------
@@ -94,13 +95,22 @@ JEKYLL_BUILD := bundle exec jekyll build --quiet
 JEKYLL_CLEAN := bundle exec jekyll clean
 JEKYLL_SERVE := bundle exec jekyll serve
 # --------------------------------------------------
+# 📦 Build, 🚀 Publishing, & Version Bumping (build, twine, &)
+BUILD := $(PYTHON) -m build
+TWINE := $(PYTHON) -m twine
+PYPI := upload dist/*
+TESTPYPI := upload --repository testpypi dist/*
+# --------------------------------------------------
+PDM := $(ACTIVATE) && pdm
+# --------------------------------------------------
 # 🏃‍♂️ ccutils command
 # --------------------------------------------------
 CCUTILS := $(PYTHON) -m ccutils.ccutils
 # -------------------------------------------------------------------
 .PHONY: all venv install black-formatter-check black-formatter-fix format-check format-fix \
 	ruff-lint-check ruff-lint-fix yaml-lint-check lint-check lint-fix \
-	typecheck test sphinx jekyll jekyll-serve build-docs run-docs readme clean help
+	typecheck test sphinx jekyll jekyll-serve build-docs run-docs readme \
+	build publish clean help
 # -------------------------------------------------------------------
 # Default: run install, lint, typecheck, tests, and build-docs
 # -------------------------------------------------------------------
@@ -212,6 +222,25 @@ readme:
 	$(AT)echo "🧹 Clening README.md build artifacts..."
 	$(AT)rm -r $(README_GEN_DIR)
 	$(AT)echo "✅ README.md auto generation complete!"
+# --------------------------------------------------
+# Build program
+# --------------------------------------------------
+build:
+	$(AT)echo "📦 Packing $(PACKAGE_NAME)..."
+	$(AT)$(BUILD)
+	$(AT)echo "✅ $(PACKAGE_NAME) packaging complete!"
+# --------------------------------------------------
+# Publish program (test.pypi & pypi)
+# --------------------------------------------------
+publish-test:
+	$(AT)echo "🚀 Publishing $(PACKAGE_NAME) to testpypi..."
+	$(AT)$(TWINE) $(TESTPYPI)
+	$(AT)echo "✅ $(PACKAGE_NAME) upload complete!"
+
+publish:
+	$(AT)echo "🚀 Publishing $(PACKAGE_NAME) to pypi..."
+	$(AT)$(TWINE) $(PYPI)
+	$(AT)echo "✅ $(PACKAGE_NAME) upload complete!"
 # --------------------------------------------------
 # Run ccutils program
 # --------------------------------------------------

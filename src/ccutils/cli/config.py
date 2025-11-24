@@ -5,9 +5,8 @@
 See the LICENSE file for more details.
 
 Author: Jared Cook
-Description: Command-line interface for ccutils.build: Cookiecutter build automation utilities.
+Description: Command-line interface for ccutils.config: Cookiecutter configuration utilities.
 """
-
 from dataclasses import replace
 
 import typer
@@ -16,9 +15,9 @@ from ccutils.core.config import ensure_config
 from ccutils.core.logger import setup_logging
 from ccutils.models import CLIConfig
 
-from .commands import add_yaml_front_matter, build_readme
+from .commands import show_config
 
-app = typer.Typer(help="Cookiecutter build automation utilities.")
+app = typer.Typer(help="ccutils configuration tools.")
 
 
 @app.callback(invoke_without_command=True)
@@ -49,15 +48,12 @@ def main(
 
 
 # -----------------------------
-# Register commands:
+# Register commands
 # -----------------------------
-# Readme Generation Command:
+# Config commands:
 # -----------------------------
-app.command()(build_readme)
+app.command(name="show")(show_config)
 # -----------------------------
-# Add Yaml Front Matter Command:
-# -----------------------------
-app.command()(add_yaml_front_matter)
 
 # -----------------------------
 # Entry point

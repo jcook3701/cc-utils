@@ -12,6 +12,7 @@ from collections.abc import Mapping
 from importlib.metadata import PackageNotFoundError, metadata
 from typing import cast
 
+from ccutils.models import DEFAULT_METADATA, Metadata
 
 def init_metadata() -> None:
     """

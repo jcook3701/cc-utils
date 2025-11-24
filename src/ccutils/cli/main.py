@@ -18,11 +18,12 @@ from dataclasses import replace
 import typer
 
 from ccutils.cli.build import app as build_app
+from ccutils.cli.config import app as config_app
 from ccutils.core.config import ensure_config
 from ccutils.core.logger import setup_logging
 from ccutils.models import CLIConfig
 
-from .commands import add_docs, extract, list as list_cmds, run
+from .commands import add_docs, extract, list as list_cmds, run, show_config
 
 app = typer.Typer(help="CCUtils: Cookiecutter automation utilities")
 
@@ -72,7 +73,10 @@ app.add_typer(list_cmds.app, name="list")
 # Run command
 # -----------------------------
 app.command()(run)
-
+# -----------------------------
+# Config command:
+# -----------------------------
+app.add_typer(config_app, name="config")
 # -----------------------------
 # Build commands
 # -----------------------------

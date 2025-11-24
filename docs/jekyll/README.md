@@ -6,34 +6,6 @@ __Version:__ {{ site.version }}
 ## Overview
 {{ site.description }}  
 
-## Development
-### Build environment (.venv)
-``` shell
-$ make install  
-```
-### Linting (ruff & yaml-lint)
-2.
-``` shell
-$ make lint-check  
-```
-### Typechecking (mypy)
-``` shell
-$ make typecheck  
-```
-### Testing (pytest)
-``` shell
-$ make test  
-```
-### Build Help
-``` shell
-$ make help  
-```
-## Usage
-1. Source environment created by ```make install```.  
-``` shell
-$ source .venv  
-```
-
 ## Usage (Commands)
 ### Add Docs  
 __Description:__ Add GitHub docs to an existing project using the github-docs-cookiecutter template.  
@@ -62,3 +34,32 @@ __Description:__ Run a cookiecutter template using a pre-supplied JSON configura
 1.  
 ``` shell
 ```
+
+## Development
+### Build environment (.venv)
+``` shell
+$ make install  
+```
+### Linting (ruff & yaml-lint)
+2.
+``` shell
+$ make lint-check  
+```
+### Typechecking (mypy)
+``` shell
+$ make typecheck  
+```
+### Testing (pytest)
+``` shell
+$ make test  
+```
+### Build Help
+``` shell
+$ make help  
+```
+## Usage
+1. Source environment created by ```make install```.  
+``` shell
+$ source .venv  
+```
+
