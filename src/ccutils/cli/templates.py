@@ -5,7 +5,7 @@
 See the LICENSE file for more details.
 
 Author: Jared Cook
-Description: Command-line interface for ccutils.config: Cookiecutter configuration utilities.
+Description: Command-line interface for ccutils.template: Cookiecutter configuration utilities.
 """
 
 import typer
@@ -13,10 +13,10 @@ import typer
 from ccutils.core.config import ensure_config
 from ccutils.models import CLIConfig
 
-from .commands.ccconfig import show_config
+from .commands.cctemplates import generate
 from .options import verbose_mode
 
-app = typer.Typer(help="cc-utils configuration tools.")
+app = typer.Typer(help="cc-templates tools.")
 
 
 @app.callback(invoke_without_command=True)
@@ -40,9 +40,9 @@ def main(
 # -----------------------------
 # Register commands
 # -----------------------------
-# cc-config commands:
+# cctemplates commands:
 # -----------------------------
-app.command(name="show")(show_config)
+app.command()(generate)
 # -----------------------------
 
 

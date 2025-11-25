@@ -63,3 +63,15 @@ $ make help
 $ source .venv  
 ```
 
+### Authors Notes:  
+
+
+### Future Ideas (TODOs):
+1. cc-templates/ccindex.toml
+  * create/update this file using the individual ccmeta.toml files in cc-templates
+
+## Packages
+### PyPi (stabale)
+
+### TestPyPi (development)
+https://test.pypi.org/project/cc-utils/

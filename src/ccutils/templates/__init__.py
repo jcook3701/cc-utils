@@ -7,10 +7,9 @@ See the LICENSE file for more details.
 Author: Jared Cook
 """
 
-from .verbose import verbose_mode
-from .version import version_mode
+from .cc_templates import generate_makefile, generate_readme
 
 __all__ = [
-    "verbose_mode",
-    "version_mode",
+    "generate_makefile",
+    "generate_readme",
 ]

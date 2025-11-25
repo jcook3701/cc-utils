@@ -17,10 +17,11 @@ import typer
 
 from ccutils.cli.build import app as build_app
 from ccutils.cli.config import app as config_app
+from ccutils.cli.templates import app as template_app
 from ccutils.core.config import ensure_config
 from ccutils.models import CLIConfig
 
-from .commands import add_docs, extract, list as list_cmds, run
+from .commands.ccutils import add_docs, extract, list as list_cmds, run
 from .options import verbose_mode, version_mode
 
 app = typer.Typer(help="CC-Utils: Cookiecutter automation utilities")
@@ -54,29 +55,24 @@ def main(
 # -----------------------------
 # Register commands
 # -----------------------------
-# Docs command
+# cc-util commands:
 # -----------------------------
 app.command()(add_docs)
-# -----------------------------
-# Extract command
-# -----------------------------
 app.command()(extract)
-# -----------------------------
-# List commands
-# -----------------------------
 app.add_typer(list_cmds.app, name="list")
-# -----------------------------
-# Run command
-# -----------------------------
 app.command()(run)
 # -----------------------------
-# Config command:
+# cc-config commands:
 # -----------------------------
 app.add_typer(config_app, name="config")
 # -----------------------------
-# Build commands
+# cc-build commands:
 # -----------------------------
 app.add_typer(build_app, name="build")
+# -----------------------------
+# cc-templates commands:
+# -----------------------------
+app.add_typer(template_app, name="template")
 
 # -----------------------------
 # Entry point

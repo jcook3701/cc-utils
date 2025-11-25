@@ -22,7 +22,6 @@ class CLIConfig(BaseModel):
     """
     Represents user CLI configuration for cc-utils.
 
-
     Attributes:
          github: (GitHubAccount) GitHub users/org personal info.
          ga_tracking: (str) Google Analytics Tracking number.

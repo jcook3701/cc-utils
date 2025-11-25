@@ -7,10 +7,8 @@ See the LICENSE file for more details.
 Author: Jared Cook
 """
 
-from .verbose import verbose_mode
-from .version import version_mode
+from .config import show_config
 
 __all__ = [
-    "verbose_mode",
-    "version_mode",
+    "show_config",
 ]

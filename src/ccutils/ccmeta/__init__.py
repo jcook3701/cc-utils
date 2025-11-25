@@ -5,12 +5,12 @@
 See the LICENSE file for more details.
 
 Author: Jared Cook
+Description: Init ccmeta tools.
 """
 
-from .verbose import verbose_mode
-from .version import version_mode
+from .parser import find_templates, load_ccmeta
 
 __all__ = [
-    "verbose_mode",
-    "version_mode",
+    "find_templates",
+    "load_ccmeta",
 ]

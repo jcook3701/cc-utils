@@ -264,7 +264,7 @@ publish:
 # Run cc-utils program
 # --------------------------------------------------
 run:
-	$(AT)echo "🏃‍♂️ running ccurtils..."
+	$(AT)echo "🏃‍♂️ running $(PACKAGE_NAME)..."
 	$(AT)$(CCUTILS)
 # --------------------------------------------------
 # Clean artifacts

@@ -13,7 +13,7 @@ import typer
 from ccutils.core.config import ensure_config
 from ccutils.models import CLIConfig
 
-from .commands import add_yaml_front_matter, build_readme
+from .commands.ccbuild import add_yaml_front_matter, build_readme
 from .options import verbose_mode
 
 app = typer.Typer(help="Cookiecutter build automation utilities.")
@@ -40,13 +40,12 @@ def main(
 # -----------------------------
 # Register commands:
 # -----------------------------
-# Readme Generation Command:
+# cc-build Command:
 # -----------------------------
 app.command()(build_readme)
-# -----------------------------
-# Add Yaml Front Matter Command:
-# -----------------------------
 app.command()(add_yaml_front_matter)
+# -----------------------------
+
 
 # -----------------------------
 # Entry point
