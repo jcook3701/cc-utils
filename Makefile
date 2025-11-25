@@ -95,15 +95,24 @@ JEKYLL_BUILD := bundle exec jekyll build --quiet
 JEKYLL_CLEAN := bundle exec jekyll clean
 JEKYLL_SERVE := bundle exec jekyll serve
 # --------------------------------------------------
-# 📦 Build, 🚀 Publishing, & 🔖 Version Bumping (build, twine, & bumpy-my-version)
+# 🔖 Version Bumping (bumpy-my-version)
+# --------------------------------------------------
+BUMPVERSION := bump-my-version bump --verbose
+# Patch types:
+MAJOR := major
+MINOR := minor
+PATCH := patch
+# --------------------------------------------------
+# 📦 Build (build)
+# --------------------------------------------------
 BUILD := $(PYTHON) -m build
+# --------------------------------------------------
+# 🚀 Publishing (twine)
+# --------------------------------------------------
 TWINE := $(PYTHON) -m twine
-BUMPVERSION := bump-my-version bump --dry-run --allow-dirty --verbose patch
-
+# Repos:
 PYPI := upload dist/*
 TESTPYPI := upload --repository testpypi --verbose dist/*
-# --------------------------------------------------
-PDM := $(ACTIVATE) && pdm
 # --------------------------------------------------
 # 🏃‍♂️ cc-utils command
 # --------------------------------------------------
@@ -225,20 +234,20 @@ readme:
 	$(AT)rm -r $(README_GEN_DIR)
 	$(AT)echo "✅ README.md auto generation complete!"
 # --------------------------------------------------
+# bump version of program
+# --------------------------------------------------
+# TODO: Also create a git tag of current version.
+bump-version-patch:
+	$(AT)echo "🔖 Updating $(PACKAGE_NAME) version from $(VERSION)..."
+	$(AT)$(BUMPVERSION) $(PATCH)
+	$(AT)echo "✅ $(PACKAGE_NAME) version udpate complete!"
+# --------------------------------------------------
 # Build program
 # --------------------------------------------------
 build:
 	$(AT)echo "📦 Packing $(PACKAGE_NAME)..."
 	$(AT)$(BUILD)
 	$(AT)echo "✅ $(PACKAGE_NAME) packaging complete!"
-# --------------------------------------------------
-# bump version of program
-# --------------------------------------------------
-# TODO: Also create a git tag of current version.
-bump-version:
-	$(AT)echo "🔖 Updating $(PACKAGE_NAME) version from $(VERSION)..."
-	$(AT)$(BUMPVERSION)
-	$(AT)echo "✅ $(PACKAGE_NAME) version udpate complete!"
 # --------------------------------------------------
 # Publish program (test.pypi & pypi)
 # --------------------------------------------------
