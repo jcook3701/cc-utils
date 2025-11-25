@@ -38,7 +38,7 @@ endef
 # --------------------------------------------------
 PACKAGE_NAME := "cc-utils"
 PACKAGE_AUTHOR := "Jared Cook"
-PACKAGE_VERSION := "0.1.0"
+PACKAGE_VERSION := "0.1.1"
 # --------------------------------------------------
 # 📁 Build Directories
 # --------------------------------------------------
