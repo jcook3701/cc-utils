@@ -45,6 +45,7 @@ Documentation = "https://github.com/jcook3701/cc-utils/docs/jekyll"
 [project.optional-dependencies]
 dev = [
   "build>=1.3",
+  "bump-my-version>=1.2",
   "coverage>=7.12",
   "black>=25.11",
   "ruff>=0.14.0",
@@ -76,8 +77,26 @@ where = [
   "src",
   ]
 include = [
-  "src*",
+  "ccutils*",
 ]
+# ====================================
+# Version Bumping (bump-my-version):
+# ====================================
+[tool.bumpversion]
+current_version = "0.1.0"
+parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"
+serialize = ["{major}.{minor}.{patch}"]
+search = "{current_version}"
+replace = "{new_version}"
+tag = false
+commit = false
+
+[[tool.bumpversion.files]]
+filename = "Makefile"
+[[tool.bumpversion.files]]
+filename = "./docs/jekyll/_config.yml"
+[[tool.bumpversion.files]]
+filename = "./docs/sphinx/conf.py"
 # ====================================
 # Ruff Configuration: (linter, formatter, import sorter)
 # ====================================

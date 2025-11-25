@@ -1,6 +1,6 @@
 # Makefile
 # =========================================
-# Project: ccutils
+# Project: cc-utils
 # =========================================
 
 # --------------------------------------------------
@@ -36,9 +36,9 @@ endef
 # --------------------------------------------------
 # ⚙️ Build Settings
 # --------------------------------------------------
-PACKAGE_NAME := ccutils
+PACKAGE_NAME := "cc-utils"
 PACKAGE_AUTHOR := "Jared Cook"
-PACKAGE_VERSION := 0.1.0
+PACKAGE_VERSION := "0.1.0"
 # --------------------------------------------------
 # 📁 Build Directories
 # --------------------------------------------------
@@ -95,17 +95,19 @@ JEKYLL_BUILD := bundle exec jekyll build --quiet
 JEKYLL_CLEAN := bundle exec jekyll clean
 JEKYLL_SERVE := bundle exec jekyll serve
 # --------------------------------------------------
-# 📦 Build, 🚀 Publishing, & Version Bumping (build, twine, &)
+# 📦 Build, 🚀 Publishing, & 🔖 Version Bumping (build, twine, & bumpy-my-version)
 BUILD := $(PYTHON) -m build
 TWINE := $(PYTHON) -m twine
+BUMPVERSION := bump-my-version bump --dry-run --allow-dirty --verbose patch
+
 PYPI := upload dist/*
-TESTPYPI := upload --repository testpypi dist/*
+TESTPYPI := upload --repository testpypi --verbose dist/*
 # --------------------------------------------------
 PDM := $(ACTIVATE) && pdm
 # --------------------------------------------------
-# 🏃‍♂️ ccutils command
+# 🏃‍♂️ cc-utils command
 # --------------------------------------------------
-CCUTILS := $(PYTHON) -m ccutils.ccutils
+CCUTILS := $(PYTHON) -m ccutils
 # -------------------------------------------------------------------
 .PHONY: all venv install black-formatter-check black-formatter-fix format-check format-fix \
 	ruff-lint-check ruff-lint-fix yaml-lint-check lint-check lint-fix \
@@ -230,6 +232,14 @@ build:
 	$(AT)$(BUILD)
 	$(AT)echo "✅ $(PACKAGE_NAME) packaging complete!"
 # --------------------------------------------------
+# bump version of program
+# --------------------------------------------------
+# TODO: Also create a git tag of current version.
+bump-version:
+	$(AT)echo "🔖 Updating $(PACKAGE_NAME) version from $(VERSION)..."
+	$(AT)$(BUMPVERSION)
+	$(AT)echo "✅ $(PACKAGE_NAME) version udpate complete!"
+# --------------------------------------------------
 # Publish program (test.pypi & pypi)
 # --------------------------------------------------
 publish-test:
@@ -242,7 +252,7 @@ publish:
 	$(AT)$(TWINE) $(PYPI)
 	$(AT)echo "✅ $(PACKAGE_NAME) upload complete!"
 # --------------------------------------------------
-# Run ccutils program
+# Run cc-utils program
 # --------------------------------------------------
 run:
 	$(AT)echo "🏃‍♂️ running ccurtils..."
@@ -281,7 +291,7 @@ help:
 	$(AT)echo "  make build-docs             Build Sphinx + Jekyll documentation"
 	$(AT)echo "  make run-docs               Preview Jekyll documentation"
 	$(AT)echo "  make readme                 Uses Jekyll $(JEKYLL_DIR)/README.md for readme generation"
-	$(AT)echo "  make run                    Run ccutils.py"
+	$(AT)echo "  make run                    Run cc-utils.py"
 	$(AT)echo "  make clean                  Clean build artifacts"
 	$(AT)echo "  make all                    Run lint, typecheck, test, and docs"
 	$(AT)echo "Options:"
