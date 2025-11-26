@@ -13,7 +13,11 @@
 
 <hr />
 
-<p><img src="https://github.com/OWNER/REPO/actions/workflows/ruff-lint.yml/badge.svg" alt="ruff-lint" /></p>
+<p><img src="https://github.com/jcook3701/cc-utils/actions/workflows/black-format.yml/badge.svg" alt="black-format" />
+<img src="https://github.com/jcook3701/cc-utils/actions/workflows/ruff-lint.yml/badge.svg" alt="ruff-lint" />
+<img src="https://github.com/jcook3701/cc-utils/actions/workflows/tests.yml/badge.svg" alt="tests" />
+<img src="https://github.com/jcook3701/cc-utils/actions/workflows/typecheck.yml/badge.svg" alt="typecheck" />
+<img src="https://github.com/jcook3701/cc-utils/actions/workflows/yaml-lint.yml/badge.svg" alt="yaml-lint" /></p>
 
 <h2 id="command-examples">Command Examples:</h2>
 <h3 id="-cc-utils-add_docs-extract-run-list">🔧 cc-utils (add_docs, extract, run, list)</h3>
@@ -58,11 +62,12 @@
 <hr />
 
 <h3 id="️-config-cc-config">⚙️ Config (cc-config)</h3>
-<p><strong>Description:</strong> cc-utils configuration tools.</p>
+<p><strong>Description:</strong> cc-utils configuration tools.
+<strong>Note:</strong> These are tools that are used to manage the cc-utils configuration file.</p>
 
 <h4 id="sub-commands-show">Sub-commands: (show)</h4>
 
-<h4 id="show">Show</h4>
+<h4 id="show">Show:</h4>
 <p><strong>Description:</strong></p>
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>cc-config show
 </code></pre></div></div>
@@ -74,7 +79,7 @@
 <strong>Note:</strong> These commands are intended to be used within project Makefiles as build tools. Examples will assume for use in Makefile.</p>
 <h4 id="sub-commands-readme-add-yaml-front-matter">Sub-commands: (readme, add-yaml-front-matter)</h4>
 
-<h4 id="readme">Readme</h4>
+<h4 id="readme">Readme:</h4>
 <p><strong>Description:</strong> Generates project readme from projects github-docs jekyll project.  The intention is keep the readme within ./docs/jekyll as the projects single source of truth.<br />
 <strong>Note</strong>: Replace with real values.</p>
 <div class="language-makefile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">readme</span><span class="o">:</span>
@@ -82,20 +87,21 @@
 	  <span class="err">--tmp-dir</span> <span class="err">$(README_GEN_DIR)</span> <span class="err">--jekyll-cmd</span> <span class="s1">'$(JEKYLL_BUILD_CMD)'</span>
 </code></pre></div></div>
 
+<h4 id="add-yaml-front-matter">add-yaml-front-matter:</h4>
+<p><strong>Description:</strong></p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>cc-templates add-yaml-front-matter
+</code></pre></div></div>
+
 <hr />
 
 <h2 id="-template-cc-templates">🍪 Template (cc-templates)</h2>
-<p><strong>Description:</strong> cc-templates tools.</p>
-
-<h4 id="sub-commands-readme-add-yaml-front-matter-1">Sub-commands: (readme, add-yaml-front-matter)</h4>
+<p><strong>Description:</strong> cc-templates tools.
+<strong>Note:</strong></p>
+<h4 id="sub-commands-generate">Sub-commands: (generate)</h4>
 
 <h4 id="generate">Generate:</h4>
 <p><strong>Description:</strong></p>
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>cc-templates generate
-</code></pre></div></div>
-<h4 id="add-yaml-front-matter">add-yaml-front-matter:</h4>
-<p><strong>Description:</strong></p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>cc-templates add-yaml-front-matter
 </code></pre></div></div>
 
 <hr />

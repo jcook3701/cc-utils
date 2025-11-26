@@ -8,8 +8,11 @@ __Version:__ {{ site.version }}
 
 ***
 
-![ruff-lint](https://github.com/OWNER/REPO/actions/workflows/ruff-lint.yml/badge.svg)
-
+![black-format](https://github.com/jcook3701/cc-utils/actions/workflows/black-format.yml/badge.svg)
+![ruff-lint](https://github.com/jcook3701/cc-utils/actions/workflows/ruff-lint.yml/badge.svg)
+![tests](https://github.com/jcook3701/cc-utils/actions/workflows/tests.yml/badge.svg)
+![typecheck](https://github.com/jcook3701/cc-utils/actions/workflows/typecheck.yml/badge.svg)
+![yaml-lint](https://github.com/jcook3701/cc-utils/actions/workflows/yaml-lint.yml/badge.svg)
 
 ## Command Examples:
 ### 🔧 cc-utils (add_docs, extract, run, list)
@@ -52,10 +55,11 @@ $ cc-utils list --help
 
 ### ⚙️ Config (cc-config)
 __Description:__ cc-utils configuration tools.
+__Note:__ These are tools that are used to manage the cc-utils configuration file.
 
 #### Sub-commands: (show)
 
-#### Show
+#### Show:
 __Description:__
 ```shell
 $ cc-config show
@@ -68,7 +72,7 @@ __Description:__ Cookiecutter build automation utilities.
 __Note:__ These commands are intended to be used within project Makefiles as build tools. Examples will assume for use in Makefile. 
 #### Sub-commands: (readme, add-yaml-front-matter)
 
-#### Readme
+#### Readme:
 __Description:__ Generates project readme from projects github-docs jekyll project.  The intention is keep the readme within ./docs/jekyll as the projects single source of truth.  
 __Note__: Replace with real values.  
 ```makefile
@@ -77,22 +81,23 @@ readme:
 	  --tmp-dir $(README_GEN_DIR) --jekyll-cmd '$(JEKYLL_BUILD_CMD)'
 ```
 
+#### add-yaml-front-matter:
+__Description:__
+```shell
+$ cc-templates add-yaml-front-matter
+```
+
 ***
 
 ## 🍪 Template (cc-templates)
 __Description:__ cc-templates tools.
-
-#### Sub-commands: (readme, add-yaml-front-matter)
+__Note:__
+#### Sub-commands: (generate)
 
 #### Generate: 
 __Description:__
 ```shell
 $ cc-templates generate
-```
-#### add-yaml-front-matter:
-__Description:__
-```shell
-$ cc-templates add-yaml-front-matter
 ```
 
 ***
