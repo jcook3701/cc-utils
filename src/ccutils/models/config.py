@@ -39,7 +39,7 @@ class CLIConfig(BaseModel):
     default_template_branch: str = "main"
 
     cache_dir: Path = Path.home() / ".cache" / "cc-utils"
-    log_file: Path = Path.home() / ".cc-utils" / "ccutlis.log"
+    log_file: Path = Path.home() / ".cc-utils" / "cc-utlis.log"
 
     verbose: bool = False
 
