@@ -25,7 +25,7 @@
 <p><strong>Description:</strong> Add GitHub docs to an existing project using the github-docs-cookiecutter template.</p>
 <ol>
   <li>
-    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>cc-utils add-docs <span class="nt">--help</span>
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>cc-utils add-docs <span class="si">$(</span>target_dir<span class="si">)</span>
 </code></pre></div>    </div>
   </li>
 </ol>
@@ -51,12 +51,12 @@
 
 <h4 id="run">Run:</h4>
 <p><strong>Description:</strong> Run a cookiecutter template using a pre-supplied JSON configuration file.</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>cc-utils run <span class="nt">--help</span>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>cc-utils run <span class="si">$(</span>template<span class="si">)</span> <span class="si">$(</span>config<span class="si">)</span>
 </code></pre></div></div>
 
 <h4 id="list">List:</h4>
 <p><strong>Description:</strong> List available cookiecutter templates under a namespace.</p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>cc-utils list <span class="nt">--help</span>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>cc-utils list
 </code></pre></div></div>
 
 <hr />
@@ -88,7 +88,8 @@
 </code></pre></div></div>
 
 <h4 id="add-yaml-front-matter">add-yaml-front-matter:</h4>
-<p><strong>Description:</strong></p>
+<p><strong>Description:</strong> This adds yaml-front-matter to the head of (md, yml, &amp; yaml) files to help beautify github docs.  Intended to be used with <a href="https://github.com/jcook3701/github-docs-cookiecutter">github-docs-cookiecutter</a><br />
+<strong>Note:</strong> github-docs-cookiecutter will either be moved to <a href="https://github.com/jcook3701/cc-templates">cc-templates</a> or be added to cc-templates as a submodule.</p>
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>cc-templates add-yaml-front-matter
 </code></pre></div></div>
 
@@ -100,9 +101,15 @@
 <h4 id="sub-commands-generate">Sub-commands: (generate)</h4>
 
 <h4 id="generate">Generate:</h4>
-<p><strong>Description:</strong></p>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>cc-templates generate
-</code></pre></div></div>
+<p><strong>Description:</strong> This is for custom Cookiecutter template (<a href="https://github.com/jcook3701/cc-templates">cc-templates</a>) that utilizes ccmeta.toml files to organize projects.
+<strong>Note:</strong> This feature is still in development.  <strong>(Use at your own risk!!!)</strong>
+<strong>Arguments:</strong></p>
+<ul>
+  <li>repo: Path to the template repository to generate README.md and Makefile
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>cc-templates generate <span class="si">$(</span>repo<span class="si">)</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
 
 <hr />
 
@@ -142,9 +149,8 @@
 
 <hr />
 
-<h3 id="authors-notes">Authors Notes:</h3>
-
-<h3 id="future-ideas-todos">Future Ideas (TODOs):</h3>
+<h2 id="authors-notes">Authors Notes:</h2>
+<h3 id="future-ideas-todos">Future Ideas (TODO’s):</h3>
 <ol>
   <li>cc-templates/ccindex.toml
     <ul>
@@ -152,6 +158,13 @@
     </ul>
   </li>
   <li>Finish updating this.readme with command usage.</li>
+  <li>Readme <code class="language-plaintext highlighter-rouge">make readme</code> should end up being a ci/cd process to ensure it is always up to date.</li>
+  <li>Thinking about adding a ci/cd process for version bumping.  To create a git tag.</li>
+</ol>
+
+<h3 id="future-design-decisions">Future Design Decisions</h3>
+<ol>
+  <li>I need to decide whether to change all my current Cookiecutter projects to use the prefix <code class="language-plaintext highlighter-rouge">cc-</code> and use them as submodules within the <a href="https://github.com/jcook3701/cc-templates">cc-templates</a> repository.  Or to just move the code directly into the cc-templates repository and use it as a monolithic repo.</li>
 </ol>
 
 <h2 id="packages">Packages</h2>
