@@ -18,9 +18,9 @@ __Version:__ {{ site.version }}
 ### 🔧 cc-utils (add_docs, extract, run, list)
 #### Add Docs:
 __Description:__ Add GitHub docs to an existing project using the github-docs-cookiecutter template.  
-1.  
+1. 
 ``` shell
-$ cc-utils add-docs --help
+$ cc-utils add-docs $(target_dir)
 ```
 
 #### Extract:
@@ -42,13 +42,13 @@ $ cc-utils extract \
 #### Run:
 __Description:__ Run a cookiecutter template using a pre-supplied JSON configuration file.  
 ```shell
-$ cc-utils run --help
+$ cc-utils run $(template) $(config)
 ```
 
 #### List:
 __Description:__ List available cookiecutter templates under a namespace.  
 ```shell
-$ cc-utils list --help
+$ cc-utils list
 ```
 
 ***
@@ -82,7 +82,8 @@ readme:
 ```
 
 #### add-yaml-front-matter:
-__Description:__
+__Description:__ This adds yaml-front-matter to the head of (md, yml, & yaml) files to help beautify github docs.  Intended to be used with [github-docs-cookiecutter](https://github.com/jcook3701/github-docs-cookiecutter)  
+__Note:__ github-docs-cookiecutter will either be moved to [cc-templates](https://github.com/jcook3701/cc-templates) or be added to cc-templates as a submodule.
 ```shell
 $ cc-templates add-yaml-front-matter
 ```
@@ -95,9 +96,12 @@ __Note:__
 #### Sub-commands: (generate)
 
 #### Generate: 
-__Description:__
+__Description:__ This is for custom Cookiecutter template ([cc-templates](https://github.com/jcook3701/cc-templates)) that utilizes ccmeta.toml files to organize projects.
+__Note:__ This feature is still in development.  __(Use at your own risk!!!)__
+__Arguments:__
+  * repo: Path to the template repository to generate README.md and Makefile
 ```shell
-$ cc-templates generate
+$ cc-templates generate $(repo)
 ```
 
 ***
@@ -149,13 +153,16 @@ $ make help
 
 ***
 
-### Authors Notes:  
-
-
-### Future Ideas (TODOs):
+## Authors Notes:
+### Future Ideas (TODO's):
 1. cc-templates/ccindex.toml
   * create/update this file using the individual ccmeta.toml files in cc-templates
 2. Finish updating this.readme with command usage.
+3. Readme ```make readme``` should end up being a ci/cd process to ensure it is always up to date.
+4. Thinking about adding a ci/cd process for version bumping.  To create a git tag.
+
+### Future Design Decisions
+1. I need to decide whether to change all my current Cookiecutter projects to use the prefix ```cc-``` and use them as submodules within the [cc-templates](https://github.com/jcook3701/cc-templates) repository.  Or to just move the code directly into the cc-templates repository and use it as a monolithic repo.
 
 ## Packages
 ### PyPi (stable)

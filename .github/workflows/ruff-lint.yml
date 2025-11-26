@@ -1,6 +1,6 @@
 # ruff lint
 ---
-name: Ruff Lint
+name: Ruff Lint Check
 
 on:
   push:

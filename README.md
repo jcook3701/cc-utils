@@ -9,7 +9,7 @@
 <strong>Version:</strong> 0.1.1</p>
 
 <h2 id="overview">Overview</h2>
-<p>Cookiecutter utilities for jcook3701’s cookiecuter templates.</p>
+<p>Cookiecutter utilities for streamlining development and utilization of Cookiecutter templates.</p>
 
 <hr />
 

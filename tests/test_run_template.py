@@ -12,7 +12,7 @@ import json
 from pathlib import Path
 from unittest.mock import patch
 
-from ccutils.run import run_template
+from ccutils.cli.commands.ccutils.run import run_template
 
 
 def test_run_template_calls_cookiecutter(tmp_path: Path) -> None:
