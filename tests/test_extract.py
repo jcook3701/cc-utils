@@ -1,4 +1,4 @@
-"""ccutils Package
+"""cc-utils Package
 
 © All rights reserved. Jared Cook
 

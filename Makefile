@@ -125,7 +125,7 @@ CCUTILS := $(PYTHON) -m ccutils
 # -------------------------------------------------------------------
 # Default: run install, lint, typecheck, tests, and build-docs
 # -------------------------------------------------------------------
-all: install lint-check typecheck test build-docs readme
+all: clean install lint-check typecheck test build-docs readme
 # --------------------------------------------------
 # Virtual Environment Setup
 # --------------------------------------------------
@@ -214,6 +214,11 @@ build-docs: sphinx jekyll
 run-docs: jekyll-serve
 
 readme:
+	$(AT)$(CCUTILS) build readme $(JEKYLL_DIR) ./README.md \
+		--tmp-dir $(README_GEN_DIR) --jekyll-cmd '$(JEKYLL_BUILD)'
+
+# DEPRECATED: DON'T USE!!! #
+old-readme:
 	$(AT)echo "🔨 Building ./README.md 📘 with Jekyll..."
 	$(AT)mkdir -p $(README_GEN_DIR)
 	$(AT)cp $(JEKYLL_DIR)/_config.yml $(README_GEN_DIR)/_config.yml

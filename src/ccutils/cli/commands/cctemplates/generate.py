@@ -7,9 +7,11 @@ See the LICENSE file for more details.
 Author: Jared Cook
 """
 
-import typer
 from pathlib import Path
-from ccutils.templates.cc_templates import generate_readme, generate_makefile
+
+import typer
+
+from ccutils.templates.cc_templates import generate_makefile, generate_readme
 
 
 def generate(

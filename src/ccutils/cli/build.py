@@ -42,7 +42,7 @@ def main(
 # -----------------------------
 # cc-build Command:
 # -----------------------------
-app.command()(build_readme)
+app.command(name="readme")(build_readme)
 app.command()(add_yaml_front_matter)
 # -----------------------------
 
