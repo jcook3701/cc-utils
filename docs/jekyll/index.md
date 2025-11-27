@@ -1,6 +1,6 @@
 ---
 layout: default
-title: ccutils
+title: cc-utils
 nav_order: 1
 description: Cookiecutter utilities for jcook3701's cookiecuter templates.
 ---

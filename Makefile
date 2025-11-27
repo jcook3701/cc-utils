@@ -42,14 +42,13 @@ PACKAGE_VERSION := "0.1.1"
 # --------------------------------------------------
 # 📁 Build Directories
 # --------------------------------------------------
-SRC_DIR := ./src
-TEST_DIR := ./tests
-DOCS_DIR := ./docs
+PROJECT_ROOT := $(PWD)
+SRC_DIR := $(PROJECT_ROOT)/src
+TEST_DIR := $(PROJECT_ROOT)/tests
+DOCS_DIR := $(PROJECT_ROOT)/docs
 SPHINX_DIR := $(DOCS_DIR)/sphinx
 JEKYLL_DIR := $(DOCS_DIR)/jekyll
-
-SPHINX_BUILD_DIR := $(SPHINX_DIR)/_build/html
-JEKYLL_OUTPUT_DIR := $(JEKYLL_DIR)/sphinx
+JEKYLL_SPHINX_DIR := $(JEKYLL_DIR)/sphinx
 README_GEN_DIR := $(JEKYLL_DIR)/tmp_readme
 # --------------------------------------------------
 # 🐍 Python / Virtual Environment
@@ -195,20 +194,13 @@ test:
 # Documentation (Sphinx + Jekyll)
 # --------------------------------------------------
 sphinx:
-	$(AT)echo "🧹 Cleaning Sphinx build artifacts..."
-	$(AT)rm -rf $(JEKYLL_OUTPUT_DIR)
-	$(AT)echo "🔨 Building Sphinx documentation 📘 as Markdown..."
-	$(AT)$(SPHINX) $(SPHINX_DIR) $(JEKYLL_OUTPUT_DIR)
-	$(AT)echo "✅ Sphinx Markdown build complete!"
+	$(MAKE) -C $(SPHINX_DIR) all PUBLISHDIR=$(JEKYLL_SPHINX_DIR)
 
 jekyll:
-	$(AT)echo "🔨 Building Jekyll site 🌐..."
-	$(AT)cd $(JEKYLL_DIR) && $(JEKYLL_BUILD)
-	$(AT)echo "✅ Full documentation build complete!"
+	$(MAKE) -C $(JEKYLL_DIR) build-docs;
 
 jekyll-serve:
-	$(AT)echo "🚀 Starting Jekyll development server 🌐..."
-	$(AT)cd $(JEKYLL_DIR) && $(JEKYLL_SERVE)
+	$(MAKE) -C $(JEKYLL_DIR) run-docs;
 
 build-docs: sphinx jekyll
 run-docs: jekyll-serve
@@ -216,28 +208,6 @@ run-docs: jekyll-serve
 readme:
 	$(AT)$(CCUTILS) build readme $(JEKYLL_DIR) ./README.md \
 		--tmp-dir $(README_GEN_DIR) --jekyll-cmd '$(JEKYLL_BUILD)'
-
-# DEPRECATED: DON'T USE!!! #
-old-readme:
-	$(AT)echo "🔨 Building ./README.md 📘 with Jekyll..."
-	$(AT)mkdir -p $(README_GEN_DIR)
-	$(AT)cp $(JEKYLL_DIR)/_config.yml $(README_GEN_DIR)/_config.yml
-	$(AT)cp $(JEKYLL_DIR)/Gemfile $(README_GEN_DIR)/Gemfile
-	$(AT)printf "%s\n" "---" \
-		"layout: raw" \
-		"permalink: /README.md" \
-		"---" > $(README_GEN_DIR)/README.md
-	$(AT)printf '%s\n' '<!--' \
-		'  Auto-generated file. Do not edit directly.' \
-		'  Edit $(JEKYLL_DIR)/README.md instead.' \
-		'  Run ```make readme``` to regenerate this file' \
-		'-->' >> $(README_GEN_DIR)/README.md
-	$(AT)cat $(JEKYLL_DIR)/README.md >> $(README_GEN_DIR)/README.md
-	$(AT)cd $(README_GEN_DIR) && $(JEKYLL_BUILD)
-	$(AT)cp $(README_GEN_DIR)/_site/README.md ./README.md
-	$(AT)echo "🧹 Cleaning README.md build artifacts..."
-	$(AT)rm -r $(README_GEN_DIR)
-	$(AT)echo "✅ README.md auto generation complete!"
 # --------------------------------------------------
 # bump version of program
 # --------------------------------------------------
@@ -271,11 +241,12 @@ publish:
 clean:
 	$(AT)echo "🧹 Cleaning build artifacts..."
 	$(AT)rm -rf $(SPHINX_DIR)/_build
-	$(AT)$(call run_ci_safe, cd $(JEKYLL_DIR) && $(JEKYLL_CLEAN))
+	$(AT)$(MAKE) -C $(JEKYLL_DIR) clean
+	$(AT)$(MAKE) -C $(SPHINX_DIR) clean
 	$(AT)rm -rf build dist *.egg-info
 	$(AT)find $(SRC_DIR) $(TEST_DIR) -name "__pycache__" -type d -exec rm -rf {} +
 	$(AT)rm -rf $(VENV_DIR)
-	$(AT)echo "🧹 Finished cleaning build artifacts..."
+	$(AT)echo "✅ Finished cleaning build artifacts..."
 # --------------------------------------------------
 # Help
 # --------------------------------------------------

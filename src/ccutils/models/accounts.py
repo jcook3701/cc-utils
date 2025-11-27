@@ -17,10 +17,10 @@ class Accounts(BaseModel):
     Represents user accounts.
 
     Attributes:
-         github_username:
-         twitter_username:
-         linkedin_username:
-         buymeacoffee_username:
+        github_username (str): GitHub username of the account.
+        twitter_username (str): Twitter handle.
+        linkedin_usercode (str): LinkedIn user code.
+        buymeacoffee_username (str): BuyMeACoffee username.
     """
 
     github_username: str = ""

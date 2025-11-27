@@ -20,7 +20,6 @@ def fetch_config(repo_url: str) -> ConfigData | None:
     Fetch cookiecutter.json from a GitHub repo,
     trying both main and master branches.
     """
-    base_raw_url = repo_url.replace("github.com", "raw.githubusercontent.com")
     branches = ["main", "master"]
 
     for branch in branches:

@@ -53,7 +53,7 @@ all: build-docs
 # Documentation (Jekyll)
 # --------------------------------------------------
 jekyll:
-	$(AT)echo "🔨 Building Jekyll site..."
+	$(AT)echo "🔨 Building Jekyll site 🌐..."
 	$(AT)$(JEKYLL_BUILD)
 	$(AT)echo "✅ Full documentation build complete!"
 

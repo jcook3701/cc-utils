@@ -54,8 +54,8 @@ $ cc-utils list
 ***
 
 ### ⚙️ Config (cc-config)
-__Description:__ cc-utils configuration tools.
-__Note:__ These are tools that are used to manage the cc-utils configuration file.
+__Description:__ cc-utils configuration tools.  
+__Note:__ These are tools that are used to manage the cc-utils configuration file.  
 
 #### Sub-commands: (show)
 
@@ -68,22 +68,28 @@ $ cc-config show
 ***
 
 ### 🔨 Build (cc-build)
-__Description:__ Cookiecutter build automation utilities.
+__Description:__ Cookiecutter build automation utilities.  
 __Note:__ These commands are intended to be used within project Makefiles as build tools. Examples will assume for use in Makefile. 
 #### Sub-commands: (readme, add-yaml-front-matter)
 
 #### Readme:
 __Description:__ Generates project readme from projects github-docs jekyll project.  The intention is keep the readme within ./docs/jekyll as the projects single source of truth.  
 __Note__: Replace with real values.  
-```makefile
+```shell
+PROJECT_ROOT := $(PWD)
+DOCS_DIR := $(PROJECT_ROOT)/docs
+JEKYLL_DIR := $(DOCS_DIR)/jekyll
+JEKYLL_BUILD := bundle exec jekyll build --quiet
+README_GEN_DIR := $(JEKYLL_DIR)/tmp_readme
+
 readme:
   cc-build readme $(JEKYLL_DIR) ./README.md \
-	  --tmp-dir $(README_GEN_DIR) --jekyll-cmd '$(JEKYLL_BUILD_CMD)'
+	  --tmp-dir $(README_GEN_DIR) --jekyll-cmd '$(JEKYLL_BUILD)'
 ```
 
 #### add-yaml-front-matter:
 __Description:__ This adds yaml-front-matter to the head of (md, yml, & yaml) files to help beautify github docs.  Intended to be used with [github-docs-cookiecutter](https://github.com/jcook3701/github-docs-cookiecutter)  
-__Note:__ github-docs-cookiecutter will either be moved to [cc-templates](https://github.com/jcook3701/cc-templates) or be added to cc-templates as a submodule.
+__Note:__ github-docs-cookiecutter will either be moved to [cc-templates](https://github.com/jcook3701/cc-templates) or be added to cc-templates as a submodule.  
 ```shell
 $ cc-templates add-yaml-front-matter
 ```
@@ -96,8 +102,8 @@ __Note:__
 #### Sub-commands: (generate)
 
 #### Generate: 
-__Description:__ This is for custom Cookiecutter template ([cc-templates](https://github.com/jcook3701/cc-templates)) that utilizes ccmeta.toml files to organize projects.
-__Note:__ This feature is still in development.  __(Use at your own risk!!!)__
+__Description:__ This is for custom Cookiecutter template ([cc-templates](https://github.com/jcook3701/cc-templates)) that utilizes ccmeta.toml files to organize projects.  
+__Note:__ This feature is still in development.  __(Use at your own risk!!!)__  
 __Arguments:__
   * repo: Path to the template repository to generate README.md and Makefile
 ```shell
@@ -154,18 +160,18 @@ $ make help
 ***
 
 ## Authors Notes:
-### Future Ideas (TODO's):
+### TODO's:
 1. cc-templates/ccindex.toml
   * create/update this file using the individual ccmeta.toml files in cc-templates
 2. Finish updating this.readme with command usage.
 3. Readme ```make readme``` should end up being a ci/cd process to ensure it is always up to date.
 4. Thinking about adding a ci/cd process for version bumping.  To create a git tag.
 
-### Future Design Decisions
+### Future Design Decisions:
 1. I need to decide whether to change all my current Cookiecutter projects to use the prefix ```cc-``` and use them as submodules within the [cc-templates](https://github.com/jcook3701/cc-templates) repository.  Or to just move the code directly into the cc-templates repository and use it as a monolithic repo.
 
-## Packages
-### PyPi (stable)
+## Package:
+### PyPi: (stable)
 
-### TestPyPi (development)
+### TestPyPi: (development)
 https://test.pypi.org/project/cc-utils/

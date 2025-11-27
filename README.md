@@ -1,6 +1,6 @@
 <!--
   Auto-generated file. Do not edit directly.
-  Edit docs/jekyll/README.md instead.
+  Edit /home/jcook/Documents/git_repo/cc-utils/docs/jekyll/README.md instead.
   Run ```make readme``` to regenerate this file
 -->
 <h1 id="cc-utils">cc-utils</h1>
@@ -62,7 +62,7 @@
 <hr />
 
 <h3 id="️-config-cc-config">⚙️ Config (cc-config)</h3>
-<p><strong>Description:</strong> cc-utils configuration tools.
+<p><strong>Description:</strong> cc-utils configuration tools.<br />
 <strong>Note:</strong> These are tools that are used to manage the cc-utils configuration file.</p>
 
 <h4 id="sub-commands-show">Sub-commands: (show)</h4>
@@ -75,16 +75,22 @@
 <hr />
 
 <h3 id="-build-cc-build">🔨 Build (cc-build)</h3>
-<p><strong>Description:</strong> Cookiecutter build automation utilities.
+<p><strong>Description:</strong> Cookiecutter build automation utilities.<br />
 <strong>Note:</strong> These commands are intended to be used within project Makefiles as build tools. Examples will assume for use in Makefile.</p>
 <h4 id="sub-commands-readme-add-yaml-front-matter">Sub-commands: (readme, add-yaml-front-matter)</h4>
 
 <h4 id="readme">Readme:</h4>
 <p><strong>Description:</strong> Generates project readme from projects github-docs jekyll project.  The intention is keep the readme within ./docs/jekyll as the projects single source of truth.<br />
 <strong>Note</strong>: Replace with real values.</p>
-<div class="language-makefile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">readme</span><span class="o">:</span>
-  <span class="err">cc-build</span> <span class="err">readme</span> <span class="err">$(JEKYLL_DIR)</span> <span class="err">./README.md</span> <span class="err">\</span>
-	  <span class="err">--tmp-dir</span> <span class="err">$(README_GEN_DIR)</span> <span class="err">--jekyll-cmd</span> <span class="s1">'$(JEKYLL_BUILD_CMD)'</span>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PROJECT_ROOT :<span class="o">=</span> <span class="si">$(</span>PWD<span class="si">)</span>
+DOCS_DIR :<span class="o">=</span> <span class="si">$(</span>PROJECT_ROOT<span class="si">)</span>/docs
+JEKYLL_DIR :<span class="o">=</span> <span class="si">$(</span>DOCS_DIR<span class="si">)</span>/jekyll
+JEKYLL_BUILD :<span class="o">=</span> bundle <span class="nb">exec </span>jekyll build <span class="nt">--quiet</span>
+README_GEN_DIR :<span class="o">=</span> <span class="si">$(</span>JEKYLL_DIR<span class="si">)</span>/tmp_readme
+
+readme:
+  cc-build readme <span class="si">$(</span>JEKYLL_DIR<span class="si">)</span> ./README.md <span class="se">\</span>
+	  <span class="nt">--tmp-dir</span> <span class="si">$(</span>README_GEN_DIR<span class="si">)</span> <span class="nt">--jekyll-cmd</span> <span class="s1">'$(JEKYLL_BUILD)'</span>
 </code></pre></div></div>
 
 <h4 id="add-yaml-front-matter">add-yaml-front-matter:</h4>
@@ -101,8 +107,8 @@
 <h4 id="sub-commands-generate">Sub-commands: (generate)</h4>
 
 <h4 id="generate">Generate:</h4>
-<p><strong>Description:</strong> This is for custom Cookiecutter template (<a href="https://github.com/jcook3701/cc-templates">cc-templates</a>) that utilizes ccmeta.toml files to organize projects.
-<strong>Note:</strong> This feature is still in development.  <strong>(Use at your own risk!!!)</strong>
+<p><strong>Description:</strong> This is for custom Cookiecutter template (<a href="https://github.com/jcook3701/cc-templates">cc-templates</a>) that utilizes ccmeta.toml files to organize projects.<br />
+<strong>Note:</strong> This feature is still in development.  <strong>(Use at your own risk!!!)</strong><br />
 <strong>Arguments:</strong></p>
 <ul>
   <li>repo: Path to the template repository to generate README.md and Makefile
@@ -150,7 +156,7 @@
 <hr />
 
 <h2 id="authors-notes">Authors Notes:</h2>
-<h3 id="future-ideas-todos">Future Ideas (TODO’s):</h3>
+<h3 id="todos">TODO’s:</h3>
 <ol>
   <li>cc-templates/ccindex.toml
     <ul>
@@ -162,13 +168,13 @@
   <li>Thinking about adding a ci/cd process for version bumping.  To create a git tag.</li>
 </ol>
 
-<h3 id="future-design-decisions">Future Design Decisions</h3>
+<h3 id="future-design-decisions">Future Design Decisions:</h3>
 <ol>
   <li>I need to decide whether to change all my current Cookiecutter projects to use the prefix <code class="language-plaintext highlighter-rouge">cc-</code> and use them as submodules within the <a href="https://github.com/jcook3701/cc-templates">cc-templates</a> repository.  Or to just move the code directly into the cc-templates repository and use it as a monolithic repo.</li>
 </ol>
 
-<h2 id="packages">Packages</h2>
-<h3 id="pypi-stable">PyPi (stable)</h3>
+<h2 id="package">Package:</h2>
+<h3 id="pypi-stable">PyPi: (stable)</h3>
 
-<h3 id="testpypi-development">TestPyPi (development)</h3>
+<h3 id="testpypi-development">TestPyPi: (development)</h3>
 <p>https://test.pypi.org/project/cc-utils/</p>

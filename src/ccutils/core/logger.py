@@ -5,7 +5,7 @@
 See the LICENSE file for more details.
 
 Author: Jared Cook
-Description: ccutils project logger.
+Description: cc-utils project logger.
 """
 
 import logging
@@ -50,9 +50,6 @@ def _log_formatter(verbose: bool = False) -> logging.Formatter:
 
 def _console_handler(cfg: CLIConfig, verbose: bool = False) -> logging.Handler:
     """Return a console handler — uses TyperHandler for CLI-aware output."""
-
-    handler: logging.Handler = TyperHandler()
-
     console_handler: logging.StreamHandler[TextIO] = logging.StreamHandler(sys.stdout)
     console_handler.setLevel(logging.DEBUG if verbose else logging.INFO)
     console_handler.setFormatter(_log_formatter(verbose))
