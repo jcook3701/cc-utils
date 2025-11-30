@@ -1,11 +1,11 @@
-"""cc-utils Package
+"""nutri-matic Package
 
 © All rights reserved. Jared Cook
 
 See the LICENSE file for more details.
 
 Author: Jared Cook
-Description: Tests for ccutils.docs
+Description: Tests for nutrimatic.core.config
 """
 
 from __future__ import annotations
@@ -19,8 +19,8 @@ from unittest.mock import MagicMock, patch
 import pytest
 import yaml
 
-import ccutils.core.config as config_module
-from ccutils.models import CLIConfig
+import nutrimatic.core.config as config_module
+from nutrimatic.models import CLIConfig
 
 # ---------------------------------------------------------------------------
 # Fixtures

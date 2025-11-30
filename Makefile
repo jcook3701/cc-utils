@@ -1,6 +1,6 @@
 # Makefile
 # =========================================
-# Project: cc-utils
+# Project: nutri-matic 🍹
 # =========================================
 
 # --------------------------------------------------
@@ -36,7 +36,7 @@ endef
 # --------------------------------------------------
 # ⚙️ Build Settings
 # --------------------------------------------------
-PACKAGE_NAME := "cc-utils"
+PACKAGE_NAME := "nutri-matic"
 PACKAGE_AUTHOR := "Jared Cook"
 PACKAGE_VERSION := "0.1.1"
 # --------------------------------------------------
@@ -113,9 +113,9 @@ TWINE := $(PYTHON) -m twine
 PYPI := upload dist/*
 TESTPYPI := upload --repository testpypi --verbose dist/*
 # --------------------------------------------------
-# 🏃‍♂️ cc-utils command
+# 🏃‍♂️ nutrimatic command
 # --------------------------------------------------
-CCUTILS := $(PYTHON) -m ccutils
+NUTRIMATIC := $(PYTHON) -m nutrimatic
 # -------------------------------------------------------------------
 .PHONY: all venv install black-formatter-check black-formatter-fix format-check format-fix \
 	ruff-lint-check ruff-lint-fix yaml-lint-check lint-check lint-fix \
@@ -126,10 +126,10 @@ CCUTILS := $(PYTHON) -m ccutils
 # -------------------------------------------------------------------
 all: clean install lint-check typecheck test build-docs readme
 # --------------------------------------------------
-# Virtual Environment Setup
+# 🐍 Virtual Environment Setup
 # --------------------------------------------------
 venv:
-	$(AT)echo "🔨️ Creating virtual environment..."
+	$(AT)echo "🐍 Creating virtual environment..."
 	$(AT)$(CREATE_VENV)
 	$(AT)echo "✅ Virtual environment created."
 
@@ -141,7 +141,7 @@ install: venv
 	$(AT)$(PIP) install -e $(DEV_DOCS)
 	$(AT)echo "✅ Dependencies installed."
 # --------------------------------------------------
-# Formatting (black)
+# 🎨 Formatting (black)
 # --------------------------------------------------
 black-formatter-check:
 	$(AT)echo "🔍 Running black formatter style check..."
@@ -156,7 +156,7 @@ black-formatter-fix:
 format-check: black-formatter-check
 format-fix: black-formatter-fix
 # --------------------------------------------------
-# Linting (ruff, yaml)
+# 🔍 Linting (ruff, yaml)
 # --------------------------------------------------
 ruff-lint-check:
 	$(AT)echo "🔍 Running ruff linting..."
@@ -177,39 +177,39 @@ yaml-lint-check:
 lint-check: ruff-lint-check yaml-lint-check
 lint-fix: ruff-lint-fix
 # --------------------------------------------------
-# Typechecking (MyPy)
+# 🧠 Typechecking (MyPy)
 # --------------------------------------------------
 typecheck:
 	$(AT)echo "🧠 Checking types (MyPy)..."
 	$(AT)$(call run_ci_safe, $(MYPY) $(SRC_DIR) $(TEST_DIR))
 	$(AT)echo "✅ Python typecheck complete!"
 # --------------------------------------------------
-# Testing (pytest)
+# 🧪 Testing (pytest)
 # --------------------------------------------------
 test:
 	$(AT)echo "🧪 Running tests with pytest..."
 	$(AT)$(call run_ci_safe, $(PYTEST) $(TEST_DIR))
 	$(AT)echo "✅ Python tests complete!"
 # --------------------------------------------------
-# Documentation (Sphinx + Jekyll)
+# 📘 Documentation (Sphinx + Jekyll + nutrimatic)
 # --------------------------------------------------
 sphinx:
 	$(MAKE) -C $(SPHINX_DIR) all PUBLISHDIR=$(JEKYLL_SPHINX_DIR)
 
 jekyll:
-	$(MAKE) -C $(JEKYLL_DIR) build-docs;
+	$(MAKE) -C $(JEKYLL_DIR) build;
 
 jekyll-serve:
-	$(MAKE) -C $(JEKYLL_DIR) run-docs;
-
-build-docs: sphinx jekyll
-run-docs: jekyll-serve
+	$(MAKE) -C $(JEKYLL_DIR) run;
 
 readme:
-	$(AT)$(CCUTILS) build readme $(JEKYLL_DIR) ./README.md \
+	$(AT)$(NUTRIMATIC) build readme $(JEKYLL_DIR) ./README.md \
 		--tmp-dir $(README_GEN_DIR) --jekyll-cmd '$(JEKYLL_BUILD)'
+
+build-docs: sphinx jekyll readme
+run-docs: jekyll-serve
 # --------------------------------------------------
-# bump version of program
+# 🔖 Version Bumping (bumpy-my-version)
 # --------------------------------------------------
 # TODO: Also create a git tag of current version.
 bump-version-patch:
@@ -217,14 +217,14 @@ bump-version-patch:
 	$(AT)$(BUMPVERSION) $(PATCH)
 	$(AT)echo "✅ $(PACKAGE_NAME) version update complete!"
 # --------------------------------------------------
-# Build program
+# 📦 Build program (build)
 # --------------------------------------------------
 build:
 	$(AT)echo "📦 Packing $(PACKAGE_NAME)..."
 	$(AT)$(BUILD)
 	$(AT)echo "✅ $(PACKAGE_NAME) packaging complete!"
 # --------------------------------------------------
-# Publish program (test.pypi & pypi)
+# 🚀 Publish program (twine) (Repos: Testpypi, & Pypi)
 # --------------------------------------------------
 publish-test:
 	$(AT)echo "🚀 Publishing $(PACKAGE_NAME) to testpypi..."
@@ -236,11 +236,10 @@ publish:
 	$(AT)$(TWINE) $(PYPI)
 	$(AT)echo "✅ $(PACKAGE_NAME) upload complete!"
 # --------------------------------------------------
-# Clean artifacts
+# 🧹 Clean artifacts
 # --------------------------------------------------
 clean:
 	$(AT)echo "🧹 Cleaning build artifacts..."
-	$(AT)rm -rf $(SPHINX_DIR)/_build
 	$(AT)$(MAKE) -C $(JEKYLL_DIR) clean
 	$(AT)$(MAKE) -C $(SPHINX_DIR) clean
 	$(AT)rm -rf build dist *.egg-info
@@ -270,7 +269,6 @@ help:
 	$(AT)echo "  make build-docs             Build Sphinx + Jekyll documentation"
 	$(AT)echo "  make run-docs               Preview Jekyll documentation"
 	$(AT)echo "  make readme                 Uses Jekyll $(JEKYLL_DIR)/README.md for readme generation"
-	$(AT)echo "  make run                    Run cc-utils.py"
 	$(AT)echo "  make clean                  Clean build artifacts"
 	$(AT)echo "  make all                    Run lint, typecheck, test, and docs"
 	$(AT)echo "Options:"

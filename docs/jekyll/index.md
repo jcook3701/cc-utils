@@ -1,8 +1,7 @@
 ---
 layout: default
-title: cc-utils
+title: Nutri-Matic
 nav_order: 1
-description: Cookiecutter utilities for jcook3701's cookiecuter templates.
 ---
 
 

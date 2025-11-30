@@ -1,13 +1,13 @@
 # pyproject.toml
 # =========================================
-# Project: cc-utils
+# Project: nutri-matic 🍹
 # =========================================
 [build-system]
 requires = ["setuptools>=64", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "cc-utils"
+name = "nutri-matic"
 version = "0.1.1"
 description = "Cookiecutter utilities for jcook3701's cookiecutter templates."
 authors = [
@@ -41,9 +41,9 @@ classifiers = [
   "Operating System :: OS Independent",
 ]
 [project.urls]
-Homepage = "https://github.com/jcook3701/cc-utils"
-Repository = "https://github.com/jcook3701/cc-utils"
-Documentation = "https://github.com/jcook3701/cc-utils/docs/jekyll"
+Homepage = "https://github.com/jcook3701/nutri-matic"
+Repository = "https://github.com/jcook3701/nutri-matic"
+Documentation = "https://github.com/jcook3701/nutri-matic/docs/jekyll"
 
 [project.optional-dependencies]
 dev = [
@@ -54,6 +54,7 @@ dev = [
   "ruff>=0.14.0",
   "mypy==1.9",
   "myst-parser>=0.18",
+  "nameisok>=0.1",
   "pytest>=8.0",
   "pytest-cov>=7.0",
   "yamllint>=1.0",
@@ -66,13 +67,17 @@ docs = [
   "sphinx-autodoc-typehints>=3.5",
 ]
 # ====================================
-# Optional entry point (lets you run with `python -m cc-utils`)
+# Optional entry point:
+# lets you run with either:
+#   1. ```python -m nutrimatic```
+#   2. ```nutrimatic```
 # ====================================
 [project.scripts]
-cc-utils = "ccutils.cli.main:app"
-cc-build = "ccutils.cli.build:app"
-cc-config = "ccutils.cli.config:app"
-cc-templates = "ccutils.cli.templates:app"
+nutrimatic = "nutrimatic.cli.main:app"
+nm-util = "nutrimatic.cli.main:app"
+nm-build = "nutrimatic.cli.build:app"
+nm-cfg = "nutrimatic.cli.config:app"
+nm-templates = "nutrimatic.cli.templates:app"
 
 # ====================================
 # Setuptools Configuration:
@@ -82,7 +87,7 @@ where = [
   "src",
   ]
 include = [
-  "ccutils*",
+  "nutrimatic*",
 ]
 # ====================================
 # Version Bumping (bump-my-version):
@@ -98,6 +103,8 @@ commit = false
 
 [[tool.bumpversion.files]]
 filename = "Makefile"
+[[tool.bumpversion.files]]
+filename = "./docs/jekyll/Makefile"
 [[tool.bumpversion.files]]
 filename = "./docs/jekyll/_config.yml"
 [[tool.bumpversion.files]]
@@ -158,7 +165,7 @@ ignore = [
 # ====================================
 [tool.ruff.lint.isort]
 combine-as-imports = true
-known-first-party = ["ccutils"]
+known-first-party = ["nutrimatic"]
 # ====================================
 # Formatter Configuration:
 # Ruff also formats YAML, TOML, and Markdown
