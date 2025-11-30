@@ -226,6 +226,6 @@ cc-github-docs
 
 ## Package:
 ### PyPi: (stable)
-
+https://pypi.org/project/{{ site.repo_name }}/
 ### TestPyPi: (development)
 https://test.pypi.org/project/{{ site.repo_name }}/

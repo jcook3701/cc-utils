@@ -225,6 +225,6 @@ cc-github-docs
 
 <h2 id="package">Package:</h2>
 <h3 id="pypi-stable">PyPi: (stable)</h3>
-
+<p>https://pypi.org/project/nutri-matic/</p>
 <h3 id="testpypi-development">TestPyPi: (development)</h3>
 <p>https://test.pypi.org/project/nutri-matic/</p>
