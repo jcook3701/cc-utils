@@ -1,12 +1,12 @@
 <!--
   Auto-generated file. Do not edit directly.
-  Edit /home/jcook/Documents/git_repo/cc-utils/docs/jekyll/README.md instead.
+  Edit /home/jcook/Documents/git_repo/nutri-matic/docs/jekyll/README.md instead.
   Run ```make readme``` to regenerate this file
 -->
 <h1 id="nutri-matic">Nutri-Matic</h1>
 
 <p><strong>Author:</strong> Jared Cook<br />
-<strong>Version:</strong> 0.1.1</p>
+<strong>Version:</strong> 0.1.2</p>
 
 <h2 id="overview">Overview</h2>
 <p>Cookiecutter utilities for streamlining development and utilization of Cookiecutter templates.</p>

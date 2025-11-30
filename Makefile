@@ -38,7 +38,7 @@ endef
 # --------------------------------------------------
 PACKAGE_NAME := "nutri-matic"
 PACKAGE_AUTHOR := "Jared Cook"
-PACKAGE_VERSION := "0.1.1"
+PACKAGE_VERSION := "0.1.2"
 # --------------------------------------------------
 # 📁 Build Directories
 # --------------------------------------------------
