@@ -31,7 +31,7 @@ sys.path.insert(0, os.path.abspath("../../src"))
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "nutri-matic"
-copyright = "2025, Jared Cook"
+copyright = "2025, Jared Cook" # noqa: A001
 author = "Jared Cook"
 release = "0.1.2"
 

@@ -1,6 +1,6 @@
 # Makefile
 # =========================================
-# Project: github-docs for  nutri-matic 🍹
+# Project: github-docs for nutri-matic 🍹
 # =========================================
 
 # --------------------------------------------------
@@ -32,7 +32,7 @@ define run_ci_safe =
 ( $1 || [ "$(CI)" != "1" ] )
 endef
 # --------------------------------------------------
-# ⚙️ Build Settings
+# ⚙️ Jekyll Build Settings
 # --------------------------------------------------
 PACKAGE_NAME := "nutri-matic"
 AUTHOR := "Jared Cook"

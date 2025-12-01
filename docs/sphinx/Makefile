@@ -1,5 +1,7 @@
-# Makefile for Sphinx documentation
-#
+# Makefile
+# =========================================
+# Project: Sphinx documentation for  nutri-matic 🍹
+# =========================================
 
 # --------------------------------------------------
 # ⚙️ Sphinx Build Settings

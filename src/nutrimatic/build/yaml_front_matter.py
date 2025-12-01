@@ -77,7 +77,7 @@ def add_front_matter_to_dir(
         if not file_path.is_file():
             continue
         logger.debug(f"Checking file: {file_path}")
-        if file_path.suffix.lower() not in extensions:
+        if file_path.suffix.lower().lstrip('.') not in extensions:
             logger.info(f" - skipped due to extension: {file_path.suffix}")
             continue
         if add_front_matter_to_file(file_path, project):
