@@ -80,3 +80,7 @@
 
 - Fixed removal of dependencies
 - Fixed makefile so clean wont remove sphinx docs again.
+
+### 🚀 Added
+
+- *(build)* CI/CD updates and major updates to use pre-commit, codespell, deptry, & pip-audit. Also setup configuration for git-cliff chanagelog generation.

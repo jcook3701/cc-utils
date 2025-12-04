@@ -14,7 +14,10 @@
 <hr />
 
 <p><img src="https://github.com/jcook3701/nutri-matic/actions/workflows/black-format.yml/badge.svg" alt="black-format" />
+<img src="https://github.com/jcook3701/nutri-matic/actions/workflows/dependency-check.yml/badge.svg" alt="dependency-check" />
 <img src="https://github.com/jcook3701/nutri-matic/actions/workflows/ruff-lint.yml/badge.svg" alt="ruff-lint" />
+<img src="https://github.com/jcook3701/nutri-matic/actions/workflows/security-audit.yml/badge.svg" alt="security-audit" />
+<img src="https://github.com/jcook3701/nutri-matic/actions/workflows/spellcheck.yml/badge.svg" alt="spellcheck" />
 <img src="https://github.com/jcook3701/nutri-matic/actions/workflows/tests.yml/badge.svg" alt="tests" />
 <img src="https://github.com/jcook3701/nutri-matic/actions/workflows/typecheck.yml/badge.svg" alt="typecheck" />
 <img src="https://github.com/jcook3701/nutri-matic/actions/workflows/yaml-lint.yml/badge.svg" alt="yaml-lint" /></p>

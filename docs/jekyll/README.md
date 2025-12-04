@@ -9,7 +9,10 @@ __Version:__ {{ site.version }}
 ***
 
 ![black-format](https://github.com/{{ site.github_username }}/{{ site.repo_name }}/actions/workflows/black-format.yml/badge.svg)
+![dependency-check](https://github.com/{{ site.github_username }}/{{ site.repo_name }}/actions/workflows/dependency-check.yml/badge.svg)
 ![ruff-lint](https://github.com/{{ site.github_username }}/{{ site.repo_name }}/actions/workflows/ruff-lint.yml/badge.svg)
+![security-audit](https://github.com/{{ site.github_username }}/{{ site.repo_name }}/actions/workflows/security-audit.yml/badge.svg)
+![spellcheck](https://github.com/{{ site.github_username }}/{{ site.repo_name }}/actions/workflows/spellcheck.yml/badge.svg)
 ![tests](https://github.com/{{ site.github_username }}/{{ site.repo_name }}/actions/workflows/tests.yml/badge.svg)
 ![typecheck](https://github.com/{{ site.github_username }}/{{ site.repo_name }}/actions/workflows/typecheck.yml/badge.svg)
 ![yaml-lint](https://github.com/{{ site.github_username }}/{{ site.repo_name }}/actions/workflows/yaml-lint.yml/badge.svg)

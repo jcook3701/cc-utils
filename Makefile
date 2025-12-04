@@ -287,6 +287,7 @@ readme:
 	$(AT)$(NUTRIMATIC) build readme $(JEKYLL_DIR) $(README_FILE) \
 		--tmp-dir $(README_GEN_DIR) --jekyll-cmd '$(JEKYLL_BUILD)'
 
+# Note: Run as part of pre-commit.  No manual run needed.
 build-docs: sphinx jekyll readme
 	$(AT)$(GIT) add $(DOCS_DIR)
 	$(AT)$(GIT) add $(README_FILE)
