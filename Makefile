@@ -338,6 +338,16 @@ build:
 	$(AT)$(BUILD)
 	$(AT)echo "✅ $(PACKAGE_NAME) packaging complete!"
 # --------------------------------------------------
+# 🐙 Github Commands (git)
+# --------------------------------------------------
+#NOTE: Not yet tested!!!
+git-release:
+	$(AT)echo "📦 $(PACKAGE_NAME) Release Tag - $(RELEASE)! 🎉"
+	$(AT)$(GIT) tag -a $(RELEASE) -m "Release $(RELEASE)"
+	$(AT)$(GIT) push origin $(RELEASE)
+	$(AT)$(GITHUB) release create $(RELEASE) --title $(PACKAGE_NAME) $(RELEASE) --generate-notes
+	$(AT)echo "✅ Finished uploading Release - $(RELEASE)! 🎉"
+# --------------------------------------------------
 # 🚀 Publish program (twine) (Repos: Testpypi, & Pypi)
 # --------------------------------------------------
 publish-test:
@@ -349,6 +359,13 @@ publish:
 	$(AT)echo "🚀 Publishing $(PACKAGE_NAME) to pypi..."
 	$(AT)$(TWINE) $(PYPI)
 	$(AT)echo "✅ $(PACKAGE_NAME) upload complete!"
+# --------------------------------------------------
+# 📢 Release
+# --------------------------------------------------
+pre-commit: test security dependency-check format-fix lint-check spellcheck typecheck
+pre-release: clean install pre-commit build-docs changelog build
+test-release: pre-release test-publish
+release: pre-release publish git-release bump-version-patch
 # --------------------------------------------------
 # 🧹 Clean artifacts
 # --------------------------------------------------

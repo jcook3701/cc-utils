@@ -114,12 +114,32 @@ $ nm-templates generate $(repo)
 
 ***
 
-## Development Strategy
-__Note:__ All Makefile commands are used in ci/cd to ensure that if they pass locally they should also pass once pushed to github.  
+## Development Strategy:
 ### 🐍️ Build environment (.venv)
+__Description:__ This creates python virtual environment and installs all necessary packages.  
 ``` shell
 $ make install
 ```
+### CI/CD Checklist 🧬🛡️🎨🔍🎓🧠🧪:
+__Description:__  Runs all checks that are used for CI/CD.  This should pass without error before attempting a pull-request.  
+__Note:__ All Makefile commands are used in CI/CD to ensure that if they pass locally they should also pass once pushed to github.  
+```shell
+$ make pre-commit
+```
+### 📢 Test Release Project (Test PyPi):
+__Description:__ This runs the entire build cycle and results in a new test release to [test.pypi](https://test.pypi.org/project/nutri-matic/).  
+```shell
+$ make test-release
+```
+### 📢 Release Project (Github & PyPi):
+__Description:__   This runs the entire build cycle and results in a new release to Github and [Pypi](https://pypi.org/project/nutri-matic/).  Project is also versioned up after release has been published.  
+```shell
+$ make release
+```
+
+***
+
+## Make Toolkit (Individual Commands):
 ### 🧬 Dependency Management (deptry)
 ```shell
 $ make dependency-check

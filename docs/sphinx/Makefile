@@ -59,7 +59,7 @@ clean:
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 # --------------------------------------------------
 %: Makefile
-	@echo "🏃 Running Sphinx Documentation Generator..."
-	$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+	@echo "📚 Running Sphinx Documentation Generator..."
+	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 	@echo "✅ Sphinx run complete."
 # --------------------------------------------------

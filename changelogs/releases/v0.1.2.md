@@ -82,6 +82,7 @@
 - Fixed makefile so clean wont remove sphinx docs again.
 - *(dependencies)* Fixed errors from deptry.
 - *(docs)* Updates to pre-commit to not remove double spaces from markdown files and fixed main readme file.
+- *(changelogs)* Got changelogs setup how I actually want.  Now there should be a seperate changelog per a release as well as a running changelog.  Major updates to ci/cd as well.
 
 ### 🚀 Added
 
