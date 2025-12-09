@@ -87,6 +87,7 @@
 ### 📚 Documentation
 
 - *(readme)* Updates for development cycle explanation.
+- *(readme)* Minor fixes
 
 ### 🚀 Added
 
