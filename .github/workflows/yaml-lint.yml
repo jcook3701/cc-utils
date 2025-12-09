@@ -1,4 +1,4 @@
-# yaml lint
+# .github/workflows/yaml-lint.yml
 ---
 name: YAML Lint
 

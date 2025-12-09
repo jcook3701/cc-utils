@@ -1,11 +1,11 @@
-"""cc-utils Package
+"""nutri-matic Package
 
 © All rights reserved. Jared Cook
 
 See the LICENSE file for more details.
 
 Author: Jared Cook
-Description: Tests for ccutils.docs
+Description: Tests for nutrimatic.core.config
 """
 
 from __future__ import annotations
@@ -19,12 +19,13 @@ from unittest.mock import MagicMock, patch
 import pytest
 import yaml
 
-import ccutils.core.config as config_module
-from ccutils.models import CLIConfig
+import nutrimatic.core.config as config_module
+from nutrimatic.models import CLIConfig
 
 # ---------------------------------------------------------------------------
 # Fixtures
 # ---------------------------------------------------------------------------
+
 
 @pytest.fixture
 def mock_cli_config() -> MagicMock:
@@ -54,6 +55,7 @@ def quiet_logger() -> Generator[None, None, None]:
 # ---------------------------------------------------------------------------
 # _read_config
 # ---------------------------------------------------------------------------
+
 
 def test_read_config_yaml(tmp_path: Path, quiet_logger: None) -> None:
     cfg_file = tmp_path / "config.yml"
@@ -88,6 +90,7 @@ def test_read_config_wrong_type(tmp_path: Path, quiet_logger: None) -> None:
 # _write_config
 # ---------------------------------------------------------------------------
 
+
 def test_write_config_yaml(
     tmp_path: Path,
     mock_cli_config: MagicMock,
@@ -118,6 +121,7 @@ def test_write_config_json(
 # _load_or_create_config
 # ---------------------------------------------------------------------------
 
+
 def test_load_or_create_config_existing_valid(
     tmp_path: Path,
     mock_cli_config: MagicMock,
@@ -142,7 +146,9 @@ def test_load_or_create_config_invalid_yaml(
     cfg_file = tmp_path / "config.yml"
     cfg_file.write_text("not: valid: yaml:::")  # corrupt YAML
 
-    with patch.object(CLIConfig, "model_validate", side_effect=Exception("validation error")):
+    with patch.object(
+        CLIConfig, "model_validate", side_effect=Exception("validation error")
+    ):
         cfg = config_module._load_or_create_config(cfg_file)
 
     assert cfg is mock_cli_config
@@ -168,6 +174,7 @@ def test_load_or_create_config_missing_file(
 # ensure_config
 # ---------------------------------------------------------------------------
 
+
 def test_ensure_config_uses_cache(
     tmp_path: Path,
     mock_cli_config: MagicMock,
@@ -177,7 +184,9 @@ def test_ensure_config_uses_cache(
     with patch.object(config_module, "CONFIG_PATH", tmp_path / "config.yml"):
         config_module.ensure_config.cache_clear()
 
-        with patch.object(config_module, "_load_or_create_config", return_value=mock_cli_config) as mock_load:
+        with patch.object(
+            config_module, "_load_or_create_config", return_value=mock_cli_config
+        ) as mock_load:
             c1 = config_module.ensure_config()
             c2 = config_module.ensure_config()
 

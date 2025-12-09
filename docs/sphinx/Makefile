@@ -1,5 +1,13 @@
-# Makefile for Sphinx documentation
-#
+# Makefile
+# =========================================
+# Project: Sphinx documentation for  nutri-matic 🍹
+# =========================================
+
+# --------------------------------------------------
+# ⚙️ Environment Settings
+# --------------------------------------------------
+SHELL := /bin/bash
+.SHELLFLAGS := -O globstar -c
 
 # --------------------------------------------------
 # ⚙️ Sphinx Build Settings
@@ -51,7 +59,7 @@ clean:
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 # --------------------------------------------------
 %: Makefile
-	@echo "🏃 Running Sphinx Documentation Generator..."
+	@echo "📚 Running Sphinx Documentation Generator..."
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 	@echo "✅ Sphinx run complete."
 # --------------------------------------------------

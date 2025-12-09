@@ -1,16 +1,16 @@
-# cc-utils documentation
+# nutri-matic documentation
 ---
 
-title: "cc-utils"
+title: "Nutri-Matic"
 author: "Jared Cook"
-version: "0.1.1"
+version: "0.1.2"
 description: "Cookiecutter utilities for streamlining development and utilization of Cookiecutter templates."
 remote_theme: "pmarsceill/just-the-docs"
 ga_tracking: "G-C7PWLWSHB9"
 
-repo_name: "cc-utils"
-baseurl: "/cc-utils"
-repo_url: "https://github.com/jcook3701/cc-utils"
+repo_name: "nutri-matic"
+baseurl: "/nutri-matic"
+repo_url: "https://github.com/jcook3701/nutri-matic"
 
 # Author Remote User Accounts
 # twitter_username: ""
@@ -52,8 +52,8 @@ heading_anchors: true
 
 # Aux links for the upper right navigation
 aux_links:
-  "cc-utils on GitHub":
-    - "//github.com/jcook3701/cc-utils"
+  "nutri-matic on GitHub":
+    - "//github.com/jcook3701/nutri-matic"
 
 # Makes Aux links open in a new tab. Default is false
 aux_links_new_tab: false
@@ -65,8 +65,8 @@ nav_enabled: true
 
 # External navigation links
 nav_external_links:
-  - title: "cc-utils on GitHub"
-    url: "https://github.com/jcook3701/cc-utils"
+  - title: "nutri-matic on GitHub"
+    url: "https://github.com/jcook3701/nutri-matic"
 
 # Back to top link
 back_to_top: true
@@ -74,7 +74,7 @@ back_to_top_text: "Back to top"
 
 footer_content: >-
   Copyright &copy; 2025 Jared Cook. Distributed by an
-  <a href="https://github.com/jcook3701/cc-utils/blob/master/LICENSE">
+  <a href="https://github.com/jcook3701/nutri-matic/blob/master/LICENSE">
       MIT license.
   </a>
   <a href=""></a>
@@ -90,7 +90,7 @@ last_edit_time_format: >-
 gh_edit_link: true # show or hide edit this page link
 gh_edit_link_text: "Edit this page on GitHub"
 # the github URL for your repo
-gh_edit_repository: "https://github.com/jcook3701/cc-utils"
+gh_edit_repository: "https://github.com/jcook3701/nutri-matic"
 # the branch that your docs is served from
 gh_edit_branch: "master"
 # the source that your files originate from
@@ -135,5 +135,5 @@ exclude:
 
 # Optional SEO metadata
 seo:
-  title: "cc-utils documentation"
-  description: "Full code documentation for the cc-utils project"
+  title: "nutri-matic documentation"
+  description: "Full code documentation for the nutri-matic project"

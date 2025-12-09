@@ -1,6 +1,6 @@
 # Makefile
 # =========================================
-# Project: cc-utils
+# Project: nutri-matic 🍹
 # =========================================
 
 # --------------------------------------------------
@@ -29,6 +29,9 @@ else
 CI := 0
 endif
 
+# --------------------------------------------------
+# 🏗️ CI/CD Functions
+# --------------------------------------------------
 # Define a reusable CI-safe runner
 define run_ci_safe =
 ( $1 || [ "$(CI)" != "1" ] )
@@ -36,25 +39,39 @@ endef
 # --------------------------------------------------
 # ⚙️ Build Settings
 # --------------------------------------------------
-PACKAGE_NAME := "cc-utils"
-PACKAGE_AUTHOR := "Jared Cook"
-PACKAGE_VERSION := "0.1.1"
+PACKAGE_NAME := "nutri-matic"
+AUTHOR := "Jared Cook"
+VERSION := "0.1.2"
+RELEASE := v$(VERSION)
+# --------------------------------------------------
+# 🐙 Github Build Settings
+# --------------------------------------------------
+GITHUB_USER := "jcook3701"
+GITHUB_REPO := $(GITHUB_USER)/$(PACKAGE_NAME)
 # --------------------------------------------------
 # 📁 Build Directories
 # --------------------------------------------------
 PROJECT_ROOT := $(PWD)
 SRC_DIR := $(PROJECT_ROOT)/src
-TEST_DIR := $(PROJECT_ROOT)/tests
+TESTS_DIR := $(PROJECT_ROOT)/tests
 DOCS_DIR := $(PROJECT_ROOT)/docs
 SPHINX_DIR := $(DOCS_DIR)/sphinx
 JEKYLL_DIR := $(DOCS_DIR)/jekyll
 JEKYLL_SPHINX_DIR := $(JEKYLL_DIR)/sphinx
 README_GEN_DIR := $(JEKYLL_DIR)/tmp_readme
+CHANGELOG_DIR := $(PROJECT_ROOT)/changelogs
+CHANGELOG_RELEASE_DIR := $(CHANGELOG_DIR)/releases
+# --------------------------------------------------
+# 📄 Build Files
+# --------------------------------------------------
+README_FILE := $(PROJECT_ROOT)/README.md
+CHANGELOG_FILE := $(CHANGELOG_DIR)/CHANGELOG.md
+CHANGELOG_RELEASE_FILE := $(CHANGELOG_RELEASE_DIR)/$(RELEASE).md
 # --------------------------------------------------
 # 🐍 Python / Virtual Environment
 # --------------------------------------------------
 PYTHON_CMD := python3.11
-VENV_DIR := .venv
+VENV_DIR := $(PROJECT_ROOT)/.venv
 # --------------------------------------------------
 # 🐍 Python Dependencies
 # --------------------------------------------------
@@ -69,25 +86,38 @@ ACTIVATE := source $(VENV_DIR)/bin/activate
 PYTHON := $(ACTIVATE) && $(PYTHON_CMD)
 PIP := $(PYTHON) -m pip
 # --------------------------------------------------
-# 🧠 Typing (mypy)
+# 🧬 Dependency Management (deptry)
 # --------------------------------------------------
-MYPY := $(PYTHON) -m mypy
+DEPTRY := $(ACTIVATE) && deptry
 # --------------------------------------------------
-# 🔍 Linting (ruff, yaml)
+# 🛡️ Security Audit (pip-audit)
 # --------------------------------------------------
-RUFF := $(PYTHON) -m ruff
-YAMLLINT := $(PYTHON) -m yamllint
+PIPAUDIT :=	$(ACTIVATE) && pip-audit
 # --------------------------------------------------
 # 🎨 Formatting (black)
 # --------------------------------------------------
 BLACK := $(PYTHON) -m black
+# --------------------------------------------------
+# 🔍 Linting (ruff, yaml)
+# --------------------------------------------------
+RUFF := $(PYTHON) -m ruff
+TOMLLINT := tomllint
+YAMLLINT := $(PYTHON) -m yamllint
+# --------------------------------------------------
+# 🎓 Spellchecker (codespell)
+# --------------------------------------------------
+CODESPELL := $(ACTIVATE) && codespell
+# --------------------------------------------------
+# 🧠 Typing (mypy)
+# --------------------------------------------------
+MYPY := $(PYTHON) -m mypy
 # --------------------------------------------------
 # 🧪 Testing (pytest)
 # --------------------------------------------------
 PYTEST := $(PYTHON) -m pytest
 COVERAGE := $(ACTIVATE) && coverage run -m pytest
 # --------------------------------------------------
-# 📘 Documentation (Sphinx + Jekyll)
+# 📚 Documentation (Sphinx + Jekyll)
 # --------------------------------------------------
 SPHINX := $(PYTHON) -m sphinx -b markdown
 JEKYLL_BUILD := bundle exec jekyll build --quiet
@@ -102,6 +132,21 @@ MAJOR := major
 MINOR := minor
 PATCH := patch
 # --------------------------------------------------
+# 📜 Changelog generation (git-clif)
+# --------------------------------------------------
+GITCLIFF := git cliff
+GITCLIFF_CHANGELOG := $(GITCLIFF) --output $(CHANGELOG_FILE)
+GITCLIFF_CHANGELOG_RELEASE := $(GITCLIFF) --unreleased --tag $(RELEASE) --output $(CHANGELOG_RELEASE_FILE)
+# --------------------------------------------------
+# 🐙 Github Tools (git)
+# --------------------------------------------------
+GIT := git
+GITHUB := gh
+# --------------------------------------------------
+# 🚨 Pre-Commit (pre-commit)
+# --------------------------------------------------
+PRECOMMIT := $(ACTIVATE) && pre-commit
+# --------------------------------------------------
 # 📦 Build (build)
 # --------------------------------------------------
 BUILD := $(PYTHON) -m build
@@ -113,11 +158,11 @@ TWINE := $(PYTHON) -m twine
 PYPI := upload dist/*
 TESTPYPI := upload --repository testpypi --verbose dist/*
 # --------------------------------------------------
-# 🏃‍♂️ cc-utils command
+# 🏃‍♂️ nutrimatic command
 # --------------------------------------------------
-CCUTILS := $(PYTHON) -m ccutils
+NUTRIMATIC := $(PYTHON) -m nutrimatic
 # -------------------------------------------------------------------
-.PHONY: all venv install black-formatter-check black-formatter-fix format-check format-fix \
+.PHONY: all list-folders venv install black-formatter-check black-formatter-fix format-check format-fix \
 	ruff-lint-check ruff-lint-fix yaml-lint-check lint-check lint-fix \
 	typecheck test sphinx jekyll jekyll-serve build-docs run-docs readme \
 	build publish clean help
@@ -126,28 +171,60 @@ CCUTILS := $(PYTHON) -m ccutils
 # -------------------------------------------------------------------
 all: clean install lint-check typecheck test build-docs readme
 # --------------------------------------------------
-# Virtual Environment Setup
+# Make Internal Utilities
+# --------------------------------------------------
+list-folders:
+	$(AT)printf "\
+	🐍 src: $(SRC_DIR)\n\
+	🧪 Test: $(TESTS_DIR)\n"
+# --------------------------------------------------
+# 🐍 Virtual Environment Setup
 # --------------------------------------------------
 venv:
-	$(AT)echo "🔨️ Creating virtual environment..."
+	$(AT)echo "🐍 Creating virtual environment..."
 	$(AT)$(CREATE_VENV)
 	$(AT)echo "✅ Virtual environment created."
 
 install: venv
 	$(AT)echo "📦 Installing project dependencies..."
-	$(AT)$(PIP) install --upgrade pip
+	$(AT)$(PIP) install --upgrade pip setuptools wheel
 	$(AT)$(PIP) install -e $(DEPS)
 	$(AT)$(PIP) install -e $(DEV_DEPS)
 	$(AT)$(PIP) install -e $(DEV_DOCS)
 	$(AT)echo "✅ Dependencies installed."
 # --------------------------------------------------
-# Formatting (black)
+# 🚨 Pre-Commit (pre-commit)
+# --------------------------------------------------
+# NOTE: Should only be needed once!
+pre-commit-init:
+	$(AT)echo "📦 Installing pre-commit hooks and hook-types..."
+	$(AT)which $(GIT) >/dev/null || { $(AT)echo "Git is required"; exit 1; }
+	$(AT)$(PRECOMMIT) install --install-hooks
+	$(AT)$(PRECOMMIT) install --hook-type pre-commit --hook-type commit-msg --hook-type typos-commit-msg
+	$(AT)echo "✅ pre-commit dependencies installed!"
+# --------------------------------------------------
+# 🛡️ Security (pip-audit)
+# --------------------------------------------------
+security:
+	$(AT)echo "🛡️ Running security audit..."
+	$(AT)$(call run_ci_safe, $(PIPAUDIT))
+	$(AT)echo "✅ Finished security audit!"
+# --------------------------------------------------
+# 🧬 Dependency Management (deptry)
+# --------------------------------------------------
+dependency-check:
+	$(AT)echo "🧬 Checking dependency issues..."
+	$(AT)$(DEPTRY) --pep621-dev-dependency-groups dev,docs \
+		 $(SRC_DIR)
+	$(AT)echo "✅ Finished checking for dependency issues!"
+# --------------------------------------------------
+# 🎨 Formatting (black)
 # --------------------------------------------------
 black-formatter-check:
 	$(AT)echo "🔍 Running black formatter style check..."
 	$(AT)$(call run_ci_safe, $(BLACK) --check $(SRC_DIR) $(TESTS_DIR))
 	$(AT)echo "✅ Finished formatting check of Python code with Black!"
-	
+
 black-formatter-fix:
 	$(AT)echo "🎨 Running black formatter fixes..."
 	$(AT)$(BLACK) $(SRC_DIR) $(TESTS_DIR)
@@ -156,60 +233,82 @@ black-formatter-fix:
 format-check: black-formatter-check
 format-fix: black-formatter-fix
 # --------------------------------------------------
-# Linting (ruff, yaml)
+# 🔍 Linting (ruff, yaml)
 # --------------------------------------------------
 ruff-lint-check:
 	$(AT)echo "🔍 Running ruff linting..."
-	$(AT)$(RUFF) check $(SRC_DIR) $(TEST_DIR)
+	$(AT)$(MAKE) list-folders
+	$(AT)$(call run_ci_safe, $(RUFF) check $(SRC_DIR) $(TESTS_DIR))
 	$(AT)echo "✅ Python lint check complete!"
 
 ruff-lint-fix:
 	$(AT)echo "🎨 Running ruff lint fixes..."
-	$(AT)$(RUFF) check --show-files $(SRC_DIR) $(TEST_DIR)
-	$(AT)$(RUFF) check --fix $(SRC_DIR) $(TEST_DIR)
+	$(AT)$(RUFF) check --show-files $(SRC_DIR) $(TESTS_DIR)
+	$(AT)$(RUFF) check --fix $(SRC_DIR) $(TESTS_DIR)
 	$(AT)echo "✅ Python lint fix complete!"
+
+toml-lint-check:
+	$(AT)echo "🔍 Running Tomllint..."
+	$(AT)$(ACTIVATE) && \
+		find $(PROJECT_ROOT) -name "*.toml" \
+			! -path "$(VENV_DIR)/*" \
+			! -path "*{{*" \
+			! -path "*}}*" \
+			-print0 | xargs -0 -n 1 $(TOMLLINT)
+	$(AT)echo "✅ Finished linting check of toml configuration files with Tomllint!"
 
 yaml-lint-check:
 	$(AT)echo "🔍 Running yamllint..."
 	$(AT)$(YAMLLINT) .
 	$(AT)echo "✅ Yaml lint check complete!"
 
-lint-check: ruff-lint-check yaml-lint-check
+lint-check: ruff-lint-check toml-lint-check yaml-lint-check
 lint-fix: ruff-lint-fix
 # --------------------------------------------------
-# Typechecking (MyPy)
+# 🎓 Spellchecker (codespell)
+# --------------------------------------------------
+spellcheck:
+	$(AT)echo "🎓 Checking Spelling (codespell)..."
+	$(AT)$(CODESPELL)
+	$(AT)echo "✅ Finished spellcheck!"
+# --------------------------------------------------
+# 🧠 Typechecking (MyPy)
 # --------------------------------------------------
 typecheck:
 	$(AT)echo "🧠 Checking types (MyPy)..."
-	$(AT)$(call run_ci_safe, $(MYPY) $(SRC_DIR) $(TEST_DIR))
+	$(AT)$(call run_ci_safe, $(MYPY) $(SRC_DIR) $(TESTS_DIR))
 	$(AT)echo "✅ Python typecheck complete!"
 # --------------------------------------------------
-# Testing (pytest)
+# 🧪 Testing (pytest)
 # --------------------------------------------------
 test:
 	$(AT)echo "🧪 Running tests with pytest..."
-	$(AT)$(call run_ci_safe, $(PYTEST) $(TEST_DIR))
+	$(AT)$(call run_ci_safe, $(PYTEST) $(TESTS_DIR))
 	$(AT)echo "✅ Python tests complete!"
 # --------------------------------------------------
-# Documentation (Sphinx + Jekyll)
+# 📚 Documentation (Sphinx + Jekyll + nutrimatic)
 # --------------------------------------------------
 sphinx:
-	$(MAKE) -C $(SPHINX_DIR) all PUBLISHDIR=$(JEKYLL_SPHINX_DIR)
+	$(ACTIVATE) && $(MAKE) -C $(SPHINX_DIR) all PUBLISHDIR=$(JEKYLL_SPHINX_DIR)
 
 jekyll:
-	$(MAKE) -C $(JEKYLL_DIR) build-docs;
+	$(MAKE) -C $(JEKYLL_DIR) build;
 
 jekyll-serve:
-	$(MAKE) -C $(JEKYLL_DIR) run-docs;
-
-build-docs: sphinx jekyll
-run-docs: jekyll-serve
+	$(MAKE) -C $(JEKYLL_DIR) run;
 
 readme:
-	$(AT)$(CCUTILS) build readme $(JEKYLL_DIR) ./README.md \
+	$(AT)$(NUTRIMATIC) build readme $(JEKYLL_DIR) $(README_FILE) \
 		--tmp-dir $(README_GEN_DIR) --jekyll-cmd '$(JEKYLL_BUILD)'
+
+# Note: Run as part of pre-commit.  No manual run needed.
+build-docs: sphinx jekyll readme
+	$(AT)$(GIT) add $(DOCS_DIR)
+	$(AT)$(GIT) add $(README_FILE)
+
+run-docs: jekyll-serve
 # --------------------------------------------------
-# bump version of program
+# 🔖 Version Bumping (bumpy-my-version)
 # --------------------------------------------------
 # TODO: Also create a git tag of current version.
 bump-version-patch:
@@ -217,14 +316,39 @@ bump-version-patch:
 	$(AT)$(BUMPVERSION) $(PATCH)
 	$(AT)echo "✅ $(PACKAGE_NAME) version update complete!"
 # --------------------------------------------------
-# Build program
+# 📜 Changelog generation (git-cliff) # TODO: Convert this to ansible-changelog
+# --------------------------------------------------
+# Note: Run as part of pre-commit.  No manual run needed.
+changelog:
+	$(AT)echo "📜 $(PACKAGE_NAME) Changelog Generation..."
+	$(AT)$(GITCLIFF_CHANGELOG)
+	$(AT)$(GITCLIFF_CHANGELOG_RELEASE)
+	$(AT)$(GIT) add $(CHANGELOG_FILE)
+	$(AT)$(GIT) add $(CHANGELOG_RELEASE_FILE)
+	$(AT)echo "✅ Finished Changelog Update!"
+
+changelog-test:
+	$(AT)echo $(GITCLIFF_CHANGELOG)
+	$(AT)echo $(GITCLIFF_CHANGELOG_RELEASE)
+# --------------------------------------------------
+# 📦 Build program (build)
 # --------------------------------------------------
 build:
 	$(AT)echo "📦 Packing $(PACKAGE_NAME)..."
 	$(AT)$(BUILD)
 	$(AT)echo "✅ $(PACKAGE_NAME) packaging complete!"
 # --------------------------------------------------
-# Publish program (test.pypi & pypi)
+# 🐙 Github Commands (git)
+# --------------------------------------------------
+#NOTE: Not yet tested!!!
+git-release:
+	$(AT)echo "📦 $(PACKAGE_NAME) Release Tag - $(RELEASE)! 🎉"
+	$(AT)$(GIT) tag -a $(RELEASE) -m "Release $(RELEASE)"
+	$(AT)$(GIT) push origin $(RELEASE)
+	$(AT)$(GITHUB) release create $(RELEASE) --title $(PACKAGE_NAME) $(RELEASE) --generate-notes
+	$(AT)echo "✅ Finished uploading Release - $(RELEASE)! 🎉"
+# --------------------------------------------------
+# 🚀 Publish program (twine) (Repos: Testpypi, & Pypi)
 # --------------------------------------------------
 publish-test:
 	$(AT)echo "🚀 Publishing $(PACKAGE_NAME) to testpypi..."
@@ -236,24 +360,35 @@ publish:
 	$(AT)$(TWINE) $(PYPI)
 	$(AT)echo "✅ $(PACKAGE_NAME) upload complete!"
 # --------------------------------------------------
-# Clean artifacts
+# 📢 Release
+# --------------------------------------------------
+pre-commit: test security dependency-check format-fix lint-check spellcheck typecheck
+pre-release: clean install pre-commit build-docs changelog build
+test-release: pre-release test-publish
+release: pre-release publish git-release bump-version-patch
+# --------------------------------------------------
+# 🧹 Clean artifacts
 # --------------------------------------------------
 clean:
 	$(AT)echo "🧹 Cleaning build artifacts..."
-	$(AT)rm -rf $(SPHINX_DIR)/_build
 	$(AT)$(MAKE) -C $(JEKYLL_DIR) clean
 	$(AT)$(MAKE) -C $(SPHINX_DIR) clean
 	$(AT)rm -rf build dist *.egg-info
-	$(AT)find $(SRC_DIR) $(TEST_DIR) -name "__pycache__" -type d -exec rm -rf {} +
+	$(AT)find $(SRC_DIR) $(TESTS_DIR) -name "__pycache__" -type d -exec rm -rf {} +
 	$(AT)rm -rf $(VENV_DIR)
 	$(AT)echo "✅ Finished cleaning build artifacts..."
 # --------------------------------------------------
-# Help
+# Version
+# --------------------------------------------------
+version:
+	$(AT)echo "$(PACKAGE_NAME)"
+	$(AT)echo "author: $(AUTHOR)"
+	$(AT)echo "version: $(VERSION)"
+# --------------------------------------------------
+# ❓ Help
 # --------------------------------------------------
 help:
 	$(AT)echo "📦 $(PACKAGE_NAME) Makefile"
-	$(AT)echo "   author: $(PACKAGE_AUTHOR)"
-	$(AT)echo "   version: $(PACKAGE_VERSION)"
 	$(AT)echo ""
 	$(AT)echo "Usage:"
 	$(AT)echo "  make venv                   Create virtual environment"
@@ -270,7 +405,6 @@ help:
 	$(AT)echo "  make build-docs             Build Sphinx + Jekyll documentation"
 	$(AT)echo "  make run-docs               Preview Jekyll documentation"
 	$(AT)echo "  make readme                 Uses Jekyll $(JEKYLL_DIR)/README.md for readme generation"
-	$(AT)echo "  make run                    Run cc-utils.py"
 	$(AT)echo "  make clean                  Clean build artifacts"
 	$(AT)echo "  make all                    Run lint, typecheck, test, and docs"
 	$(AT)echo "Options:"

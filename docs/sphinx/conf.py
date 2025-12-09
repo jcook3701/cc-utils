@@ -20,7 +20,7 @@ import sys
 
 from sphinx.application import Sphinx
 
-from ccutils.build import clean_module_docstring, add_yaml_front_matter, skip_dupes
+from nutrimatic.build import clean_module_docstring, add_yaml_front_matter, skip_dupes
 
 # -- Path setup --------------------------------------------------------------
 
@@ -30,27 +30,28 @@ sys.path.insert(0, os.path.abspath("../../src"))
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = "cc-utils"
-copyright = "2025, Jared Cook"
+project = "nutri-matic"
+copyright = "2025, Jared Cook" # noqa: A001
 author = "Jared Cook"
-release = "0.1.1"
+release = "0.1.2"
 
 # Main Sphinx Entry Point
-master_doc = 'api'
+root_doc = 'api'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 # Mock imports that aren't available in your environment
 autodoc_mock_imports = []
 
-# Extensions: MyST for Markdown + autodoc for docstrings
+# Extensions:  + 
 extensions = [
+    "myst_parser",               # MyST for Markdown
+    "sphinx.ext.autodoc",        # autodoc for docstrings
+    "sphinx.ext.napoleon",       # Supports Google/NumPy style docstrings
+    "sphinx.ext.viewcode",       # Adds links to source code
+    "sphinx.ext.autosummary",
+    "sphinx_autodoc_typehints",
     "sphinx_markdown_builder",
-    "myst_parser",
-    "sphinx.ext.autodoc",
-    "sphinx.ext.napoleon",   # Supports Google/NumPy style docstrings
-    "sphinx.ext.viewcode",   # Adds links to source code
-    "sphinx.ext.autosummary",    
 ]
 
 myst_enable_extensions = [
@@ -58,11 +59,10 @@ myst_enable_extensions = [
     "deflist",
 ]
 
+smartquotes = False
 numpydoc_class_members_toctree = False
 autosummary_generate = True
 autodoc_member_order = 'bysource'
-# 2. Tell Sphinx where to write generated stubs (usually a hidden directory to avoid conflicts)
-# You might need to add 'ext.autodoc' and 'ext.autosummary' to your extensions list
 autosummary_generate = True
 autosummary_generate_dir = '_autosummary_generated'
 
@@ -88,8 +88,6 @@ autodoc_default_options = {
     "undoc-members": True,
     "show-inheritance": True,
 }
-
-smartquotes = False
 
 
 def setup(app: Sphinx):

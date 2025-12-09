@@ -1,4 +1,4 @@
-# typecheck
+# .github/workflows/typecheck.yml
 ---
 name: Python Typecheck
 

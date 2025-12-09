@@ -1,14 +1,14 @@
 # pyproject.toml
 # =========================================
-# Project: cc-utils
+# Project: nutri-matic 🍹
 # =========================================
 [build-system]
 requires = ["setuptools>=64", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "cc-utils"
-version = "0.1.1"
+name = "nutri-matic"
+version = "0.1.2"
 description = "Cookiecutter utilities for jcook3701's cookiecutter templates."
 authors = [
   { name = "Jared Cook", email = "jcook3701+github@gmail.com" }
@@ -21,15 +21,14 @@ dependencies = [
   "cookiecutter>=2.6",
   "Deprecated>=1.3",
   "GitPython>=3.1",
+  "Jinja2>=3.1",
   "pydantic>=2.12",
+  "PyYAML>=6.0",
+  "requests>=2.32",
   "sphinx>=8.0",
   "toml>=0.10",
   "typer>=0.20",
-  "types-Deprecated>=1.3",
-  "types-requests>=2.32",
-  "types-PyYAML>=6.0",
-  "types-toml>=0.10",
-] 
+]
 keywords = [
   "python3",
   "cookiecutter",
@@ -41,21 +40,31 @@ classifiers = [
   "Operating System :: OS Independent",
 ]
 [project.urls]
-Homepage = "https://github.com/jcook3701/cc-utils"
-Repository = "https://github.com/jcook3701/cc-utils"
-Documentation = "https://github.com/jcook3701/cc-utils/docs/jekyll"
+Homepage = "https://github.com/jcook3701/nutri-matic"
+Repository = "https://github.com/jcook3701/nutri-matic"
+Documentation = "https://github.com/jcook3701/nutri-matic/docs/jekyll"
 
 [project.optional-dependencies]
 dev = [
+  "black>=25.11",
   "build>=1.3",
   "bump-my-version>=1.2",
+  "codespell>=2.4",
   "coverage>=7.12",
-  "black>=25.11",
-  "ruff>=0.14.0",
+  "deptry>=0.24",
   "mypy==1.9",
   "myst-parser>=0.18",
+  "pip-audit>=2.10",
+  "pre-commit>=4.5",
+  "nameisok>=0.1",
   "pytest>=8.0",
   "pytest-cov>=7.0",
+  "ruff>=0.14.0",
+  "tomllint>=0.3",
+  "types-Deprecated>=1.3",
+  "types-requests>=2.32",
+  "types-PyYAML>=6.0",
+  "types-toml>=0.10",
   "yamllint>=1.0",
   "twine>=6.2",
 ]
@@ -66,13 +75,17 @@ docs = [
   "sphinx-autodoc-typehints>=3.5",
 ]
 # ====================================
-# Optional entry point (lets you run with `python -m cc-utils`)
+# Optional entry point:
+# lets you run with either:
+#   1. ```python -m nutrimatic```
+#   2. ```nutrimatic```
 # ====================================
 [project.scripts]
-cc-utils = "ccutils.cli.main:app"
-cc-build = "ccutils.cli.build:app"
-cc-config = "ccutils.cli.config:app"
-cc-templates = "ccutils.cli.templates:app"
+nutrimatic = "nutrimatic.cli.main:app"
+nm-util = "nutrimatic.cli.main:app"
+nm-build = "nutrimatic.cli.build:app"
+nm-cfg = "nutrimatic.cli.config:app"
+nm-templates = "nutrimatic.cli.templates:app"
 
 # ====================================
 # Setuptools Configuration:
@@ -82,13 +95,13 @@ where = [
   "src",
   ]
 include = [
-  "ccutils*",
+  "nutrimatic*",
 ]
 # ====================================
 # Version Bumping (bump-my-version):
 # ====================================
 [tool.bumpversion]
-current_version = "0.1.1"
+current_version = "0.1.2"
 parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"
 serialize = ["{major}.{minor}.{patch}"]
 search = "{current_version}"
@@ -99,9 +112,34 @@ commit = false
 [[tool.bumpversion.files]]
 filename = "Makefile"
 [[tool.bumpversion.files]]
+filename = "./docs/jekyll/Makefile"
+[[tool.bumpversion.files]]
 filename = "./docs/jekyll/_config.yml"
 [[tool.bumpversion.files]]
 filename = "./docs/sphinx/conf.py"
+# ====================================
+# Codespell Configuration:
+# ====================================
+[tool.codespell]
+# files/patterns to ignore
+skip = "./changelogs/*,./docs/jekyll/_site,*.svg,*.css,*.html,*.lock"
+
+# words to ignore globally
+ignore-words-list = ["crate", "ba"]
+
+# extra options
+check-filenames = true
+# quiet-level = 2
+# ====================================
+# Deptry Configuration:
+# ====================================
+[tool.deptry]
+ignore_notebooks = true
+exclude = [
+    "tests/*",
+    "build/*",
+    "docs/*",
+]
 # ====================================
 # Ruff Configuration: (linter, formatter, import sorter)
 # ====================================
@@ -158,7 +196,7 @@ ignore = [
 # ====================================
 [tool.ruff.lint.isort]
 combine-as-imports = true
-known-first-party = ["ccutils"]
+known-first-party = ["nutrimatic"]
 # ====================================
 # Formatter Configuration:
 # Ruff also formats YAML, TOML, and Markdown
@@ -194,7 +232,7 @@ exclude = '''
 # Mypy (type-checker) Configuration:
 # ====================================
 [tool.mypy]
-python_version = 3.11
+python_version = "3.11"
 mypy_path = "src"
 strict = true
 warn_unused_ignores = true

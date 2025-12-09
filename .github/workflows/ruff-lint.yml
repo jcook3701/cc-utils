@@ -1,4 +1,4 @@
-# ruff lint
+# .github/workflows/ruff-lint.yml
 ---
 name: Ruff Lint Check
 
