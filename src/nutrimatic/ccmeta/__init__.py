@@ -8,9 +8,9 @@ Author: Jared Cook
 Description: Init ccmeta tools.
 """
 
-from .parser import find_templates, load_ccmeta
+from .parser import find_templates, load_teabag
 
 __all__ = [
     "find_templates",
-    "load_ccmeta",
+    "load_teabag",
 ]

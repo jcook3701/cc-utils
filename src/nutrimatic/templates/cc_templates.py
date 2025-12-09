@@ -11,12 +11,12 @@ from pathlib import Path
 
 from jinja2 import Template
 
-from nutrimatic.ccmeta import find_templates, load_ccmeta
+from nutrimatic.ccmeta import find_templates, load_teabag
 
 
 def generate_readme(repo_dir: Path) -> None:
     templates_dir = repo_dir / "templates"
-    repo_meta = load_ccmeta(repo_dir / "ccmeta.toml")
+    repo_meta = load_teabag(repo_dir / "ccmeta.toml")
 
     readme_template = """# {{ repo_name }}
 
@@ -29,7 +29,7 @@ def generate_readme(repo_dir: Path) -> None:
 """
     templates_info = []
     for template_dir in find_templates(templates_dir):
-        meta = load_ccmeta(template_dir)
+        meta = load_teabag(template_dir)
         templates_info.append(
             {
                 "name": meta["project"]["name"],
@@ -50,7 +50,7 @@ def generate_makefile(repo_dir: Path) -> None:
     makefile_lines = ["PYTHON=python3\n"]
 
     for template_dir in find_templates(templates_dir):
-        meta = load_ccmeta(template_dir)
+        meta = load_teabag(template_dir)
         target_name = meta["project"]["name"].replace("-", "_")
         makefile_lines.append(
             f"{target_name}:\n\t@echo 'Building template {meta['project']['name']}'\n"

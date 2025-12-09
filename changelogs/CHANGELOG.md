@@ -81,6 +81,7 @@
 - Fixed removal of dependencies
 - Fixed makefile so clean wont remove sphinx docs again.
 - *(dependencies)* Fixed errors from deptry.
+- *(docs)* Updates to pre-commit to not remove double spaces from markdown files and fixed main readme file.
 
 ### 🚀 Added
 

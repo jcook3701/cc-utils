@@ -5,6 +5,7 @@
 See the LICENSE file for more details.
 
 Author: Jared Cook
+Description: Template Project
 """
 
 from pydantic import BaseModel, Field
@@ -14,8 +15,8 @@ from .cctemplate import CCTemplate
 
 class CCMeta(BaseModel):
     """
-    Root model for ccmeta.toml.
-    Adjust fields as needed to match your ccmeta.toml structure.
+    Root model for teabag.toml.
+    Adjust fields as needed to match your teabag.toml structure.
     """
 
     # If your file describes a single template:

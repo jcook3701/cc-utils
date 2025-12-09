@@ -62,9 +62,8 @@
 
 <h3 id="️-config-nm-config">⚙️ Config (nm-config)</h3>
 <p><strong>Description:</strong> nutrimatic configuration tools.<br />
-<strong>Note:</strong> These are tools that are used to manage package configuration file.</p>
-
-<h4 id="sub-commands-show">Sub-commands: (show)</h4>
+<strong>Note:</strong> These are tools that are used to manage package configuration file.<br />
+<strong>Sub-commands:</strong> (show)</p>
 
 <h4 id="show">Show:</h4>
 <p><strong>Description:</strong></p>
@@ -75,20 +74,21 @@
 
 <h3 id="-build-nm-build">🔨 Build (nm-build)</h3>
 <p><strong>Description:</strong> Cookiecutter build automation utilities.<br />
-<strong>Note:</strong> These commands are intended to be used within project Makefiles as build tools. Examples will assume for use in Makefile.</p>
-<h4 id="sub-commands-readme-add-yaml-front-matter">Sub-commands: (readme, add-yaml-front-matter)</h4>
+<strong>Note:</strong> These commands are intended to be used within project Makefiles as build tools. Examples will assume for use in Makefile.<br />
+<strong>Sub-commands:</strong> (readme, add-yaml-front-matter)</p>
 
 <h4 id="readme">Readme:</h4>
-<p><strong>Description:</strong> Generates project readme from projects github-docs jekyll project.  The intention is keep the readme within ./docs/jekyll as the projects single source of truth.<br />
-<strong>Note</strong>: Replace with real values.</p>
+<p><strong>Description:</strong> Generates project readme from projects github-docs jekyll project.  The intention is keep the readme within <code class="language-plaintext highlighter-rouge">./docs/jekyll</code> as the project’s single source of truth.<br />
+<strong>Note</strong>: Intended for use within project Makefile as shown below.</p>
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PROJECT_ROOT :<span class="o">=</span> <span class="si">$(</span>PWD<span class="si">)</span>
 DOCS_DIR :<span class="o">=</span> <span class="si">$(</span>PROJECT_ROOT<span class="si">)</span>/docs
 JEKYLL_DIR :<span class="o">=</span> <span class="si">$(</span>DOCS_DIR<span class="si">)</span>/jekyll
 JEKYLL_BUILD :<span class="o">=</span> bundle <span class="nb">exec </span>jekyll build <span class="nt">--quiet</span>
 README_GEN_DIR :<span class="o">=</span> <span class="si">$(</span>JEKYLL_DIR<span class="si">)</span>/tmp_readme
+README_FILE :<span class="o">=</span> <span class="si">$(</span>PROJECT_ROOT<span class="si">)</span>/README.md
 
 readme:
-  nm-build readme <span class="si">$(</span>JEKYLL_DIR<span class="si">)</span> ./README.md <span class="se">\</span>
+  nm-build readme <span class="si">$(</span>JEKYLL_DIR<span class="si">)</span> <span class="si">$(</span>README_FILE<span class="si">)</span> <span class="se">\</span>
 	  <span class="nt">--tmp-dir</span> <span class="si">$(</span>README_GEN_DIR<span class="si">)</span> <span class="nt">--jekyll-cmd</span> <span class="s1">'$(JEKYLL_BUILD)'</span>
 </code></pre></div></div>
 
@@ -101,7 +101,8 @@ readme:
 
 <h2 id="-template-nm-templates">🍪 Template (nm-templates)</h2>
 <p><strong>Description:</strong> nm-templates tools.<br />
-<strong>Note:</strong> github-docs-cookiecutter will either be moved to <a href="https://github.com/jcook3701/cc-templates">cc-templates</a> or be added to cc-templates as a submodule.  #### Sub-commands: (generate)</p>
+<strong>Note:</strong> github-docs-cookiecutter will either be moved to <a href="https://github.com/jcook3701/cc-templates">cc-templates</a> or be added to cc-templates as a submodule.<br />
+<strong>Sub-commands:</strong> (generate)</p>
 
 <h4 id="generate">Generate:</h4>
 <p><strong>Description:</strong> This is for custom Cookiecutter template (<a href="https://github.com/jcook3701/cc-templates">cc-templates</a>) that utilizes ccmeta.toml files to organize projects.<br />
@@ -121,15 +122,24 @@ readme:
 <h3 id="️-build-environment-venv">🐍️ Build environment (.venv)</h3>
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>make <span class="nb">install</span>
 </code></pre></div></div>
-<h3 id="-linting-ruff--yaml-lint">🔍 Linting (ruff &amp; yaml-lint)</h3>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>make lint-check
+<h3 id="-dependency-management-deptry">🧬 Dependency Management (deptry)</h3>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>make dependency-check
 </code></pre></div></div>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>make lint-fix
+<h3 id="️-security-audit-pip-audit">🛡️ Security Audit (pip-audit)</h3>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>make security
 </code></pre></div></div>
 <h3 id="-formatting-black">🎨 Formatting (black)</h3>
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>make format-check
 </code></pre></div></div>
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>make format-fix
+</code></pre></div></div>
+<h3 id="-linting-ruff-toml--yaml-lint">🔍 Linting (ruff, toml, &amp; yaml-lint)</h3>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>make lint-check
+</code></pre></div></div>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>make lint-fix
+</code></pre></div></div>
+<h3 id="-spellchecking-codespell">🎓 Spellchecking (codespell)</h3>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>make spellcheck
 </code></pre></div></div>
 <h3 id="-typechecking-mypy">🧠 Typechecking (mypy)</h3>
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>make typecheck
@@ -137,18 +147,58 @@ readme:
 <h3 id="-testing-pytest">🧪 Testing (pytest)</h3>
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>make <span class="nb">test</span>
 </code></pre></div></div>
-<h3 id="-version-bumping-bumpy-my-version">🔖 Version Bumping (bumpy-my-version)</h3>
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>make bump-version-patch
-</code></pre></div></div>
 <h3 id="-building-build">📦 Building (build)</h3>
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>make build
 </code></pre></div></div>
-<h3 id="-publishing-twine">🚀 Publishing (Twine)</h3>
+<h3 id="-publishing-twine--github">🚀 Publishing (Twine + Github)</h3>
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>make publish
 </code></pre></div></div>
-<h3 id="build-help">Build Help</h3>
+<h3 id="-version-bumping-bumpy-my-version">🔖 Version Bumping (bumpy-my-version)</h3>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>make bump-version-patch
+</code></pre></div></div>
+<h3 id="-build-help">❓ Build Help</h3>
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>make <span class="nb">help</span>
 </code></pre></div></div>
+
+<hr />
+
+<h2 id="commit-help">Commit Help:</h2>
+<p><strong>Note:</strong> Commits are required to be conventional git commit message.  This helps with the auto-generation of the changelog files and is enforced by pre-commit.<br />
+<strong>example:</strong></p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;<span class="nb">type</span><span class="o">&gt;[</span>optional scope]: &lt;description&gt;
+
+<span class="o">[</span>optional body]
+
+<span class="o">[</span>optional footer<span class="o">(</span>s<span class="o">)]</span>
+</code></pre></div></div>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">&lt;type&gt;</code>: A required noun that describes the nature of the change.</li>
+  <li><code class="language-plaintext highlighter-rouge">[optional scope]</code>: An optional phrase within parentheses that specifies the part of the codebase being affected (e.g., fix(parser):).</li>
+  <li><code class="language-plaintext highlighter-rouge">&lt;description&gt;</code>: A required short, imperative-mood summary of the changes.</li>
+  <li><code class="language-plaintext highlighter-rouge">[optional body]</code>: A longer description providing additional context and “what and why” details.</li>
+  <li><code class="language-plaintext highlighter-rouge">[optional footer(s)]</code>: Used for adding meta-information, such as issue references (Fixes #123) or indicating breaking changes.</li>
+</ul>
+
+<hr />
+
+<h2 id="requirements">Requirements:</h2>
+<ol>
+  <li>Python 3.11
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>python3.11
+</code></pre></div>    </div>
+  </li>
+  <li><a href="https://rust-lang.org/tools/install/">rustup</a><br />
+<strong>Note:</strong> I found that it is easiest to use rustup to manage rustc and cargo but this is not required.<br />
+<strong>Example:</strong> Install rustup with the following:
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>curl <span class="nt">--proto</span> <span class="s1">'=https'</span> <span class="nt">--tlsv1</span>.2 <span class="nt">-sSf</span> https://sh.rustup.rs | sh
+</code></pre></div>    </div>
+  </li>
+  <li><a href="https://git-cliff.org/">git-cliff</a><br />
+<strong>Note:</strong> git-cliff can generate changelog files from the Git history by utilizing conventional commits as well as regex-powered custom parsers.
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>cargo <span class="nb">install </span>git-cliff
+</code></pre></div>    </div>
+  </li>
+</ol>
 
 <hr />
 
@@ -228,3 +278,13 @@ cc-github-docs
 <h3 id="testpypi-development"><a href="https://test.pypi.org/project/nutri-matic/">TestPyPi:</a> (development)</h3>
 <h3 id="github"><a href="https://github.com/jcook3701/nutri-matic/">GitHub:</a></h3>
 <h3 id="gitdocs"><a href="https://jcook3701.github.io/nutri-matic/">GitDocs:</a></h3>
+
+<!--
+# Authors Second Hidden Notes:
+
+## Development Ideas:
+1. Right now I am thinking about adding two different types of meta files.
+  * teabag.toml -> This will be used in (cc-templates, to be changed to: )
+  * tea.toml -> This will be automatically to generated projects and used for updates.
+      1. Potentially human generated and added to a project to allow
+-->

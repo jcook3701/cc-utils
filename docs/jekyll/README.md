@@ -59,8 +59,7 @@ $ nutrimatic list
 ### ⚙️ Config (nm-config)
 __Description:__ nutrimatic configuration tools.  
 __Note:__ These are tools that are used to manage package configuration file.  
-
-#### Sub-commands: (show)
+__Sub-commands:__ (show)  
 
 #### Show:
 __Description:__
@@ -73,20 +72,21 @@ $ nm-config show
 ### 🔨 Build (nm-build)
 __Description:__ Cookiecutter build automation utilities.  
 __Note:__ These commands are intended to be used within project Makefiles as build tools. Examples will assume for use in Makefile.  
-#### Sub-commands: (readme, add-yaml-front-matter)
+__Sub-commands:__ (readme, add-yaml-front-matter)
 
 #### Readme:
-__Description:__ Generates project readme from projects github-docs jekyll project.  The intention is keep the readme within ./docs/jekyll as the projects single source of truth.  
-__Note__: Replace with real values.  
+__Description:__ Generates project readme from projects github-docs jekyll project.  The intention is keep the readme within ```./docs/jekyll``` as the project's single source of truth.  
+__Note__: Intended for use within project Makefile as shown below.  
 ```shell
 PROJECT_ROOT := $(PWD)
 DOCS_DIR := $(PROJECT_ROOT)/docs
 JEKYLL_DIR := $(DOCS_DIR)/jekyll
 JEKYLL_BUILD := bundle exec jekyll build --quiet
 README_GEN_DIR := $(JEKYLL_DIR)/tmp_readme
+README_FILE := $(PROJECT_ROOT)/README.md
 
 readme:
-  nm-build readme $(JEKYLL_DIR) ./README.md \
+  nm-build readme $(JEKYLL_DIR) $(README_FILE) \
 	  --tmp-dir $(README_GEN_DIR) --jekyll-cmd '$(JEKYLL_BUILD)'
 ```
 
@@ -100,7 +100,8 @@ $ nm-build add-yaml-front-matter
 
 ## 🍪 Template (nm-templates)
 __Description:__ nm-templates tools.  
-__Note:__ github-docs-cookiecutter will either be moved to [cc-templates](https://github.com/jcook3701/cc-templates) or be added to cc-templates as a submodule.  #### Sub-commands: (generate)  
+__Note:__ github-docs-cookiecutter will either be moved to [cc-templates](https://github.com/jcook3701/cc-templates) or be added to cc-templates as a submodule.  
+__Sub-commands:__ (generate)  
 
 #### Generate:
 __Description:__ This is for custom Cookiecutter template ([cc-templates](https://github.com/jcook3701/cc-templates)) that utilizes ccmeta.toml files to organize projects.  
@@ -119,12 +120,13 @@ __Note:__ All Makefile commands are used in ci/cd to ensure that if they pass lo
 ``` shell
 $ make install
 ```
-### 🔍 Linting (ruff & yaml-lint)
-``` shell
-$ make lint-check
+### 🧬 Dependency Management (deptry)
+```shell
+$ make dependency-check
 ```
-``` shell
-$ make lint-fix
+### 🛡️ Security Audit (pip-audit)
+```shell
+$ make security
 ```
 ### 🎨 Formatting (black)
 ```shell
@@ -132,6 +134,17 @@ $ make format-check
 ```
 ```shell
 $ make format-fix
+```
+### 🔍 Linting (ruff, toml, & yaml-lint)
+``` shell
+$ make lint-check
+```
+``` shell
+$ make lint-fix
+```
+### 🎓 Spellchecking (codespell)
+```shell
+$ make spellcheck
 ```
 ### 🧠 Typechecking (mypy)
 ``` shell
@@ -141,21 +154,59 @@ $ make typecheck
 ``` shell
 $ make test
 ```
-### 🔖 Version Bumping (bumpy-my-version)
-```shell
-$ make bump-version-patch
-```
 ### 📦 Building (build)
 ```shell
 $ make build
 ```
-### 🚀 Publishing (Twine)
+### 🚀 Publishing (Twine + Github)
 ```shell
 $ make publish
 ```
-### Build Help
+### 🔖 Version Bumping (bumpy-my-version)
+```shell
+$ make bump-version-patch
+```
+### ❓ Build Help
 ``` shell
 $ make help
+```
+
+***
+
+## Commit Help:
+__Note:__ Commits are required to be conventional git commit message.  This helps with the auto-generation of the changelog files and is enforced by pre-commit.  
+__example:__  
+```shell
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+* ```<type>```: A required noun that describes the nature of the change.  
+* ```[optional scope]```: An optional phrase within parentheses that specifies the part of the codebase being affected (e.g., fix(parser):).  
+* ```<description>```: A required short, imperative-mood summary of the changes.  
+* ```[optional body]```: A longer description providing additional context and "what and why" details.  
+* ```[optional footer(s)]```: Used for adding meta-information, such as issue references (Fixes #123) or indicating breaking changes.  
+
+***
+
+## Requirements:
+1. Python 3.11  
+```shell
+$ sudo apt install python3.11
+```
+2. [rustup](https://rust-lang.org/tools/install/)  
+__Note:__ I found that it is easiest to use rustup to manage rustc and cargo but this is not required.  
+__Example:__ Install rustup with the following:  
+```shell
+$ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+3. [git-cliff](https://git-cliff.org/)  
+__Note:__ git-cliff can generate changelog files from the Git history by utilizing conventional commits as well as regex-powered custom parsers.  
+```shell
+$ cargo install git-cliff
 ```
 
 ***
@@ -232,3 +283,14 @@ cc-github-docs
 ### [TestPyPi:](https://test.pypi.org/project/{{ site.repo_name }}/) (development)  
 ### [GitHub:](https://github.com/jcook3701/{{ site.repo_name }}/)  
 ### [GitDocs:](https://jcook3701.github.io/{{ site.repo_name }}/)  
+
+
+<!--
+# Authors Second Hidden Notes:
+
+## Development Ideas:
+1. Right now I am thinking about adding two different types of meta files.
+  * teabag.toml -> This will be used in (cc-templates, to be changed to: )
+  * tea.toml -> This will be automatically to generated projects and used for updates.
+      1. Potentially human generated and added to a project to allow
+-->

@@ -4,6 +4,12 @@
 # =========================================
 
 # --------------------------------------------------
+# ⚙️ Environment Settings
+# --------------------------------------------------
+SHELL := /bin/bash
+.SHELLFLAGS := -O globstar -c
+
+# --------------------------------------------------
 # ⚙️ Sphinx Build Settings
 # --------------------------------------------------
 # You can set these variables from the command line, and also
@@ -54,6 +60,6 @@ clean:
 # --------------------------------------------------
 %: Makefile
 	@echo "🏃 Running Sphinx Documentation Generator..."
-	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+	$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 	@echo "✅ Sphinx run complete."
 # --------------------------------------------------

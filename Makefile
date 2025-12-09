@@ -40,8 +40,9 @@ endef
 # ⚙️ Build Settings
 # --------------------------------------------------
 PACKAGE_NAME := "nutri-matic"
-PACKAGE_AUTHOR := "Jared Cook"
-PACKAGE_VERSION := "0.1.2"
+AUTHOR := "Jared Cook"
+VERSION := "0.1.2"
+RELEASE := v$(VERSION)
 # --------------------------------------------------
 # 🐙 Github Build Settings
 # --------------------------------------------------
@@ -52,24 +53,25 @@ GITHUB_REPO := $(GITHUB_USER)/$(PACKAGE_NAME)
 # --------------------------------------------------
 PROJECT_ROOT := $(PWD)
 SRC_DIR := $(PROJECT_ROOT)/src
-TEST_DIR := $(PROJECT_ROOT)/tests
+TESTS_DIR := $(PROJECT_ROOT)/tests
 DOCS_DIR := $(PROJECT_ROOT)/docs
 SPHINX_DIR := $(DOCS_DIR)/sphinx
 JEKYLL_DIR := $(DOCS_DIR)/jekyll
 JEKYLL_SPHINX_DIR := $(JEKYLL_DIR)/sphinx
 README_GEN_DIR := $(JEKYLL_DIR)/tmp_readme
-CHANGELOG_DIR := $(PROJECT_ROOT)
-CHANGELOG_RELEASE_DIR = $(CHANGELOG_DIR)/changelogs/releases
+CHANGELOG_DIR := $(PROJECT_ROOT)/changelogs
+CHANGELOG_RELEASE_DIR := $(CHANGELOG_DIR)/releases
 # --------------------------------------------------
 # 📄 Build Files
 # --------------------------------------------------
-README_FILE = $(PROJECT_ROOT)/README.md
-CHANGELOG_FILE = $(CHANGELOG_DIR)/CHANGELOG.md
+README_FILE := $(PROJECT_ROOT)/README.md
+CHANGELOG_FILE := $(CHANGELOG_DIR)/CHANGELOG.md
+CHANGELOG_RELEASE_FILE := $(CHANGELOG_RELEASE_DIR)/$(RELEASE).md
 # --------------------------------------------------
 # 🐍 Python / Virtual Environment
 # --------------------------------------------------
 PYTHON_CMD := python3.11
-VENV_DIR := .venv
+VENV_DIR := $(PROJECT_ROOT)/.venv
 # --------------------------------------------------
 # 🐍 Python Dependencies
 # --------------------------------------------------
@@ -99,6 +101,7 @@ BLACK := $(PYTHON) -m black
 # 🔍 Linting (ruff, yaml)
 # --------------------------------------------------
 RUFF := $(PYTHON) -m ruff
+TOMLLINT := tomllint
 YAMLLINT := $(PYTHON) -m yamllint
 # --------------------------------------------------
 # 🎓 Spellchecker (codespell)
@@ -132,10 +135,13 @@ PATCH := patch
 # 📜 Changelog generation (git-clif)
 # --------------------------------------------------
 GITCLIFF := git cliff
+GITCLIFF_CHANGELOG := $(GITCLIFF) --output $(CHANGELOG_FILE)
+GITCLIFF_CHANGELOG_RELEASE := $(GITCLIFF) --unreleased --tag $(RELEASE) --output $(CHANGELOG_RELEASE_FILE)
 # --------------------------------------------------
 # 🐙 Github Tools (git)
 # --------------------------------------------------
 GIT := git
+GITHUB := gh
 # --------------------------------------------------
 # 🚨 Pre-Commit (pre-commit)
 # --------------------------------------------------
@@ -156,7 +162,7 @@ TESTPYPI := upload --repository testpypi --verbose dist/*
 # --------------------------------------------------
 NUTRIMATIC := $(PYTHON) -m nutrimatic
 # -------------------------------------------------------------------
-.PHONY: all venv install black-formatter-check black-formatter-fix format-check format-fix \
+.PHONY: all list-folders venv install black-formatter-check black-formatter-fix format-check format-fix \
 	ruff-lint-check ruff-lint-fix yaml-lint-check lint-check lint-fix \
 	typecheck test sphinx jekyll jekyll-serve build-docs run-docs readme \
 	build publish clean help
@@ -164,6 +170,13 @@ NUTRIMATIC := $(PYTHON) -m nutrimatic
 # Default: run install, lint, typecheck, tests, and build-docs
 # -------------------------------------------------------------------
 all: clean install lint-check typecheck test build-docs readme
+# --------------------------------------------------
+# Make Internal Utilities
+# --------------------------------------------------
+list-folders:
+	$(AT)printf "\
+	🐍 src: $(SRC_DIR)\n\
+	🧪 Test: $(TESTS_DIR)\n"
 # --------------------------------------------------
 # 🐍 Virtual Environment Setup
 # --------------------------------------------------
@@ -224,13 +237,14 @@ format-fix: black-formatter-fix
 # --------------------------------------------------
 ruff-lint-check:
 	$(AT)echo "🔍 Running ruff linting..."
-	$(AT)$(RUFF) check $(SRC_DIR) $(TEST_DIR)
+	$(AT)$(MAKE) list-folders
+	$(AT)$(call run_ci_safe, $(RUFF) check $(SRC_DIR) $(TESTS_DIR))
 	$(AT)echo "✅ Python lint check complete!"
 
 ruff-lint-fix:
 	$(AT)echo "🎨 Running ruff lint fixes..."
-	$(AT)$(RUFF) check --show-files $(SRC_DIR) $(TEST_DIR)
-	$(AT)$(RUFF) check --fix $(SRC_DIR) $(TEST_DIR)
+	$(AT)$(RUFF) check --show-files $(SRC_DIR) $(TESTS_DIR)
+	$(AT)$(RUFF) check --fix $(SRC_DIR) $(TESTS_DIR)
 	$(AT)echo "✅ Python lint fix complete!"
 
 toml-lint-check:
@@ -262,20 +276,20 @@ spellcheck:
 # --------------------------------------------------
 typecheck:
 	$(AT)echo "🧠 Checking types (MyPy)..."
-	$(AT)$(call run_ci_safe, $(MYPY) $(SRC_DIR) $(TEST_DIR))
+	$(AT)$(call run_ci_safe, $(MYPY) $(SRC_DIR) $(TESTS_DIR))
 	$(AT)echo "✅ Python typecheck complete!"
 # --------------------------------------------------
 # 🧪 Testing (pytest)
 # --------------------------------------------------
 test:
 	$(AT)echo "🧪 Running tests with pytest..."
-	$(AT)$(call run_ci_safe, $(PYTEST) $(TEST_DIR))
+	$(AT)$(call run_ci_safe, $(PYTEST) $(TESTS_DIR))
 	$(AT)echo "✅ Python tests complete!"
 # --------------------------------------------------
 # 📚 Documentation (Sphinx + Jekyll + nutrimatic)
 # --------------------------------------------------
 sphinx:
-	$(MAKE) -C $(SPHINX_DIR) all PUBLISHDIR=$(JEKYLL_SPHINX_DIR)
+	$(ACTIVATE) && $(MAKE) -C $(SPHINX_DIR) all PUBLISHDIR=$(JEKYLL_SPHINX_DIR)
 
 jekyll:
 	$(MAKE) -C $(JEKYLL_DIR) build;
@@ -307,10 +321,15 @@ bump-version-patch:
 # Note: Run as part of pre-commit.  No manual run needed.
 changelog:
 	$(AT)echo "📜 $(PACKAGE_NAME) Changelog Generation..."
-	$(AT)$(GITCLIFF) \
-	  --output $(CHANGELOG_FILE)
+	$(AT)$(GITCLIFF_CHANGELOG)
+	$(AT)$(GITCLIFF_CHANGELOG_RELEASE)
 	$(AT)$(GIT) add $(CHANGELOG_FILE)
+	$(AT)$(GIT) add $(CHANGELOG_RELEASE_FILE)
 	$(AT)echo "✅ Finished Changelog Update!"
+
+changelog-test:
+	$(AT)echo $(GITCLIFF_CHANGELOG)
+	$(AT)echo $(GITCLIFF_CHANGELOG_RELEASE)
 # --------------------------------------------------
 # 📦 Build program (build)
 # --------------------------------------------------
@@ -338,16 +357,21 @@ clean:
 	$(AT)$(MAKE) -C $(JEKYLL_DIR) clean
 	$(AT)$(MAKE) -C $(SPHINX_DIR) clean
 	$(AT)rm -rf build dist *.egg-info
-	$(AT)find $(SRC_DIR) $(TEST_DIR) -name "__pycache__" -type d -exec rm -rf {} +
+	$(AT)find $(SRC_DIR) $(TESTS_DIR) -name "__pycache__" -type d -exec rm -rf {} +
 	$(AT)rm -rf $(VENV_DIR)
 	$(AT)echo "✅ Finished cleaning build artifacts..."
 # --------------------------------------------------
-# Help
+# Version
+# --------------------------------------------------
+version:
+	$(AT)echo "$(PACKAGE_NAME)"
+	$(AT)echo "author: $(AUTHOR)"
+	$(AT)echo "version: $(VERSION)"
+# --------------------------------------------------
+# ❓ Help
 # --------------------------------------------------
 help:
 	$(AT)echo "📦 $(PACKAGE_NAME) Makefile"
-	$(AT)echo "   author: $(PACKAGE_AUTHOR)"
-	$(AT)echo "   version: $(PACKAGE_VERSION)"
 	$(AT)echo ""
 	$(AT)echo "Usage:"
 	$(AT)echo "  make venv                   Create virtual environment"

@@ -11,17 +11,19 @@ nutrimatic.models.ccmeta
 
 nutri-matic Package
 
+Description: Template Project
+
 ### Classes
 
-| [`CCMeta`](#nutrimatic.models.ccmeta.CCMeta)(\*\*data)   | Root model for ccmeta.toml.   |
+| [`CCMeta`](#nutrimatic.models.ccmeta.CCMeta)(\*\*data)   | Root model for teabag.toml.   |
 |----------------------------------------------------------|-------------------------------|
 
 ### *class* nutrimatic.models.ccmeta.CCMeta(\*\*data)
 
 Bases: `BaseModel`
 
-Root model for ccmeta.toml.
-Adjust fields as needed to match your ccmeta.toml structure.
+Root model for teabag.toml.
+Adjust fields as needed to match your teabag.toml structure.
 
 #### template *: [`CCTemplate`](nutrimatic.models.cctemplate.md#nutrimatic.models.cctemplate.CCTemplate)*
 

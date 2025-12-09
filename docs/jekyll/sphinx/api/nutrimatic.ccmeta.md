@@ -15,14 +15,14 @@ Description: Init ccmeta tools.
 
 ### nutrimatic.ccmeta.find_templates(base_dir)
 
-Return all template directories containing ccmeta.toml.
+Return all template directories containing teabag.toml or tea.toml or pyproject.toml.
 
 * **Return type:**
   `list`[`Path`]
 
-### nutrimatic.ccmeta.load_ccmeta(path)
+### nutrimatic.ccmeta.load_teabag(path)
 
-Load a ccmeta.toml file.
+Load a teabag.toml file.
 
 * **Return type:**
   `dict`[`str`, `Any`]

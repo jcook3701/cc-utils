@@ -13,20 +13,20 @@ nutri-matic Package
 
 ### Functions
 
-| [`find_templates`](#nutrimatic.ccmeta.parser.find_templates)(base_dir)   | Return all template directories containing ccmeta.toml.   |
-|--------------------------------------------------------------------------|-----------------------------------------------------------|
-| [`load_ccmeta`](#nutrimatic.ccmeta.parser.load_ccmeta)(path)             | Load a ccmeta.toml file.                                  |
+| [`find_templates`](#nutrimatic.ccmeta.parser.find_templates)(base_dir)   | Return all template directories containing teabag.toml or tea.toml or pyproject.toml.   |
+|--------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
+| [`load_teabag`](#nutrimatic.ccmeta.parser.load_teabag)(path)             | Load a teabag.toml file.                                                                |
 
-### nutrimatic.ccmeta.parser.load_ccmeta(path)
+### nutrimatic.ccmeta.parser.load_teabag(path)
 
-Load a ccmeta.toml file.
+Load a teabag.toml file.
 
 * **Return type:**
   `dict`[`str`, `Any`]
 
 ### nutrimatic.ccmeta.parser.find_templates(base_dir)
 
-Return all template directories containing ccmeta.toml.
+Return all template directories containing teabag.toml or tea.toml or pyproject.toml.
 
 * **Return type:**
   `list`[`Path`]

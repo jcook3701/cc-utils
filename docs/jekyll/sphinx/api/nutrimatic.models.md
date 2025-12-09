@@ -59,8 +59,8 @@ BuyMeACoffee username.
 
 Bases: `BaseModel`
 
-Root model for ccmeta.toml.
-Adjust fields as needed to match your ccmeta.toml structure.
+Root model for teabag.toml.
+Adjust fields as needed to match your teabag.toml structure.
 
 #### *class* Config
 

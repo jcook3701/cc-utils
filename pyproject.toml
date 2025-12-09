@@ -122,7 +122,7 @@ filename = "./docs/sphinx/conf.py"
 # ====================================
 [tool.codespell]
 # files/patterns to ignore
-skip = "./CHANGELOG.md,./docs/jekyll/_site,*.svg,*.css,*.html,*.lock"
+skip = "./changelogs/*,./docs/jekyll/_site,*.svg,*.css,*.html,*.lock"
 
 # words to ignore globally
 ignore-words-list = ["crate", "ba"]
