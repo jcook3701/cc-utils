@@ -1,7 +1,8 @@
 ---
 layout: default
-title: Nutri-Matic
+title: nutri-matic
 nav_order: 1
+display_name: Nutri-Matic
 ---
 
 
@@ -22,5 +23,3 @@ If you enjoy this project, please consider buying me a coffee or making a code c
 # Social Links
 
 {% include social-bar.html %}
-
-
