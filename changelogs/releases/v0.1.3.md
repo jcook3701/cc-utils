@@ -212,3 +212,7 @@ Co-authored-by: jcook3701 <jcook3701@gmail.com>
 
 Feat 001 (#5)
 - *(bump)* Version bump.
+
+### 🚀 Added
+
+- *(build)* Updates to yaml_front_matter so that it now works for both sphinx and autodoc applications.
