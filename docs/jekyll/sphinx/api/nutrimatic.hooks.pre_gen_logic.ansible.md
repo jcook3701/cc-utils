@@ -1,5 +1,5 @@
 ---
-title: nutrimatic.hooks.pre_gen_logic.ansible
+title: nutrimatic.hooks.pre_gen_logic
 layout: default
 nav_order: 2
 parent: api

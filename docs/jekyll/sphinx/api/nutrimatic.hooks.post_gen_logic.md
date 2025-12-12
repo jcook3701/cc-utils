@@ -1,5 +1,5 @@
 ---
-title: nutrimatic.hooks.post_gen_logic
+title: nutrimatic.hooks
 layout: default
 nav_order: 2
 parent: api

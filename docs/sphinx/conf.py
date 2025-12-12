@@ -10,7 +10,7 @@ Description: Configuration file for the Sphinx documentation builder.
   https://www.sphinx-doc.org/en/master/usage/configuration.html
 """
 
-#Configuration file for the Sphinx documentation builder.
+# Configuration file for the Sphinx documentation builder.
 #
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
@@ -31,24 +31,24 @@ sys.path.insert(0, os.path.abspath("../../src"))
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "nutri-matic"
-copyright = "2025, Jared Cook" # noqa: A001
+copyright = "2025, Jared Cook"  # noqa: A001
 author = "Jared Cook"
-release = "0.1.2"
+release = "0.1.3"
 
 # Main Sphinx Entry Point
-root_doc = 'api'
+root_doc = "api"
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 # Mock imports that aren't available in your environment
-autodoc_mock_imports = []
+autodoc_mock_imports: list[str] = []
 
-# Extensions:  + 
+# Extensions:  +
 extensions = [
-    "myst_parser",               # MyST for Markdown
-    "sphinx.ext.autodoc",        # autodoc for docstrings
-    "sphinx.ext.napoleon",       # Supports Google/NumPy style docstrings
-    "sphinx.ext.viewcode",       # Adds links to source code
+    "myst_parser",  # MyST for Markdown
+    "sphinx.ext.autodoc",  # autodoc for docstrings
+    "sphinx.ext.napoleon",  # Supports Google/NumPy style docstrings
+    "sphinx.ext.viewcode",  # Adds links to source code
     "sphinx.ext.autosummary",
     "sphinx_autodoc_typehints",
     "sphinx_markdown_builder",
@@ -62,9 +62,9 @@ myst_enable_extensions = [
 smartquotes = False
 numpydoc_class_members_toctree = False
 autosummary_generate = True
-autodoc_member_order = 'bysource'
+autodoc_member_order = "bysource"
 autosummary_generate = True
-autosummary_generate_dir = '_autosummary_generated'
+autosummary_generate_dir = "_autosummary_generated"
 
 # Source file suffixes: support both .rst and .md
 source_suffix = {
@@ -90,7 +90,7 @@ autodoc_default_options = {
 }
 
 
-def setup(app: Sphinx):
+def setup(app: Sphinx) -> None:
     app.connect("autodoc-skip-member", skip_dupes)
     app.connect("autodoc-process-docstring", clean_module_docstring)
     app.connect("source-read", add_yaml_front_matter)

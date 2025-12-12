@@ -1,5 +1,5 @@
 ---
-title: nutrimatic.ccmeta
+title: nutrimatic
 layout: default
 nav_order: 2
 parent: api

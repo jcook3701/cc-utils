@@ -1,12 +1,12 @@
 ---
-title: nutrimatic.core
+title: nutrimatic.build
 layout: default
 nav_order: 2
 parent: api
 ---
-nutrimatic.core.template
+nutrimatic.build.ansible
 ========================
 
-<a id="module-nutrimatic.core.template"></a>
+<a id="module-nutrimatic.build.ansible"></a>
 
 nutri-matic Package

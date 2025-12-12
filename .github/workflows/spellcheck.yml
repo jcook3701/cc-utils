@@ -2,11 +2,7 @@
 ---
 name: Codespell Spellcheck
 
-on:
-  push:
-    branches: [master, develop]
-  pull_request:
-    branches: [master, develop]
+on: [push, pull_request]
 
 jobs:
   spellcheck:

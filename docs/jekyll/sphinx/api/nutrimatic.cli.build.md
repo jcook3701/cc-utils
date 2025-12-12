@@ -1,5 +1,5 @@
 ---
-title: nutrimatic.cli.build
+title: nutrimatic.cli
 layout: default
 nav_order: 2
 parent: api

@@ -1,5 +1,5 @@
 ---
-title: nutrimatic.cli.options.verbose
+title: nutrimatic.cli.options
 layout: default
 nav_order: 2
 parent: api
