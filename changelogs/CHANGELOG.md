@@ -2,7 +2,7 @@
 # Changelog:
 # --------------------------------------------------
 
-## [unreleased]
+## [0.1.3] - 2025-12-12
 
 ### ⚙️  Miscellaneous
 
@@ -212,12 +212,19 @@ Co-authored-by: jcook3701 <jcook3701@gmail.com>
 
 Feat 001 (#5)
 - *(bump)* Version bump.
+- Merge pull request #7 from jcook3701/feat-002
+
+Feat 002
+- Merge pull request #8 from jcook3701/develop
+
+Develop
 
 ### 🐛 Fixed
 
 - *(ci/cd)* Fixed ci/cd so that it should now also run correct checks for feature branches.
 - *(spelling)* Corrected spelling errors.
 - *(linting)* Fixed error where nutrimatic/build was not being linted.
+- *(readme)* Linting.
 - *(readme)* Linting.
 
 ### 🚀 Added

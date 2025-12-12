@@ -345,7 +345,7 @@ git-release:
 	$(AT)echo "📦 $(PACKAGE_NAME) Release Tag - $(RELEASE)! 🎉"
 	$(AT)$(GIT) tag -a $(RELEASE) -m "Release $(RELEASE)"
 	$(AT)$(GIT) push origin $(RELEASE)
-	$(AT)$(GITHUB) release create $(RELEASE) --title $(PACKAGE_NAME) $(RELEASE) --generate-notes
+	$(AT)$(GITHUB) release create $(RELEASE) --generate-notes
 	$(AT)echo "✅ Finished uploading Release - $(RELEASE)! 🎉"
 # --------------------------------------------------
 # 🚀 Publish program (twine) (Repos: Testpypi, & Pypi)
@@ -365,6 +365,7 @@ publish:
 pre-commit: test security dependency-check format-fix lint-check spellcheck typecheck
 pre-release: clean install pre-commit build-docs changelog build
 test-release: pre-release test-publish
+## TODO: Add test to make sure that we are not about to publish an already released version
 release: pre-release publish git-release bump-version-patch
 # --------------------------------------------------
 # 🧹 Clean artifacts
