@@ -213,6 +213,10 @@ Co-authored-by: jcook3701 <jcook3701@gmail.com>
 Feat 001 (#5)
 - *(bump)* Version bump.
 
+### 🐛 Fixed
+
+- *(ci/cd)* Fixed ci/cd so that it should now also run correct checks for feature branches.
+
 ### 🚀 Added
 
 - *(build)* Updates to yaml_front_matter so that it now works for both sphinx and autodoc applications.

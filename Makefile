@@ -370,7 +370,7 @@ release: pre-release publish git-release bump-version-patch
 # 🧹 Clean artifacts
 # --------------------------------------------------
 clean-docs:
-	$(AT)echo "🧹 Clening documentation artifacts..."
+	$(AT)echo "🧹 Cleaning documentation artifacts..."
 	$(AT)$(MAKE) -C $(JEKYLL_DIR) clean
 	$(AT)$(MAKE) -C $(SPHINX_DIR) clean
 	$(AT)echo "✅ Cleaned documentation artifacts..."
