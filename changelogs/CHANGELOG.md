@@ -217,6 +217,7 @@ Feat 001 (#5)
 
 - *(ci/cd)* Fixed ci/cd so that it should now also run correct checks for feature branches.
 - *(spelling)* Corrected spelling errors.
+- *(linting)* Fixed error where nutrimatic/build was not being linted.
 
 ### 🚀 Added
 
