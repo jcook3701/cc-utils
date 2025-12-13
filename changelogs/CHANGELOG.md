@@ -11,6 +11,7 @@
 ### 🚀 Added
 
 - *(github)* Got gh release create working.
+- *(cspell)* Setup pre-commit cspell.
 ## [0.1.3] - 2025-12-12
 
 ### ⚙️  Miscellaneous

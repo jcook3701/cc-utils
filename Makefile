@@ -186,6 +186,16 @@ list-folders:
 	🐍 src: $(SRC_DIR)\n\
 	🧪 Test: $(TESTS_DIR)\n"
 # --------------------------------------------------
+# Dependency Checks
+# --------------------------------------------------
+git-check:
+	$(AT)which $(GIT) >/dev/null || \
+		{ echo "Git is required: sudo apt install git"; exit 1; }
+
+gh-check:
+	$(AT)which $(GITHUB) >/dev/null || \
+		{ echo "GitHub is required: sudo apt install gh"; exit 1; }
+# --------------------------------------------------
 # 🐍 Virtual Environment Setup
 # --------------------------------------------------
 venv:
