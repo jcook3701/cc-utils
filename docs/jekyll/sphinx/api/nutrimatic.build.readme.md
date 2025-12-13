@@ -1,5 +1,5 @@
 ---
-title: nutrimatic.build
+title: nutrimatic.build.readme
 layout: default
 nav_order: 2
 parent: api

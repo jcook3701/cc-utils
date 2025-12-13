@@ -1,5 +1,5 @@
 ---
-title: nutrimatic
+title: nutrimatic.build
 layout: default
 nav_order: 2
 parent: api
@@ -21,7 +21,7 @@ Returns the number of files modified.
 * **Return type:**
   `int`
 
-### nutrimatic.build.add_front_matter_to_file(file_path, depth, project=None)
+### nutrimatic.build.add_front_matter_to_file(file_path, extensions, depth, project=None)
 
 Add YAML front matter to a single file.
 Returns True if modified, False if skipped.
@@ -36,7 +36,7 @@ Prepend YAML front-matter to every generated Markdown page.
 * **Return type:**
   `None`
 
-### nutrimatic.build.build_front_matter(file_path, depth, project)
+### nutrimatic.build.build_front_matter(file_path, extensions, depth, project)
 
 Builds front matter for a file.
 

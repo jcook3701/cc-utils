@@ -27,9 +27,10 @@ def replace_placeholders_in_file(
         text = filepath.read_text(encoding="utf-8")
     except UnicodeDecodeError:
         logger.debug(f"Skipping binary file: {filepath}")
-        pass
+        return
     except Exception as e:
         logger.info(f"An error occurred processing file {filepath}: {e}")
+        return
 
     changed = False
 

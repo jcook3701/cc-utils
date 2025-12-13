@@ -32,16 +32,24 @@ endif
 # --------------------------------------------------
 # 🏗️ CI/CD Functions
 # --------------------------------------------------
-# Define a reusable CI-safe runner
+# Returns true when CI is off and gracefully moves through failed checks.
 define run_ci_safe =
-( $1 || [ "$(CI)" != "1" ] )
+( $1 || \
+	if [ "$(CI)" != "1" ]; then \
+		echo "❌ process finished with error; continuing..."; \
+		true; \
+	else \
+		echo "❌ process finished with error"; \
+		exit 1; \
+	fi \
+)
 endef
 # --------------------------------------------------
 # ⚙️ Build Settings
 # --------------------------------------------------
 PACKAGE_NAME := "nutri-matic"
 AUTHOR := "Jared Cook"
-VERSION := "0.1.3"
+VERSION := "0.1.4"
 RELEASE := v$(VERSION)
 # --------------------------------------------------
 # 🐙 Github Build Settings
@@ -177,6 +185,16 @@ list-folders:
 	$(AT)printf "\
 	🐍 src: $(SRC_DIR)\n\
 	🧪 Test: $(TESTS_DIR)\n"
+# --------------------------------------------------
+# Dependency Checks
+# --------------------------------------------------
+git-check:
+	$(AT)which $(GIT) >/dev/null || \
+		{ echo "Git is required: sudo apt install git"; exit 1; }
+
+gh-check:
+	$(AT)which $(GITHUB) >/dev/null || \
+		{ echo "GitHub is required: sudo apt install gh"; exit 1; }
 # --------------------------------------------------
 # 🐍 Virtual Environment Setup
 # --------------------------------------------------
@@ -345,7 +363,7 @@ git-release:
 	$(AT)echo "📦 $(PACKAGE_NAME) Release Tag - $(RELEASE)! 🎉"
 	$(AT)$(GIT) tag -a $(RELEASE) -m "Release $(RELEASE)"
 	$(AT)$(GIT) push origin $(RELEASE)
-	$(AT)$(GITHUB) release create $(RELEASE) --title $(PACKAGE_NAME) $(RELEASE) --generate-notes
+	$(AT)$(GITHUB) release create $(RELEASE) --generate-notes
 	$(AT)echo "✅ Finished uploading Release - $(RELEASE)! 🎉"
 # --------------------------------------------------
 # 🚀 Publish program (twine) (Repos: Testpypi, & Pypi)
@@ -365,6 +383,7 @@ publish:
 pre-commit: test security dependency-check format-fix lint-check spellcheck typecheck
 pre-release: clean install pre-commit build-docs changelog build
 test-release: pre-release test-publish
+## TODO: Add test to make sure that we are not about to publish an already released version
 release: pre-release publish git-release bump-version-patch
 # --------------------------------------------------
 # 🧹 Clean artifacts

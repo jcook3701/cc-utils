@@ -1,5 +1,5 @@
 ---
-title: nutrimatic.core
+title: nutrimatic.core.logger
 layout: default
 nav_order: 2
 parent: api

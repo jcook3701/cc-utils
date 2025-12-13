@@ -22,6 +22,7 @@ def compute_folder_depth(file_path: Path) -> int:
 
 def build_front_matter(
     file_path: Path,
+    extensions: set[str],
     depth: int,
     project: str,
 ) -> str:
@@ -35,15 +36,13 @@ def build_front_matter(
     Returns:
         str: Returns front matter as a string.
     """
-    parent_name = (
-        project or file_path.parent.name
-        if file_path.parent.name == ""
-        else file_path.parent.name
+    title = (
+        file_path.stem if file_path.suffix.lstrip(".") in extensions else file_path.name
     )
-
+    parent_name = project if depth == 1 else file_path.parent.name
     front_matter = [
         "---",
-        f"title: {file_path.stem}",
+        f"title: {title}",
         "layout: default",
         f"nav_order: {depth}",
         f"parent: {parent_name}",
@@ -55,7 +54,10 @@ def build_front_matter(
 
 
 def add_front_matter_to_file(
-    file_path: Path, depth: int, project: str | None = None
+    file_path: Path,
+    extensions: set[str],
+    depth: int,
+    project: str | None = None,
 ) -> bool:
     """
     Add YAML front matter to a single file.
@@ -68,7 +70,10 @@ def add_front_matter_to_file(
     if original_content.lstrip().startswith("---"):
         return False
 
-    new_text = build_front_matter(file_path, depth, project_name) + original_content
+    new_text = (
+        build_front_matter(file_path, extensions, depth, project_name)
+        + original_content
+    )
 
     file_path.write_text(new_text, encoding="utf-8")
     return True
@@ -93,7 +98,7 @@ def add_front_matter_to_dir(
             continue
         file_path_rel = file_path.relative_to(directory)
         depth = compute_folder_depth(file_path_rel)
-        if add_front_matter_to_file(file_path, depth, project):
+        if add_front_matter_to_file(file_path, extensions, depth, project):
             logger.info(f" - front matter added: {file_path}")
             count += 1
 

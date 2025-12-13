@@ -55,7 +55,8 @@ def add_yaml_front_matter(app: Sphinx, docname: str, source: list[str]) -> None:
     relative_to_src = Path(docname)
 
     depth = compute_folder_depth(relative_to_src)
-    front_matter = build_front_matter(relative_to_src, depth, project_name)
+    extensions = {e.lower() for e in ["yml", "yaml", "md"]}
+    front_matter = build_front_matter(relative_to_src, extensions, depth, project_name)
     source[0] = front_matter + source[0]
 
 

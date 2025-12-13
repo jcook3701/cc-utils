@@ -1,5 +1,5 @@
 ---
-title: nutrimatic.core
+title: nutrimatic.core.template
 layout: default
 nav_order: 2
 parent: api
