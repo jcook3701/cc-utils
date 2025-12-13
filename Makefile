@@ -384,6 +384,9 @@ pre-commit: test security dependency-check format-fix lint-check spellcheck type
 pre-release: clean install pre-commit build-docs changelog build
 test-release: pre-release publish-test
 ## TODO: Add test to make sure that we are not about to publish an already released version
+## TODO: Need to add a git add --all && git commit -m "automessage" between git-release
+##       and bump-version-patch otherwise always errors out.
+## example: git commit -m "chore(changelogs): changelog updates."
 release: pre-release publish git-release bump-version-patch
 # --------------------------------------------------
 # 🧹 Clean artifacts

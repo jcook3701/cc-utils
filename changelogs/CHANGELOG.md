@@ -2,7 +2,7 @@
 # Changelog:
 # --------------------------------------------------
 
-## [unreleased]
+## [0.1.4] - 2025-12-13
 
 ### ⚙️  Miscellaneous
 
@@ -22,6 +22,10 @@ Co-authored-by: jcook3701 <jcook3701@gmail.com>
 - Merge pull request #10 from jcook3701/develop
 
 Feat 003 (#9)
+
+### 🐛 Fixed
+
+- *(build)* Minor fix for makefile test-release
 ## [0.1.3] - 2025-12-12
 
 ### ⚙️  Miscellaneous
