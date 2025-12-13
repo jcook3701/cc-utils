@@ -7,6 +7,7 @@
 ### ⚙️  Miscellaneous
 
 - *(changelogs)* Changelog updates.
+- *(version)* Version Bump.
 ## [0.1.4] - 2025-12-13
 
 ### ⚙️  Miscellaneous

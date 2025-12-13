@@ -387,6 +387,10 @@ test-release: pre-release publish-test
 ## TODO: Need to add a git add --all && git commit -m "automessage" between git-release
 ##       and bump-version-patch otherwise always errors out.
 ## example: git commit -m "chore(changelogs): changelog updates."
+## TODO: After version bump:
+##       git add --all
+##       git commit -m "chore(version): Version Bump."
+## TODO: jinja ci/cd broken still.
 release: pre-release publish git-release bump-version-patch
 # --------------------------------------------------
 # 🧹 Clean artifacts
