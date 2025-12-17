@@ -6,20 +6,6 @@
 
 ### ⚙️  Miscellaneous
 
-- *(changelogs)* Changelog updates.
-- *(version)* Version Bump.
-
-### 🐛 Fixed
-
-- *(github-pages)* Removed if statement from deploy that stopped manual runs from deploying.
-
-### 🚀 Added
-
-- *(hooks)* Added more hooks for template projects.
-## [0.1.4] - 2025-12-13
-
-### ⚙️  Miscellaneous
-
 - Feat 003 (#9)
 
 * feat(github): Got gh release create working.
@@ -36,10 +22,22 @@ Co-authored-by: jcook3701 <jcook3701@gmail.com>
 - Merge pull request #10 from jcook3701/develop
 
 Feat 003 (#9)
+- Feat 004 (#11)
 
-### 🐛 Fixed
+* fix(build): minor fix for makefile test-release
 
-- *(build)* Minor fix for makefile test-release
+* chore(changelogs): changelog updates.
+
+* chore(version): Version Bump.
+
+* fix(github-pages): removed if statement from deploy that stopped manual runs from deploying.
+
+* feat(hooks): added more hooks for template projects.
+
+* fix(jekyll): Updates to ci/cd to make it so that jekyll deploys correctly on merge from dev to master.
+- Merge pull request #12 from jcook3701/develop
+
+Feat 004 (#11)
 ## [0.1.3] - 2025-12-12
 
 ### ⚙️  Miscellaneous
