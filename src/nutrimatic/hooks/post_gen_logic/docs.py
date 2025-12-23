@@ -11,7 +11,6 @@ import shutil
 from pathlib import Path
 from typing import Any
 
-from collections import ChainMap
 from cookiecutter.main import cookiecutter
 
 from nutrimatic.core.config import ensure_config

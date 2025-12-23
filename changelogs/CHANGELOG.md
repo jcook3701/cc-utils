@@ -7,6 +7,10 @@
 ### ⚙️  Miscellaneous
 
 - *(version)* Bumped to version 0.1.7!
+
+### 🐛 Fixed
+
+- *(docs)* Quick fix for documentation template generation.
 ## [0.1.6] - 2025-12-18
 
 ### ⚙️  Miscellaneous
