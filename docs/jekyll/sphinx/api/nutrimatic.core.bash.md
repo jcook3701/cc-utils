@@ -15,10 +15,10 @@ Description: Bash commands ported to python.
 
 ### Functions
 
-| [`clean`](#nutrimatic.core.bash.clean)()   | Remove \_shared_hooks directory.                       |
-|--------------------------------------------|--------------------------------------------------------|
-| [`make`](#nutrimatic.core.bash.make)(cmd)  | Run a make target inside post-gen, exiting on failure. |
-| [`tree`](#nutrimatic.core.bash.tree)()     | Run tree cmd inside the post-gen.                      |
+| [`clean`](#nutrimatic.core.bash.clean)()                 | Remove \_shared_hooks directory.                       |
+|----------------------------------------------------------|--------------------------------------------------------|
+| [`make`](#nutrimatic.core.bash.make)(cmd, \*[, verbose]) | Run a make target inside post-gen, exiting on failure. |
+| [`tree`](#nutrimatic.core.bash.tree)()                   | Run tree cmd inside the post-gen.                      |
 
 ### nutrimatic.core.bash.clean()
 
@@ -27,7 +27,7 @@ Remove \_shared_hooks directory.
 * **Return type:**
   `None`
 
-### nutrimatic.core.bash.make(cmd)
+### nutrimatic.core.bash.make(cmd, , verbose=False)
 
 Run a make target inside post-gen, exiting on failure.
 

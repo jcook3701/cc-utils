@@ -9,8 +9,7 @@ Author: Jared Cook
 
 from nutrimatic.core.config import ensure_config
 from nutrimatic.core.logger import setup_logging
-
-from .utils import make_dirs
+from nutrimatic.core.utils import make_dirs
 
 cfg = ensure_config()  # loads singleton config
 logger = setup_logging(cfg)  # loads singleton logger

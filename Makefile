@@ -49,7 +49,7 @@ endef
 # --------------------------------------------------
 PACKAGE_NAME := "nutri-matic"
 AUTHOR := "Jared Cook"
-VERSION := "0.1.5"
+VERSION := "0.1.7"
 RELEASE := v$(VERSION)
 # --------------------------------------------------
 # 🐙 Github Build Settings
@@ -134,7 +134,7 @@ JEKYLL_SERVE := bundle exec jekyll serve
 # --------------------------------------------------
 # 🔖 Version Bumping (bumpy-my-version)
 # --------------------------------------------------
-BUMPVERSION := bump-my-version bump --verbose
+BUMPVERSION := $(ACTIVATE) && bump-my-version bump --verbose
 # Patch types:
 MAJOR := major
 MINOR := minor

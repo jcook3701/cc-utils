@@ -32,12 +32,12 @@ Generate one or more documentation templates inside docs/
 * **Return type:**
   `None`
 
-### nutrimatic.hooks.post_gen_logic.make_dirs(dirs, project_dir=PosixPath('/home/jcook/Documents/git_repo/nutri-matic/docs/sphinx'))
+### nutrimatic.hooks.post_gen_logic.get_make_cmds(context)
 
-Generate project directories
+Generate one or more documentation templates inside docs/
 
 * **Return type:**
-  `None`
+  `list`[`str`]
 
 ### nutrimatic.hooks.post_gen_logic.replace_placeholders_in_dir(replacements, path=PosixPath('/home/jcook/Documents/git_repo/nutri-matic/docs/sphinx'))
 
@@ -55,4 +55,4 @@ and replace placeholders in all files.
 | [`changelogs`](nutrimatic.hooks.post_gen_logic.changelogs.md#module-nutrimatic.hooks.post_gen_logic.changelogs) | nutri-matic Package   |
 | [`docs`](nutrimatic.hooks.post_gen_logic.docs.md#module-nutrimatic.hooks.post_gen_logic.docs)                   | nutri-matic Package   |
 | [`license`](nutrimatic.hooks.post_gen_logic.license.md#module-nutrimatic.hooks.post_gen_logic.license)          | nutri-matic Package   |
-| [`utils`](nutrimatic.hooks.post_gen_logic.utils.md#module-nutrimatic.hooks.post_gen_logic.utils)                | nutri-matic Package   |
+| [`make`](nutrimatic.hooks.post_gen_logic.make.md#module-nutrimatic.hooks.post_gen_logic.make)                   | nutri-matic Package   |

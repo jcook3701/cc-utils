@@ -32,16 +32,18 @@ def clean() -> None:
         logger.info("_shared_hooks directory does not exist, nothing to remove.")
 
 
-def make(cmd: str) -> None:
+def make(cmd: str, *, verbose: bool = False) -> None:
     """Run a make target inside post-gen, exiting on failure."""
     logger.info(f"▶ Running: make {cmd}")
     try:
-        subprocess.run(
+        result = subprocess.run(
             ["make", cmd],
             check=True,
             capture_output=True,
             text=True,
         )
+        if verbose and result.stdout:
+            logger.info(result.stdout.rstrip())
         logger.info(f"✅ Command succeeded: make {cmd}")
     except subprocess.CalledProcessError as e:
         logger.error(f"❌ Command failed: make {cmd}")

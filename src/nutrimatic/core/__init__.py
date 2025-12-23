@@ -16,12 +16,14 @@ from .bash import (
 from .config import ensure_config
 from .github import fetch_namespace
 from .logger import setup_logging
+from .utils import make_dirs
 
 __all__ = [
     "clean",
     "ensure_config",
     "fetch_namespace",
     "make",
+    "make_dirs",
     "setup_logging",
     "tree",
 ]

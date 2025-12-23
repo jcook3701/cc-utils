@@ -6,17 +6,26 @@
 
 ### ⚙️  Miscellaneous
 
-- *(changelogs)* Changelog updates.
-- *(version)* Version Bump.
+- *(version)* Bumped to version 0.1.7!
 
 ### 🐛 Fixed
 
-- *(github-pages)* Removed if statement from deploy that stopped manual runs from deploying.
+- *(docs)* Quick fix for documentation template generation.
+## [0.1.6] - 2025-12-18
+
+### ⚙️  Miscellaneous
+
+- *(version)* Version update to 1.6!
+- *(changelog)* Updates changelogs.
+
+### 🐛 Fixed
+
+- *(build)* Forgot to add virtual environment source for bump-my-version command.
 
 ### 🚀 Added
 
-- *(hooks)* Added more hooks for template projects.
-## [0.1.4] - 2025-12-13
+- *(hooks)* Added make.py to hooks so that different make commands can be chosen within the cookiecutter.json file rather than needing to template a ton for each variance of make commands that need to be run per-template.  I also refactored the make_dirs command out of hooks/utils and moved it to the core/utils directory.
+## [0.1.5] - 2025-12-17
 
 ### ⚙️  Miscellaneous
 
@@ -36,10 +45,23 @@ Co-authored-by: jcook3701 <jcook3701@gmail.com>
 - Merge pull request #10 from jcook3701/develop
 
 Feat 003 (#9)
+- Feat 004 (#11)
 
-### 🐛 Fixed
+* fix(build): minor fix for makefile test-release
 
-- *(build)* Minor fix for makefile test-release
+* chore(changelogs): changelog updates.
+
+* chore(version): Version Bump.
+
+* fix(github-pages): removed if statement from deploy that stopped manual runs from deploying.
+
+* feat(hooks): added more hooks for template projects.
+
+* fix(jekyll): Updates to ci/cd to make it so that jekyll deploys correctly on merge from dev to master.
+- Merge pull request #12 from jcook3701/develop
+
+Feat 004 (#11)
+- *(changelog)* Updates to changelog for release.
 ## [0.1.3] - 2025-12-12
 
 ### ⚙️  Miscellaneous

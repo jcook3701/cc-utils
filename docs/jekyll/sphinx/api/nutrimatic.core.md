@@ -34,9 +34,16 @@ Fetch all repositories in a namespace and their configs.
 * **Return type:**
   [`Namespace`](nutrimatic.models.template.md#nutrimatic.models.template.Namespace)
 
-### nutrimatic.core.make(cmd)
+### nutrimatic.core.make(cmd, , verbose=False)
 
 Run a make target inside post-gen, exiting on failure.
+
+* **Return type:**
+  `None`
+
+### nutrimatic.core.make_dirs(dirs, project_dir=PosixPath('/home/jcook/Documents/git_repo/nutri-matic/docs/sphinx'))
+
+Generate project directories
 
 * **Return type:**
   `None`
@@ -67,3 +74,4 @@ Run tree cmd inside the post-gen.
 | [`metadata`](nutrimatic.core.metadata.md#module-nutrimatic.core.metadata) | nutri-matic Package   |
 | [`parser`](nutrimatic.core.parser.md#module-nutrimatic.core.parser)       | nutri-matic Package   |
 | [`template`](nutrimatic.core.template.md#module-nutrimatic.core.template) | nutri-matic Package   |
+| [`utils`](nutrimatic.core.utils.md#module-nutrimatic.core.utils)          | nutri-matic Package   |

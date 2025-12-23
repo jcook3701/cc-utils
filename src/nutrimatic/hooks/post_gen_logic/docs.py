@@ -28,8 +28,10 @@ def generate_docs_templates(context: dict[str, Any]) -> None:
 
     tmp_dir.mkdir(parents=True, exist_ok=True)
 
+    project_name = context.get("package_name") or context.get("project_name")
+
     base_ctx = {
-        "project_name": context.get("package_name"),
+        "project_name": project_name,
         "author": context.get("author"),
         "version": context.get("version"),
         "description": context.get("description"),
