@@ -74,6 +74,10 @@ def generate_docs_templates(context: dict[str, Any]) -> None:
         target = cfg["target"]
         extra_ctx = cfg["extra_ctx"]
 
+        if target.exists():
+            logger.info(f"⏭️ Skipping {name}: {target} already exists.")
+            continue
+
         logger.info(f"📦 Generating {name} docs from {repo} → {target}")
         try:
             # Bake template into temp directory
@@ -91,9 +95,6 @@ def generate_docs_templates(context: dict[str, Any]) -> None:
                 continue
 
             generated_dir = subdirs[0]
-
-            if target.exists():
-                continue
 
             shutil.move(generated_dir, target)
 
