@@ -69,12 +69,13 @@ def generate_docs_templates(context: dict[str, Any]) -> None:
             logger.info(f"🚫 Skipping {cfg['name']} docs (disabled)")
             continue
 
+        sub_template = cfg["_is_sub_template"]
         name = cfg["name"]
         repo = cfg["repo"]
         target = cfg["target"]
         extra_ctx = cfg["extra_ctx"]
 
-        if target.exists():
+        if sub_template or (target.exists() and any(target.iterdir())):
             logger.info(f"⏭️ Skipping {name}: {target} already exists.")
             continue
 
