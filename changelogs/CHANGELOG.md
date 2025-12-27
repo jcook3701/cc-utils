@@ -14,6 +14,7 @@
 - Merge pull request #20 from jcook3701/develop
 
 Feat 008 (#19)
+- *(changelog)* Update changelog.
 ## [0.1.9] - 2025-12-27
 
 ### ⚙️  Miscellaneous
