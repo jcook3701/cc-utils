@@ -75,7 +75,6 @@ def generate_docs_templates(context: dict[str, Any]) -> None:
         extra_ctx = cfg["extra_ctx"]
 
         logger.info(f"📦 Generating {name} docs from {repo} → {target}")
-
         try:
             # Bake template into temp directory
             cookiecutter(
@@ -94,7 +93,7 @@ def generate_docs_templates(context: dict[str, Any]) -> None:
             generated_dir = subdirs[0]
 
             if target.exists():
-                shutil.rmtree(target)
+                continue
 
             shutil.move(generated_dir, target)
 

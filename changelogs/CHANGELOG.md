@@ -6,26 +6,8 @@
 
 ### ⚙️  Miscellaneous
 
-- *(version)* Bumped to version 0.1.7!
-
-### 🐛 Fixed
-
-- *(docs)* Quick fix for documentation template generation.
-## [0.1.6] - 2025-12-18
-
-### ⚙️  Miscellaneous
-
-- *(version)* Version update to 1.6!
-- *(changelog)* Updates changelogs.
-
-### 🐛 Fixed
-
-- *(build)* Forgot to add virtual environment source for bump-my-version command.
-
-### 🚀 Added
-
-- *(hooks)* Added make.py to hooks so that different make commands can be chosen within the cookiecutter.json file rather than needing to template a ton for each variance of make commands that need to be run per-template.  I also refactored the make_dirs command out of hooks/utils and moved it to the core/utils directory.
-## [0.1.5] - 2025-12-17
+- *(version)* Version bump to 1.8!
+## [0.1.7] - 2025-12-23
 
 ### ⚙️  Miscellaneous
 
@@ -61,7 +43,26 @@ Feat 003 (#9)
 - Merge pull request #12 from jcook3701/develop
 
 Feat 004 (#11)
-- *(changelog)* Updates to changelog for release.
+- Feat 005 (#14)
+
+* chore(changelog): Updates to changelog for release.
+
+* fix(build): forgot to add virtual environment source for bump-my-version command.
+
+* chore(version): Version update to 1.6!
+
+* feat(hooks): Added make.py to hooks so that different make commands can be chosen within the cookiecutter.json file rather than needing to template a ton for each variance of make commands that need to be run per-template.  I also refactored the make_dirs command out of hooks/utils and moved it to the core/utils directory.
+
+* chore(changelog): updates changelogs.
+
+* chore(version): bumped to version 0.1.7!
+
+* fix(docs): Quick fix for documentation template generation.
+
+* fix(lint): lint fix.
+- Merge pull request #15 from jcook3701/develop
+
+Feat 005 (#14)
 ## [0.1.3] - 2025-12-12
 
 ### ⚙️  Miscellaneous
