@@ -6,8 +6,8 @@
 
 ### ⚙️  Miscellaneous
 
-- *(version)* Version bump to 0.1.9!
-## [0.1.8] - 2025-12-27
+- *(changelog)* Changelog update!
+## [0.1.9] - 2025-12-27
 
 ### ⚙️  Miscellaneous
 
@@ -15,7 +15,16 @@
 - Merge pull request #16 from jcook3701/feat-006
 
 Feat 006
-- *(changelog)* Updates to changelog.
+- Feat 007 (#17)
+
+* chore(changelog): updates to changelog.
+
+* chore(version): Version bump to 0.1.9!
+
+* fix(hooks): docs hooks.
+- Merge pull request #18 from jcook3701/develop
+
+Feat 007 (#17)
 
 ### 🐛 Fixed
 
